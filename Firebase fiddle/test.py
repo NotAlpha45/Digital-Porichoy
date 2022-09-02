@@ -5,6 +5,7 @@ from firebase_admin import credentials, firestore
 admin_cred = credentials.Certificate(
     "digital-porichoy-firebase-adminsdk-b7p79-b63edb5cd3.json")
 firebase_admin.initialize_app(admin_cred)
+print(admin_cred)
 
 # %%
 database = firestore.client()
