@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from firebase_admin import firestore, credentials, initialize_app, auth
 
 configs = {
@@ -16,6 +17,13 @@ configs = {
     }
 }
 
+admin_cred = credentials.Certificate(configs["admin_signature"])
+admin_instance = initialize_app(admin_cred)
+# admin_instance.ge
+
+firestore_database = firestore.client()
+collection_instance = firestore_database.collection(
+    configs["customer_collection"])
 # dummy_data = {
 #     "credentials": {
 #         "email": "maheen@gmail.com",
@@ -38,25 +46,33 @@ def signup(userdata, password):
     Creates a firebase user instance and stores in the firestore database.
     """
 
-    admin_cred = credentials.Certificate(configs["admin_signature"])
-    admin_instance = initialize_app(admin_cred)
-
-    firestore_database = firestore.client()
-    collection_instance = firestore_database.collection(
-        configs["customer_collection"])
+    user = None
 
     try:
-        user = auth.create_user(
-            email=userdata["credentials"]["email"],
-            email_verified=False,
-            phone_number=userdata["credentials"]["phone"],
-            password=password,
-            display_name=userdata["names"]["username"],
-            disabled=False)
+        if userdata["credentials"]["email"] != "":
+            user = auth.create_user(
+                email=userdata["credentials"]["email"],
+                email_verified=False,
+                phone_number=userdata["credentials"]["phone"],
+                password=password,
+                display_name=userdata["names"]["username"],
+                disabled=False)
+        else:
+            user = auth.create_user(
+                email_verified=False,
+                phone_number=userdata["credentials"]["phone"],
+                password=password,
+                display_name=userdata["names"]["username"],
+                disabled=False)
+
+        collection_instance.document(user.uid).set(userdata)
 
     except auth.EmailAlreadyExistsError or auth.PhoneNumberAlreadyExistsError:
         print("Account already exists")
-
-    user = auth.get_user_by_email(userdata["credentials"]["email"])
-
-    collection_instance.document(user.uid).set(userdata)
+        return HttpResponse(
+            '''
+            <h1>User already exists</h1>
+            '''
+        )
+    # user = auth.get_user_by_email(userdata["credentials"]["email"])
+    # user = auth.get_user
