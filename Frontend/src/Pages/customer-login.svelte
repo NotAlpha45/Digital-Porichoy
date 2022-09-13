@@ -1,0 +1,192 @@
+<script>
+</script>
+
+<div>
+  <section
+    class="u-clearfix u-image u-shading u-section-1"
+    id="sec-4164"
+    data-image-width="1280"
+    data-image-height="853"
+  >
+    <div class="u-clearfix u-sheet u-sheet-1">
+      <h1
+        class="u-align-center u-custom-font u-font-montserrat u-text u-text-default u-text-1"
+      >
+        Customer Regestration<br />
+      </h1>
+      <div class="u-form u-form-1">
+        <form
+          action="//publish.nicepage.com/Form/Process"
+          method="POST"
+          class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
+          source="email"
+          name="form"
+          style="padding: 34px;"
+        >
+          <div class="u-form-group u-form-name">
+            <label for="name-a66d" class="u-label">Name (নাম)</label>
+            <input
+              type="text"
+              placeholder="নিজের নাম লিখুন"
+              id="name-a66d"
+              name="name"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+              required=""
+            />
+          </div>
+          <div class="u-form-group u-form-name u-form-group-2">
+            <label for="name-e2ab" class="u-label">Username (ইউজার নাম)</label>
+            <input
+              type="text"
+              placeholder="নিজের ইউজার নাম লিখুন"
+              id="name-e2ab"
+              name="username"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+              required=""
+            />
+          </div>
+          <div class="u-form-email u-form-group">
+            <label for="email-a66d" class="u-label">Email</label>
+            <input
+              type="email"
+              placeholder="ইমেইল লিখুন"
+              id="email-a66d"
+              name="email"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+            />
+          </div>
+          <div class="u-form-group u-form-phone u-form-group-4">
+            <label for="phone-f0d1" class="u-label">Phone (ফোন নাম্বার)</label>
+            <input
+              type="tel"
+              pattern="\+?\d{(0, 3)}[\s\(\-]?([0-9]{(2,
+              3)})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})"
+              placeholder="নিজের ফোন নাম্বার লিখুন (যেমন: +8801778654767)"
+              id="phone-f0d1"
+              name="phone"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+              required=""
+            />
+          </div>
+          <div class="u-form-group u-form-group-5">
+            <label for="text-cbc5" class="u-label">Password</label>
+            <input
+              type="text"
+              placeholder="নিজের পাসওয়ার্ড লিখুন"
+              id="text-cbc5"
+              name="password"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+              required="required"
+            />
+          </div>
+          <div class="u-form-group u-form-group-6">
+            <label for="text-02bd" class="u-label">Retype Password</label>
+            <input
+              type="text"
+              placeholder="আবার পাসওয়ার্ড লিখুন"
+              id="text-02bd"
+              name="retype_password"
+              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+              required="required"
+            />
+          </div>
+          <div class="u-align-center u-form-group u-form-submit">
+            <a
+              href="#"
+              class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-1-light-1 u-radius-29"
+              >Submit (সাবমিট করুন)</a
+            >
+            <input type="submit" value="submit" class="u-form-control-hidden" />
+          </div>
+          <div class="u-form-send-message u-form-send-success">
+            Thank you! Your message has been sent.
+          </div>
+          <div class="u-form-send-error u-form-send-message">
+            Unable to send your message. Please fix errors then try again.
+          </div>
+          <input type="hidden" value="" name="recaptchaResponse" />
+          <input
+            type="hidden"
+            name="formServices"
+            value="094a5e354124b7a9defe839099e3dd16"
+          />
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .u-section-1 {
+    background-image: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.6)
+      ),
+      url("/images/4fd81a5519456a4e67515f4156f00f145cb103071a001cdce1cb61a4d6728ebf87634fe83768169f955836e0a0b2c939e3eff35a9d54485ad85fe7_1280.jpg");
+    background-position: 50% 50%;
+  }
+
+  .u-section-1 .u-sheet-1 {
+    min-height: 810px;
+  }
+
+  .u-section-1 .u-text-1 {
+    margin: 67px auto 0;
+  }
+
+  .u-section-1 .u-form-1 {
+    height: 644px;
+    width: 570px;
+    margin: 23px auto 24px;
+  }
+
+  .u-section-1 .u-form-group-2 {
+    margin-left: 0;
+  }
+
+  .u-section-1 .u-form-group-4 {
+    margin-left: 0;
+  }
+
+  .u-section-1 .u-form-group-5 {
+    margin-left: 0;
+  }
+
+  .u-section-1 .u-form-group-6 {
+    margin-left: 0;
+  }
+
+  @media (max-width: 1199px) {
+    .u-section-1 .u-sheet-1 {
+      min-height: 880px;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .u-section-1 .u-sheet-1 {
+      min-height: 869px;
+    }
+
+    .u-section-1 .u-form-1 {
+      margin-bottom: 60px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .u-section-1 .u-form-1 {
+      width: 540px;
+      margin-bottom: 30px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .u-section-1 .u-sheet-1 {
+      min-height: 874px;
+    }
+
+    .u-section-1 .u-form-1 {
+      width: 340px;
+    }
+  }
+</style>
