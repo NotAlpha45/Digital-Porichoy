@@ -4,7 +4,7 @@
   import router from "page";
   let page;
 
-  router("/customer-login", () => (page = CustomerLogin));
+  router("/customer-signup", () => (page = CustomerLogin));
   router.start();
 </script>
 
