@@ -16,7 +16,7 @@
       </h1>
       <div class="u-form u-form-1">
         <form
-          action="//publish.nicepage.com/Form/Process"
+          action="http://127.0.0.1:8000/auth/customer_auth/signup"
           method="POST"
           class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
           source="email"
@@ -92,7 +92,7 @@
           </div>
           <div class="u-align-center u-form-group u-form-submit">
             <a
-              href="#"
+              href=""
               class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-1-light-1 u-radius-29"
               >Submit (সাবমিট করুন)</a
             >

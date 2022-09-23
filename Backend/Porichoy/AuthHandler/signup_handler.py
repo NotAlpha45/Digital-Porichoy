@@ -41,7 +41,7 @@ collection_instance = firestore_database.collection(
 # }
 
 
-def signup(userdata, password):
+async def signup(userdata, password):
     """
     Creates a firebase user instance and stores in the firestore database.
     """
@@ -51,7 +51,6 @@ def signup(userdata, password):
     try:
         if userdata["credentials"]["email"] != "":
             user = auth.create_user(
-                email=userdata["credentials"]["email"],
                 email_verified=False,
                 phone_number=userdata["credentials"]["phone"],
                 password=password,
@@ -66,6 +65,12 @@ def signup(userdata, password):
                 disabled=False)
 
         collection_instance.document(user.uid).set(userdata)
+
+        return HttpResponse(
+            f'''
+            <h1>Account Created for {userdata["names"]["username"]}!</h1>
+            '''
+        )
 
     except auth.EmailAlreadyExistsError or auth.PhoneNumberAlreadyExistsError:
         print("Account already exists")
