@@ -12,5 +12,5 @@ async def create_service(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
     print(request_body)
-    return HttpResponse("OK")
-    # return await create_service(request_body)
+    # return HttpResponse("OK")
+    return await create_service(request_body)

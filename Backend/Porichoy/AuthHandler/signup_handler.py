@@ -31,7 +31,6 @@ providers_collection = firestore_database.collection(
     configs["provider_collection"])
 
 
-
 async def signup(userdata, password, user_type: str):
     """
     Creates a firebase user instance and stores in the firestore database.
@@ -99,9 +98,19 @@ async def signup(userdata, password, user_type: str):
             else:
                 user = auth.get_user_by_email(userdata["credentials"]["email"])
 
-            collection.document(user.uid).set(userdata)
-            return HttpResponse(
-                f'''
-            <h1>Account Created for {userdata["names"]["username"]}!</h1>
-            '''
-            )
+            store_instance = providers_collection.document(user.uid).get()
+
+            if not store_instance.exists:
+
+                collection.document(user.uid).set(userdata)
+                return HttpResponse(
+                    f'''
+                <h1>Account Created for {userdata["names"]["username"]}!</h1>
+                '''
+                )
+            else:
+                return HttpResponse(
+                    f'''
+                <h1>The provider already exists</h1>
+                '''
+                )
