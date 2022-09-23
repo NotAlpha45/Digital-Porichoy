@@ -68,9 +68,9 @@ async def signup(userdata, password, user_type: str):
             else:
                 user = auth.get_user_by_email(userdata["credentials"]["email"])
 
-            store_instance = providers_collection.document(user.uid).get()
+            provider_instance = providers_collection.document(user.uid).get()
 
-            if not store_instance.exists:
+            if not provider_instance.exists:
 
                 collection.document(user.uid).set(userdata)
                 return HttpResponse(

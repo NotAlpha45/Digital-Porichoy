@@ -5,6 +5,7 @@ from firebase_admin import firestore, credentials, initialize_app, auth
 configs = {
     "customer_collection": "customers",
     "provider_collection": "providers",
+    "service_collection": "services",
     "admin_signature": {
         "type": "service_account",
         "project_id": "digital-porichoy",
@@ -29,3 +30,6 @@ customers_collection = firestore_database.collection(
 
 providers_collection = firestore_database.collection(
     configs["provider_collection"])
+
+services_collection = firestore_database.collection(
+    configs["service_collection"])
