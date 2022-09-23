@@ -3,5 +3,6 @@ from . import auth
 
 urlpatterns = [
     path('customer_auth/login', auth.customer_login),
-    path('customer_auth/signup', auth.customer_signup)
+    path('customer_auth/signup', auth.customer_signup),
+    path('provider_auth/signup', auth.provider_signup)
 ]
