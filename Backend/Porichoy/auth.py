@@ -20,12 +20,10 @@ async def customer_login(request: HttpRequest):
 async def customer_signup(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
-    print(request_body)
     return await signup(request_body["userdata"], request_body["password"], "customer")
 
 
 async def provider_signup(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
-    print(request_body)
     return await signup(request_body["userdata"], request_body["password"], "provider")

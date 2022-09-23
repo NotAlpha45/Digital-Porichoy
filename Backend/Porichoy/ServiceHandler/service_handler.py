@@ -5,6 +5,7 @@ from firebase_admin import firestore, credentials, initialize_app, auth
 configs = {
     "customer_collection": "customers",
     "provider_collection": "providers",
+    "service_collection": "services",
     "admin_signature": {
         "type": "service_account",
         "project_id": "digital-porichoy",
@@ -19,9 +20,11 @@ configs = {
     }
 }
 
-admin_cred = credentials.Certificate(configs["admin_signature"])
-admin_instance = initialize_app(admin_cred)
-# admin_instance.ge
+try:
+    admin_cred = credentials.Certificate(configs["admin_signature"])
+    admin_instance = initialize_app(admin_cred)
+except ValueError:
+    pass
 
 firestore_database = firestore.client()
 customers_collection = firestore_database.collection(
@@ -30,78 +33,21 @@ customers_collection = firestore_database.collection(
 providers_collection = firestore_database.collection(
     configs["provider_collection"])
 
+services_collection = firestore_database.collection(
+    configs["service_collection"])
 
 
-async def signup(userdata, password, user_type: str):
-    """
-    Creates a firebase user instance and stores in the firestore database.
-    """
-
-    collection = None
-
-    if user_type == "customer":
-        collection = customers_collection
-    elif user_type == "provider":
-        collection = providers_collection
-
-    user = None
-
+async def create_service(service_data):
     try:
-        if userdata["credentials"]["email"] == "":
-            user = auth.create_user(
-                email_verified=False,
-                phone_number=userdata["credentials"]["phone"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
+        auth.get_user(service_data["credentials"]["provider_id"])
+        services_collection.document(
+            service_data["credentials"]["provider_id"]).set(service_data)
 
-        elif userdata["credentials"]["phone"] == "":
-            user = auth.create_user(
-                email_verified=False,
-                email=userdata["credentials"]["email"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
-        else:
-            user = auth.create_user(
-                email_verified=False,
-                email=userdata["credentials"]["email"],
-                phone_number=userdata["credentials"]["phone"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
+        return HttpResponse('''
+        <h1>Your Service Created!</h1>
+        ''')
 
-        collection.document(user.uid).set(userdata)
-
-        return HttpResponse(
-            f'''
-            <h1>Account Created for {userdata["names"]["username"]}!</h1>
-            '''
-        )
-
-    except auth.EmailAlreadyExistsError or auth.PhoneNumberAlreadyExistsError:
-
-        if user_type == "customer":
-            print("Account already exists")
-            return HttpResponse(
-                '''
-                <h1>User already exists</h1>
-                '''
-            )
-
-        elif user_type == "provider":
-            user = None
-
-            if userdata["credentials"]["email"] == "":
-                user = auth.get_user_by_phone_number(
-                    userdata["credentials"]["phone"])
-
-            else:
-                user = auth.get_user_by_email(userdata["credentials"]["email"])
-
-            collection.document(user.uid).set(userdata)
-            return HttpResponse(
-                f'''
-            <h1>Account Created for {userdata["names"]["username"]}!</h1>
-            '''
-            )
+    except auth.UserNotFoundError:
+        return HttpResponse('''
+        <h1>Not A valid provider!</h1>
+        ''')
