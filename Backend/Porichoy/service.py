@@ -3,8 +3,9 @@
 services handles all the requests that are related to services. 
 """
 import json
+from turtle import distance
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse, Http404
+from django.http import HttpRequest, HttpResponse, Http404, JsonResponse
 from .firebase_init import *
 
 
@@ -55,6 +56,7 @@ async def add_offering(request: HttpRequest):
         <h1>The service does not exist!</h1>
         ''')
 
+
 async def remove_offering(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
@@ -75,3 +77,27 @@ async def remove_offering(request: HttpRequest):
         return HttpResponse('''
         <h1>The service does not exist!</h1>
         ''')
+
+
+async def search_service(request: HttpRequest):
+    # request_body = json.loads(request.body.decode("utf-8"))
+    request_params = request.GET
+    # print(request_params)
+    district = request_params["district"].lower()
+    category = request_params["category"]
+    long = request_params["long"]
+    lat = request_params["lat"]
+    distance = request_params["distance"]
+
+    # print(category)
+    query = services_collection.where(
+        "location.district", "==", district).stream()
+
+    for data in query:
+        print(data)
+
+    return HttpResponse("""
+    OK
+    """)
+
+    pass

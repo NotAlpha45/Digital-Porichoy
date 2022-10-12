@@ -8,5 +8,6 @@ urlpatterns = [
     path('provider_auth/signup', auth.provider_signup),
     path('create_service', service.create_service),
     path('add_offering', service.add_offering),
-    path('remove_offering', service.remove_offering)
+    path('remove_offering', service.remove_offering),
+    path('search_service', service.search_service)
 ]
