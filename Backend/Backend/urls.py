@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 # from Porichoy.urls
 
+# Joining the media root folder from settings to automatically create an URL
+# for any uploaded media like image
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("auth/", include('Porichoy.urls')),
     path("services/", include('Porichoy.urls'))
-]
+]+static(settings.MEDIA_ROOT, document_root=settings.MEDIA_ROOT)
 # /auth/customer-signup
