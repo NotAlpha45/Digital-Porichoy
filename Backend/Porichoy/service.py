@@ -94,8 +94,12 @@ async def search_service(request: HttpRequest):
     distance = float(request_params["distance"])
     search_limit = int(request_params["search_limit"])
 
+    # Setting max search limit and max distance limit.
     if search_limit > 1000:
         search_limit = 1000
+
+    if distance > 50:
+        distance = 50
 
     query = services_collection.where(
         "location.district", "==", district).where("credentials.category", "==", category).limit(search_limit).stream()
