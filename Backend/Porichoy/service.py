@@ -2,6 +2,7 @@
 """
 services handles all the requests that are related to services. 
 """
+from cmath import sqrt
 import json
 from turtle import distance
 from django.shortcuts import render
@@ -80,24 +81,38 @@ async def remove_offering(request: HttpRequest):
 
 
 async def search_service(request: HttpRequest):
-    # request_body = json.loads(request.body.decode("utf-8"))
+
+    """
+    Searches for a service based on category and location. 
+    """
+
     request_params = request.GET
-    # print(request_params)
     district = request_params["district"].lower()
-    category = request_params["category"]
-    long = request_params["long"]
-    lat = request_params["lat"]
-    distance = request_params["distance"]
+    category = request_params["category"].lower()
+    customer_long = float(request_params["long"])
+    customer_lat = float(request_params["lat"])
+    distance = float(request_params["distance"])
+    search_limit = int(request_params["search_limit"])
 
-    # print(category)
+    if search_limit > 1000:
+        search_limit = 1000
+
     query = services_collection.where(
-        "location.district", "==", district).stream()
+        "location.district", "==", district).where("credentials.category", "==", category).limit(search_limit).stream()
 
-    for data in query:
-        print(data)
+    result = [x.to_dict() for x in query]
 
-    return HttpResponse("""
-    OK
-    """)
+    # Only taking the instances who's distance is less than or equal to the specified distance
+    result = [x for x in result if (((x["location"]["long"] - customer_long)**2 +
+                                     (x["location"]["lat"] - customer_lat)**2)**0.5) <= distance]
 
-    pass
+    result.sort(key=lambda x: (
+        (((x["location"]["long"] - customer_long)**2 +
+         (x["location"]["lat"] - customer_lat)**2)**0.5)
+    ))
+
+    response_data = {
+        "result": result
+    }
+
+    return JsonResponse(response_data)
