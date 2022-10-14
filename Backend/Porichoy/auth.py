@@ -6,15 +6,14 @@ import json
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, Http404
 from .AuthHandler.signup_handler import signup
+from .firebase_init import *
 
 
 async def customer_login(request: HttpRequest):
-
+    
     request_body = json.loads(request.body.decode("utf-8"))
-    print(request_body["name"])
-    return HttpResponse(""" 
-    <h1>Customer login</h1>
-    """)
+    user = auth.verify_id_token(request_body["id_token"])
+    user_id = user["uid"]
 
 
 async def customer_signup(request: HttpRequest):

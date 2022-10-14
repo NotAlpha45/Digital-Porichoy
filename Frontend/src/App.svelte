@@ -1,13 +1,18 @@
 <script>
   import Navbar from "./components/Navbar.svelte";
   import CustomerSignup from "./Pages/customer-signup.svelte";
+  import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
   import router from "page";
-  let page;
 
+  let page;
 
   router("/customer-signup", () => {
     page = CustomerSignup;
+  });
+
+  router("/customer-login", () => {
+    page = CustomerLogin;
   });
 
   router("/", () => {
