@@ -26,7 +26,7 @@ async def signup(userdata, password, user_type: str):
             disabled=False)
 
         collection.document(user.uid).set(userdata)
-        print(user)
+        print(user.uid)
 
         return HttpResponse(
             f'''
