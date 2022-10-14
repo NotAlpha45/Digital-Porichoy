@@ -53,8 +53,8 @@
             <li class="u-nav-item">
               <a
                 class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base"
-                href="Customer-Login-(গ্রাহক-লগ-ইন).html"
-                style="padding: 8px;">Customer Login (গ্রাহক লগ ইন)</a
+                href="/customer-signup"
+                style="padding: 8px;">Customer Signup (গ্রাহক সাইন-আপ)</a
               >
             </li>
             <li class="u-nav-item">
@@ -83,9 +83,7 @@
                 class="u-align-center-lg u-align-center-xl u-align-left-md u-align-left-sm u-align-left-xs u-nav u-popupmenu-items u-spacing-11 u-unstyled u-nav-2"
               >
                 <li class="u-nav-item">
-                  <a
-                    class="u-button-style u-nav-link"
-                    href="/customer-login"
+                  <a class="u-button-style u-nav-link" href="/customer-signup"
                     >Customer Login (গ্রাহক লগ ইন)</a
                   >
                 </li>
@@ -114,7 +112,7 @@
       <h3
         class="u-custom-font u-font-montserrat u-text u-text-default-xl u-text-1"
       >
-        Digital P​orichoy<br />(ডিজিটাল পরিচয়)
+        <a href="/">Digital P​orichoy<br />(ডিজিটাল পরিচয়)</a>
       </h3>
     </div>
   </header>

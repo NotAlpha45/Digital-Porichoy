@@ -1,4 +1,5 @@
 from ..firebase_init import *
+from django.http import JsonResponse
 
 
 async def signup(userdata, password, user_type: str):
@@ -16,31 +17,16 @@ async def signup(userdata, password, user_type: str):
     user = None
 
     try:
-        if userdata["credentials"]["email"] == "":
-            user = auth.create_user(
-                email_verified=False,
-                phone_number=userdata["credentials"]["phone"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
 
-        elif userdata["credentials"]["phone"] == "":
-            user = auth.create_user(
-                email_verified=False,
-                email=userdata["credentials"]["email"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
-        else:
-            user = auth.create_user(
-                email_verified=False,
-                email=userdata["credentials"]["email"],
-                phone_number=userdata["credentials"]["phone"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
+        user = auth.create_user(
+            email_verified=False,
+            phone_number=userdata["credentials"]["phone"],
+            password=password,
+            display_name=userdata["names"]["username"],
+            disabled=False)
 
         collection.document(user.uid).set(userdata)
+        print(user)
 
         return HttpResponse(
             f'''
@@ -48,7 +34,7 @@ async def signup(userdata, password, user_type: str):
             '''
         )
 
-    except auth.EmailAlreadyExistsError or auth.PhoneNumberAlreadyExistsError:
+    except auth.PhoneNumberAlreadyExistsError:
 
         if user_type == "customer":
             print("Account already exists")
@@ -61,12 +47,8 @@ async def signup(userdata, password, user_type: str):
         elif user_type == "provider":
             user = None
 
-            if userdata["credentials"]["email"] == "":
-                user = auth.get_user_by_phone_number(
-                    userdata["credentials"]["phone"])
-
-            else:
-                user = auth.get_user_by_email(userdata["credentials"]["email"])
+            user = auth.get_user_by_phone_number(
+                userdata["credentials"]["phone"])
 
             provider_instance = providers_collection.document(user.uid).get()
 

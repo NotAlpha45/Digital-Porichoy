@@ -1,4 +1,74 @@
 <script>
+  import axios from "axios";
+  import router from "page";
+
+  const checkPassword = function (password, confirmPassword) {
+    if (password != confirmPassword) {
+      alert("আপনার পাসওয়ার্ড ম্যাচ করে না। আবার লিখুন!");
+      return false;
+    }
+    if (password.length < 6) {
+      alert("আপনার পাসওয়ার্ড অন্তত ৬ অক্ষর হতে হবে। আবার লিখুন!");
+      return false;
+    }
+    return true;
+  };
+
+  const checkPhoneNumber = function (phoneNumber) {
+    if (phoneNumber.length != 11 && !phoneNumber.startsWith("0")) {
+      alert("আপনার ফোন নাম্বার ঠিক নেই। আবার লিখুন!");
+      return false;
+    }
+    return true;
+  };
+
+  let name,
+    username,
+    password,
+    retype_password,
+    email = "",
+    phone = "",
+    formatted_phone;
+
+  async function formSubmit() {
+    if (checkPassword(password, retype_password) && checkPhoneNumber(phone)) {
+      formatted_phone = "+88" + phone;
+      console.log(phone, password);
+
+      let request_body = {
+        userdata: {
+          credentials: {
+            email: email,
+            phone: formatted_phone,
+          },
+          names: {
+            name: name,
+            username: username,
+            role: "customer",
+          },
+          service_data: {
+            favorite_provider: "",
+            favorite_service: "",
+            used_service_and_provider: [],
+          },
+        },
+        password: password,
+      };
+
+      await axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/auth/customer_auth/signup",
+        data: request_body,
+      })
+        .then(function (response) {
+          console.log(response);
+          router.redirect("/home");
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    }
+  }
 </script>
 
 <div>
@@ -16,8 +86,6 @@
       </h1>
       <div class="u-form u-form-1">
         <form
-          action="http://127.0.0.1:8000/auth/customer_auth/signup"
-          method="POST"
           class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form"
           source="email"
           name="form"
@@ -32,6 +100,7 @@
               name="name"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
               required=""
+              bind:value={name}
             />
           </div>
           <div class="u-form-group u-form-name u-form-group-2">
@@ -43,73 +112,55 @@
               name="username"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
               required=""
-            />
-          </div>
-          <div class="u-form-email u-form-group">
-            <label for="email-a66d" class="u-label">Email</label>
-            <input
-              type="email"
-              placeholder="ইমেইল লিখুন"
-              id="email-a66d"
-              name="email"
-              class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
+              bind:value={username}
             />
           </div>
           <div class="u-form-group u-form-phone u-form-group-4">
             <label for="phone-f0d1" class="u-label">Phone (ফোন নাম্বার)</label>
             <input
               type="tel"
-              pattern="\+?\d{(0, 3)}[\s\(\-]?([0-9]{(2,
-              3)})[\s\)\-]?([\s\-]?)([0-9]{3})[\s\-]?([0-9]{2})[\s\-]?([0-9]{2})"
               placeholder="নিজের ফোন নাম্বার লিখুন (যেমন: +8801778654767)"
               id="phone-f0d1"
               name="phone"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
               required=""
+              bind:value={phone}
             />
           </div>
           <div class="u-form-group u-form-group-5">
             <label for="text-cbc5" class="u-label">Password</label>
             <input
-              type="text"
               placeholder="নিজের পাসওয়ার্ড লিখুন"
               id="text-cbc5"
               name="password"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
               required="required"
+              type="password"
+              bind:value={password}
             />
           </div>
           <div class="u-form-group u-form-group-6">
             <label for="text-02bd" class="u-label">Retype Password</label>
             <input
-              type="text"
               placeholder="আবার পাসওয়ার্ড লিখুন"
               id="text-02bd"
               name="retype_password"
               class="u-border-1 u-border-grey-30 u-input u-input-rectangle u-white"
               required="required"
+              type="password"
+              bind:value={retype_password}
             />
           </div>
           <div class="u-align-center u-form-group u-form-submit">
-            <a
+            <button
+              on:click={formSubmit}
               href=""
               class="u-border-none u-btn u-btn-round u-btn-submit u-button-style u-hover-palette-1-light-1 u-radius-29"
-              >Submit (সাবমিট করুন)</a
             >
-            <input type="submit" value="submit" class="u-form-control-hidden" />
+              Submit (সাবমিট করুন)</button
+            >
+            <!-- <input type="submit" value="submit" class="u-form-control-hidden" /> -->
           </div>
-          <div class="u-form-send-message u-form-send-success">
-            Thank you! Your message has been sent.
-          </div>
-          <div class="u-form-send-error u-form-send-message">
-            Unable to send your message. Please fix errors then try again.
-          </div>
-          <input type="hidden" value="" name="recaptchaResponse" />
-          <input
-            type="hidden"
-            name="formServices"
-            value="094a5e354124b7a9defe839099e3dd16"
-          />
         </form>
       </div>
     </div>
