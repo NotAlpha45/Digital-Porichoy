@@ -1,18 +1,6 @@
 <script>
   import axios from "axios";
-  import { auth } from "../firebase_conf";
-
-  console.log(auth);
-  //   const recaptchaVerifier = new RecaptchaVerifier(
-  //     "recaptcha-container",
-  //     {
-  //       size: "invisible",
-  //       callback: function (response) {
-  //         console.log(response);
-  //       },
-  //     },
-  //     auth
-  //   );
+  import router from "page";
 
   const checkPhoneNumber = function (phoneNumber) {
     if (phoneNumber.length != 11 && !phoneNumber.startsWith("0")) {
@@ -31,6 +19,24 @@
     if (checkPhoneNumber(phone)) {
       formatted_phone = "+88" + phone;
       console.log(phone, password);
+
+      let request_body = {
+        phone: formatted_phone,
+        password: password,
+      };
+
+      await axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/auth/customer_auth/login",
+        data: request_body,
+      })
+        .then(function (response) {
+          console.log(response);
+          // router.redirect("/");
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     }
   }
 </script>

@@ -1,5 +1,6 @@
 from ..firebase_init import *
 from django.http import JsonResponse
+import hashlib
 
 
 async def signup(userdata, password, user_type: str):
@@ -8,6 +9,12 @@ async def signup(userdata, password, user_type: str):
     """
 
     collection = None
+
+    hash_obj = hashlib.new('sha512')
+    hash_obj.update(password.encode('utf-8'))
+    password = hash_obj.hexdigest()
+
+    userdata["credentials"]["password"] = password
 
     if user_type == "customer":
         collection = customers_collection
@@ -28,21 +35,18 @@ async def signup(userdata, password, user_type: str):
         collection.document(user.uid).set(userdata)
         print(user.uid)
 
-        return HttpResponse(
-            f'''
-            <h1>Account Created for {userdata["names"]["username"]}!</h1>
-            '''
-        )
+        return JsonResponse({
+            "userId": user.uid,
+            "role": userdata["names"]["role"]
+        })
 
     except auth.PhoneNumberAlreadyExistsError:
 
         if user_type == "customer":
             print("Account already exists")
-            return HttpResponse(
-                '''
-                <h1>User already exists</h1>
-                '''
-            )
+            return JsonResponse({
+                "userId": None
+            })
 
         elif user_type == "provider":
             user = None
@@ -55,14 +59,11 @@ async def signup(userdata, password, user_type: str):
             if not provider_instance.exists:
 
                 collection.document(user.uid).set(userdata)
-                return HttpResponse(
-                    f'''
-                <h1>Account Created for {userdata["names"]["username"]}!</h1>
-                '''
-                )
+                return JsonResponse({
+                    "userId": user.uid,
+                    "role": "provider"
+                })
             else:
-                return HttpResponse(
-                    f'''
-                <h1>The provider already exists</h1>
-                '''
-                )
+                return JsonResponse({
+                    "userId": None
+                })

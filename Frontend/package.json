@@ -10,6 +10,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "@types/bcrypt": "^5.0.0",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
@@ -19,6 +20,8 @@
   },
   "dependencies": {
     "axios": "^1.1.2",
+    "bcrypt": "^5.1.0",
+    "crypto": "^1.0.1",
     "firebase": "^9.12.1",
     "page": "^1.11.6",
     "sirv-cli": "^2.0.0"

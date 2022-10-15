@@ -11,6 +11,7 @@
       alert("আপনার পাসওয়ার্ড অন্তত ৬ অক্ষর হতে হবে। আবার লিখুন!");
       return false;
     }
+
     return true;
   };
 
@@ -35,11 +36,13 @@
       formatted_phone = "+88" + phone;
       console.log(phone, password);
 
+
       let request_body = {
         userdata: {
           credentials: {
             email: email,
             phone: formatted_phone,
+            password: password,
           },
           names: {
             name: name,
@@ -62,7 +65,7 @@
       })
         .then(function (response) {
           console.log(response);
-          router.redirect("/home");
+          router.redirect("/");
         })
         .catch(function (err) {
           console.log(err);
