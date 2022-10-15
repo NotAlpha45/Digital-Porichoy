@@ -21,16 +21,16 @@ async def customer_login(request: HttpRequest):
     hash_obj.update(password.encode('utf-8'))
     password = hash_obj.hexdigest()
 
-    print(password)
-
     query = customers_collection.where("credentials.phone", "==", phone).where(
         "credentials.password", "==", password).limit(1).stream()
 
     customer = [x.to_dict() for x in query]
-    print(customer)
 
     if customer:
         user_id = auth.get_user_by_phone_number(phone).uid
+        
+        print(auth.create_custom_token(user_id))
+        
         return JsonResponse({
             "userId": user_id,
             "role": "customer"

@@ -31,7 +31,9 @@
         data: request_body,
       })
         .then(function (response) {
-          console.log(response);
+          
+          let token = response.data.userId;
+          console.log(token);
           // router.redirect("/");
         })
         .catch(function (err) {
