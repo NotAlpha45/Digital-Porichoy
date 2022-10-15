@@ -3,9 +3,14 @@
   import CustomerSignup from "./Pages/customer-signup.svelte";
   import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
+  import Map from "./Pages/map.svelte";
   import router from "page";
 
   let page;
+
+  router("/map", () => {
+    page = Map;
+  });
 
   router("/customer-signup", () => {
     page = CustomerSignup;
