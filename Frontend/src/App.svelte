@@ -3,12 +3,16 @@
   import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
   import Store from "./Pages/store.svelte";
+  import Signup from "./Pages/signup.svelte"
+  import Login from "./Pages/login.svelte"
   import router from "page";
   let page;
 
   router("/customer-signup", () => (page = CustomerLogin));
   
   router("/", () => (page = Home));
+  router("/login", () => (page = Login));
+  router("/signup", () => (page = Signup));
   router("/store", () => (page = Store));
   router.start();
 </script>
