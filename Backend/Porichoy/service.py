@@ -2,9 +2,7 @@
 """
 services handles all the requests that are related to services. 
 """
-from cmath import sqrt
 import json
-from turtle import distance
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, Http404, JsonResponse
 from .firebase_init import *
