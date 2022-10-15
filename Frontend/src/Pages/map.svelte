@@ -9,7 +9,7 @@
     const map = new mapboxgl.Map({
       container: "map-container",
       style: "mapbox://styles/mapbox/outdoors-v11",
-      center: [90.380, 23.94], // starting position
+      center: [90.38, 23.94], // starting position
       zoom: 15, // starting zoom
     });
 
@@ -33,12 +33,8 @@
     let coords;
     // Add mouse move control
     map.on("click", (e) => {
-      // `e.point` is the x, y coordinates of the `mousemove` event
-      // relative to the top-left corner of the map.
-      // JSON.stringify(e.point) +
-      // "<br />" +
-      // `e.lngLat` is the longitude, latitude geographical position of the event.
-      console.log(e.lngLat.wrap().lng);
+      coords = { lang: e.lngLat.wrap().lng, lat: e.lngLat.wrap().lat };
+      console.log(coords);
     });
   });
 </script>
