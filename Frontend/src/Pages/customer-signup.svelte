@@ -16,7 +16,7 @@
   };
 
   const checkPhoneNumber = function (phoneNumber) {
-    if (phoneNumber.length != 11 && !phoneNumber.startsWith("0")) {
+    if (phoneNumber.length != 11 || !phoneNumber.startsWith("0")) {
       alert("আপনার ফোন নাম্বার ঠিক নেই। আবার লিখুন!");
       return false;
     }
