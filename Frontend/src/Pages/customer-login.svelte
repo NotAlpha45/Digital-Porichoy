@@ -1,6 +1,7 @@
 <script>
   import axios from "axios";
   import router from "page";
+  import {auth} from "../firebase_conf"
 
   const checkPhoneNumber = function (phoneNumber) {
     if (phoneNumber.length != 11 && !phoneNumber.startsWith("0")) {
@@ -31,9 +32,8 @@
         data: request_body,
       })
         .then(function (response) {
+          console.log(response);
           
-          let token = response.data.userId;
-          console.log(token);
           // router.redirect("/");
         })
         .catch(function (err) {
