@@ -103,16 +103,32 @@
     name="viewport"
     content="width=device-width, height=device-height, initial-scale=1"
   /> -->
+<section id="contact" class="contact">
+  <div class="container" data-aos="fade">
+    <div class="section-header">
+      <h2>Map Page</h2>
+    </div>
 
-<div class="allign-items-center text-align-center">
+    <div class="row gx-lg-0 gy-4">
+      <div class="col-4" id="map"/>
+      <!-- End Contact Form -->
+    </div>
+  </div>
+</section>
+
+<!-- <div class="mapPageMain">
   <div>
     <h1>Map Page!</h1>
   </div>
 
   <div id="map" />
-</div>
+</div> -->
 
 <style>
+  /* .mapPageMain {
+    align-items: center;
+    text-align: center;
+  }
   #map {
     position: absolute;
     top: 0;
@@ -120,7 +136,8 @@
     width: 100%;
     height: 100%;
     background-color: blue;
-  }
+  } */
+
   /* .mapboxgl-popup {
     max-width: 200px;
   }
@@ -129,12 +146,7 @@
     text-align: center;
     font-family: "Open Sans", sans-serif;
   }
-  .map-page-main {
-    width: 100%;
-    height: 500px;
-    align-items: center;
-    text-align: center;
-  } */
+  
   /* .mapbox-class {
     width: 70%;
     height: 100%;
