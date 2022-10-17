@@ -44,7 +44,12 @@
       })
         .then(function (response) {
           console.log(response);
-          // router.redirect("/");
+
+          if (response.data.userID == null) {
+            alert("অ্যাকাউন্ট তৈরি করাই আছে। লগ ইন করুন।");
+          } else {
+            router.redirect("/");
+          }
         })
         .catch(function (err) {
           console.log(err);
@@ -132,7 +137,8 @@
             <button
               type="button"
               class="btn btn-success rounded-pill"
-              on:click={formSubmit}>Sign up (সাইন আপ করুন)</button>
+              on:click={formSubmit}>Sign up (সাইন আপ করুন)</button
+            >
           </div>
         </form>
       </div>

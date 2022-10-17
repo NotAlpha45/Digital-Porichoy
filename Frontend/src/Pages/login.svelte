@@ -24,8 +24,12 @@
       })
         .then(function (response) {
           console.log(response);
-
-          // router.redirect("/");
+          
+          if (response.data.userID === null) {
+            alert("এই তথ্যে ইউজার নেই। সঠিক তথ্য দিয়ে চেষ্টা করুন।");
+          } else {
+            router.redirect("/");
+          }
         })
         .catch(function (err) {
           console.log(err);

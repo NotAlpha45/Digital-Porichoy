@@ -4,14 +4,16 @@
   import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
   import Store from "./Pages/store.svelte";
-  import Signup from "./Pages/signup.svelte"
-  import Login from "./Pages/login.svelte"
+  import Signup from "./Pages/signup.svelte";
+  import Login from "./Pages/login.svelte";
+  import Map from "./Pages/map.svelte";
   import router from "page";
 
   let page;
 
   router("/customer-signup", () => (page = CustomerSignup));
   router("/customer-login", () => (page = CustomerLogin));
+  router("/map", () => (page = Map));
 
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
