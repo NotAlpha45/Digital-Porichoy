@@ -11,7 +11,7 @@
   let page;
 
   router("/customer-signup", () => (page = CustomerSignup));
-
+  router("/customer-login", () => (page = CustomerLogin));
 
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
