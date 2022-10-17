@@ -2,14 +2,7 @@
   import axios from "axios";
   import router from "page";
   import {auth} from "../firebase_conf"
-
-  const checkPhoneNumber = function (phoneNumber) {
-    if (phoneNumber.length != 11 && !phoneNumber.startsWith("0")) {
-      alert("আপনার ফোন নাম্বার ঠিক নেই। আবার লিখুন!");
-      return false;
-    }
-    return true;
-  };
+  import {checkPhoneNumber} from "../utility_functions"
 
   let name,
     password,

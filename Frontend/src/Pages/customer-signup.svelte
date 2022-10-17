@@ -1,27 +1,7 @@
 <script>
   import axios from "axios";
   import router from "page";
-
-  const checkPassword = function (password, confirmPassword) {
-    if (password != confirmPassword) {
-      alert("আপনার পাসওয়ার্ড ম্যাচ করে না। আবার লিখুন!");
-      return false;
-    }
-    if (password.length < 6) {
-      alert("আপনার পাসওয়ার্ড অন্তত ৬ অক্ষর হতে হবে। আবার লিখুন!");
-      return false;
-    }
-
-    return true;
-  };
-
-  const checkPhoneNumber = function (phoneNumber) {
-    if (phoneNumber.length != 11 || !phoneNumber.startsWith("0")) {
-      alert("আপনার ফোন নাম্বার ঠিক নেই। আবার লিখুন!");
-      return false;
-    }
-    return true;
-  };
+  import { checkPhoneNumber, checkPassword } from "../utility_functions";
 
   let name,
     username,
@@ -35,7 +15,6 @@
     if (checkPassword(password, retype_password) && checkPhoneNumber(phone)) {
       formatted_phone = "+88" + phone;
       console.log(phone, password);
-
 
       let request_body = {
         userdata: {
