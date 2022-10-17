@@ -1,7 +1,7 @@
 <script>
   import Navbar from "./components/Navbar.svelte";
   import CustomerSignup from "./Pages/customer-signup.svelte";
-  import CustomerLogin from "./Pages/customer-login.svelte";
+  // import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
   import Store from "./Pages/store.svelte";
   import Signup from "./Pages/signup.svelte"
@@ -10,9 +10,7 @@
 
   let page;
 
-  router("/customer-signup", () => (page = CustomerSignup));
-
-
+//  router("/customer-signup", () => (page = CustomerSignup));
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
   router("/signup", () => (page = Signup));

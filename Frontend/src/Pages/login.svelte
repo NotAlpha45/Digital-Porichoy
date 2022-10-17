@@ -13,7 +13,7 @@
       <div class="col-4"></div>
 
         <div class="col-4 align-self-center">
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <form action="forms/contact.php" method="post" class="php-email-form">
             <div class="form-group mt-3">
                 <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
               </div>
