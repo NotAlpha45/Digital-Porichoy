@@ -11,14 +11,10 @@
 
   let page;
 
-<<<<<<< HEAD
-//  router("/customer-signup", () => (page = CustomerSignup));
-=======
   router("/customer-signup", () => (page = CustomerSignup));
   router("/customer-login", () => (page = CustomerLogin));
   router("/map", () => (page = Map));
 
->>>>>>> main
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
   router("/signup", () => (page = Signup));

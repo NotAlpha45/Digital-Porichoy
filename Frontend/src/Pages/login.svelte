@@ -24,7 +24,7 @@
       })
         .then(function (response) {
           console.log(response);
-          
+
           if (response.data.userID === null) {
             alert("এই তথ্যে ইউজার নেই। সঠিক তথ্য দিয়ে চেষ্টা করুন।");
           } else {
@@ -60,8 +60,7 @@
               <div class="form-group mt-3">
                 <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
               </div>
-            
-=======
+
       <div class="col-4 align-self-center">
         <form role="form" class="php-email-form">
           <div class="form-group mt-3">
@@ -86,7 +85,7 @@
               bind:value={password}
             />
           </div>
-          <!--             
+          <!--
 >>>>>>> main
             <div class="my-3">
               <div class="loading">Loading</div>
