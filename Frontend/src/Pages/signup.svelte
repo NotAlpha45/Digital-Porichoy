@@ -1,45 +1,152 @@
 <script>
+  import axios from "axios";
+  import router from "page";
+  import { checkPhoneNumber, checkPassword } from "../utility_functions";
+
+  let name,
+    username,
+    password,
+    retype_password,
+    email = "",
+    phone = "",
+    formatted_phone;
+
+  async function formSubmit() {
+    if (checkPassword(password, retype_password) && checkPhoneNumber(phone)) {
+      formatted_phone = "+88" + phone;
+      console.log(phone, password);
+
+      let request_body = {
+        userdata: {
+          credentials: {
+            email: email,
+            phone: formatted_phone,
+            password: password,
+          },
+          names: {
+            name: name,
+            username: username,
+            role: "customer",
+          },
+          service_data: {
+            favorite_provider: "",
+            favorite_service: "",
+            used_service_and_provider: [],
+          },
+        },
+        password: password,
+      };
+
+      await axios({
+        method: "post",
+        url: "http://127.0.0.1:8000/auth/customer_auth/signup",
+        data: request_body,
+      })
+        .then(function (response) {
+          console.log(response);
+
+          if (response.data.userID == null) {
+            alert("অ্যাকাউন্ট তৈরি করাই আছে। লগ ইন করুন।");
+          } else {
+            router.redirect("/");
+          }
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    }
+  }
 </script>
 
 <section id="contact" class="contact">
-    <div class="container" data-aos="fade-up">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <h2>Sign Up</h2>
+      <p>Get onboard and let out economy grow.</p>
+    </div>
 
-      <div class="section-header">
-        <h2>Sign Up</h2>
-        <p>Get onboard and let out economy grow.</p>
-      </div>
+    <div class="row gx-lg-0 gy-4">
+      <div class="col-4" />
 
-      <div class="row gx-lg-0 gy-4">
-
-      <div class="col-4"></div>
-
-        <div class="col-4 align-self-center">
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-            <div class="form-group mt-3">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-              </div>
-              <div class="form-group mt-3">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-              </div>
-            <div class="form-group mt-3">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-            </div>
-            <div class="form-group mt-3">
+      <div class="col-5 align-self-center">
+        <form class="php-email-form">
+          <div class="form-group mt-3">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              id="name"
+              placeholder="নিজের নাম লিখুন"
+              required
+              bind:value={name}
+            />
+          </div>
+          <div class="form-group mt-3">
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              id="username"
+              placeholder="নিজের ইউজার নাম লিখুন"
+              required
+              bind:value={username}
+            />
+          </div>
+          <div class="form-group mt-3">
+            <input
+              type="text"
+              class="form-control"
+              name="phone"
+              id="phone"
+              placeholder="নিজের ফোন নাম্বার লিখুন (যেমন: 01778654707)"
+              required
+              bind:value={phone}
+            />
+          </div>
+          <div class="form-group mt-3">
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              id="password"
+              placeholder="নিজের পাসওয়ার্ড লিখুন"
+              required
+              bind:value={password}
+            />
+          </div>
+          <div class="form-group mt-3">
+            <input
+              type="password"
+              class="form-control"
+              name="confirm-password"
+              id="confirm-password"
+              placeholder="পাসওয়ার্ড আবার লিখুন"
+              required
+              bind:value={retype_password}
+            />
+          </div>
+          <!-- <div class="form-group mt-3">
               <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
-            </div>
-            <div class="my-3">
+            </div> -->
+          <!-- <div class="my-3">
               <div class="loading">Loading</div>
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Register</button></div>
-          </form>
-        </div><!-- End Contact Form -->
-
+            </div> -->
+          <div class="text-center form-group mt-3">
+            <button
+              type="button"
+              class="btn btn-success rounded-pill"
+              on:click={formSubmit}>Sign up (সাইন আপ করুন)</button
+            >
+          </div>
+        </form>
       </div>
-
+      <!-- End Contact Form -->
     </div>
-  </section><!-- End Contact Section -->
+  </div>
+</section>
 
+<!-- End Contact Section -->
 <style>
 </style>
