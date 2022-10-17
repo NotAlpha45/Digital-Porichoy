@@ -5,9 +5,6 @@
   import { bind } from "svelte/internal";
 
   let shopName;
-  onMount(function () {
-    console.log("Geolocation", coords);
-  });
   function mockGetStore() {
     axios
       .get("http://127.0.0.1:8000/services/search_service", {
