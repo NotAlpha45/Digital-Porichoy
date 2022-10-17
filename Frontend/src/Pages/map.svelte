@@ -4,11 +4,9 @@
 
   let user_longitude = null,
     user_latitude = null;
-  console.log("Component Loaded");
 
   // onMount function renders something after the html containers has been mounted
   onMount(() => {
-    console.log("Component mounted");
     const location_data = {
       type: "FeatureCollection",
       features: [
@@ -71,14 +69,15 @@
     });
 
     let coords;
-    // // Add mouse move control
-    map.on("click", (e) => {
-      coords = {
-        longitude: e.lngLat.wrap().lng,
-        latitude: e.lngLat.wrap().lat,
-      };
-      console.log(coords);
-    });
+
+    // Add mouse move control
+    // map.on("click", (e) => {
+    //   coords = {
+    //     longitude: e.lngLat.wrap().lng,
+    //     latitude: e.lngLat.wrap().lat,
+    //   };
+    //   console.log(coords);
+    // });
 
     // add markers to map
     for (const feature of location_data.features) {
@@ -105,32 +104,15 @@
   });
 </script>
 
-<!-- <meta
-    name="viewport"
-    content="width=device-width, height=device-height, initial-scale=1"
-  /> -->
-<!-- <section id="blog" class="blog">
-  <div class="mapbox-class" data-aos="fade">
-    
-
-    <div class="section-header">
-      <h2>Map Page</h2>
-    </div>
-    
-    <div class="mapbox-class" id="map">
-      
-    </div>
-    
-  </div>
-</section> -->
-<!-- <div class="mapPageMain">
-  <div>
-    <h1>Map Page!</h1>
-  </div>
-
-  <div id="map" />
-</div> -->
 <div id="map" />
 
 <style>
+  .mapboxgl-popup {
+    max-width: 200px;
+  }
+
+  .mapboxgl-popup-content {
+    text-align: left;
+    font-family: "Open Sans", sans-serif;
+  }
 </style>

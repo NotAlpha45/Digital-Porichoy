@@ -24,7 +24,7 @@
       })
         .then(function (response) {
           console.log(response);
-          
+
           if (response.data.userID === null) {
             alert("এই তথ্যে ইউজার নেই। সঠিক তথ্য দিয়ে চেষ্টা করুন।");
           } else {
