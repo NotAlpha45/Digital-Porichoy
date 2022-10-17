@@ -20,6 +20,8 @@
   router("/signup", () => (page = Signup));
   router("/store", () => (page = Store));
   router.start();
+
+  console.log(page);
 </script>
 
 <main>
