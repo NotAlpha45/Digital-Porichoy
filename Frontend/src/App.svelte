@@ -12,16 +12,14 @@
   let page;
 
   router("/customer-signup", () => (page = CustomerSignup));
-  router("/customer-login", () => (page = CustomerLogin));
   router("/map", () => (page = Map));
+  // router("/map", () => (page = FalseMap));
 
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
   router("/signup", () => (page = Signup));
   router("/store", () => (page = Store));
   router.start();
-
-  console.log(page);
 </script>
 
 <main>
