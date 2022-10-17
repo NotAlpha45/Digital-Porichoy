@@ -1,4 +1,6 @@
 from ..firebase_init import *
+from django.http import JsonResponse
+import hashlib
 
 
 async def signup(userdata, password, user_type: str):
@@ -8,6 +10,12 @@ async def signup(userdata, password, user_type: str):
 
     collection = None
 
+    hash_obj = hashlib.new('sha512')
+    hash_obj.update(password.encode('utf-8'))
+    password = hash_obj.hexdigest()
+
+    userdata["credentials"]["password"] = password
+
     if user_type == "customer":
         collection = customers_collection
     elif user_type == "provider":
@@ -16,71 +24,46 @@ async def signup(userdata, password, user_type: str):
     user = None
 
     try:
-        if userdata["credentials"]["email"] == "":
-            user = auth.create_user(
-                email_verified=False,
-                phone_number=userdata["credentials"]["phone"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
 
-        elif userdata["credentials"]["phone"] == "":
-            user = auth.create_user(
-                email_verified=False,
-                email=userdata["credentials"]["email"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
-        else:
-            user = auth.create_user(
-                email_verified=False,
-                email=userdata["credentials"]["email"],
-                phone_number=userdata["credentials"]["phone"],
-                password=password,
-                display_name=userdata["names"]["username"],
-                disabled=False)
+        user = auth.create_user(
+            email_verified=False,
+            phone_number=userdata["credentials"]["phone"],
+            password=password,
+            display_name=userdata["names"]["username"],
+            disabled=False)
 
         collection.document(user.uid).set(userdata)
+        print(user.uid)
 
-        return HttpResponse(
-            f'''
-            <h1>Account Created for {userdata["names"]["username"]}!</h1>
-            '''
-        )
+        return JsonResponse({
+            "userId": user.uid,
+            "role": userdata["names"]["role"]
+        })
 
-    except auth.EmailAlreadyExistsError or auth.PhoneNumberAlreadyExistsError:
+    except auth.PhoneNumberAlreadyExistsError:
 
         if user_type == "customer":
             print("Account already exists")
-            return HttpResponse(
-                '''
-                <h1>User already exists</h1>
-                '''
-            )
+            return JsonResponse({
+                "userId": None
+            })
 
         elif user_type == "provider":
             user = None
 
-            if userdata["credentials"]["email"] == "":
-                user = auth.get_user_by_phone_number(
-                    userdata["credentials"]["phone"])
-
-            else:
-                user = auth.get_user_by_email(userdata["credentials"]["email"])
+            user = auth.get_user_by_phone_number(
+                userdata["credentials"]["phone"])
 
             provider_instance = providers_collection.document(user.uid).get()
 
             if not provider_instance.exists:
 
                 collection.document(user.uid).set(userdata)
-                return HttpResponse(
-                    f'''
-                <h1>Account Created for {userdata["names"]["username"]}!</h1>
-                '''
-                )
+                return JsonResponse({
+                    "userId": user.uid,
+                    "role": "provider"
+                })
             else:
-                return HttpResponse(
-                    f'''
-                <h1>The provider already exists</h1>
-                '''
-                )
+                return JsonResponse({
+                    "userId": None
+                })

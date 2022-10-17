@@ -10,15 +10,15 @@
 
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
       <a href="/" class="logo d-flex align-items-center">
-        
+
         <h1> <span>Digital </span>পরিচয়</h1>
       </a>
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="/">Home</a></li>
-          
+
           <li><a href="#services">Services</a></li>
-         
+
           <li><a href="/store">My Store</a></li>
 
           {#if isLoggedIn()}
@@ -41,5 +41,5 @@
 
 
 <style>
-  
+
 </style>
