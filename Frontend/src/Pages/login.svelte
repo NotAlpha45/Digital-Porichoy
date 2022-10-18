@@ -2,19 +2,21 @@
   import axios from "axios";
   import router from "page";
   import utf8 from "utf8";
+  import { auth, signInWithCustomToken } from "../firebase_conf";
   import {
-    auth,
-    signInWithCustomToken,
-    browserLocalPersistence,
-  } from "../firebase_conf";
-
-  import { checkPhoneNumber } from "../utility_functions";
+    checkPhoneNumber,
+    logOut,
+    userTokenStore,
+  } from "../utility_functions";
 
   let password,
     phone = "",
     formatted_phone;
 
   async function formSubmit() {
+    // if (auth.currentUser !== null) {
+    //   logOut();
+    // }
     if (checkPhoneNumber(phone)) {
       formatted_phone = "+88" + phone;
       console.log(phone, password);
@@ -30,9 +32,6 @@
         data: request_body,
       })
         .then(function (response) {
-          // console.log(response.data["userId"]);
-          // console.log(utf8.encode(response.data["userId"]));
-
           if (response.data["userId"] === null) {
             alert("এই তথ্যে ইউজার নেই। সঠিক তথ্য দিয়ে চেষ্টা করুন।");
           } else {
@@ -40,7 +39,7 @@
 
             signInWithCustomToken(auth, userToken)
               .then(function (userCredentials) {
-                console.log(userCredentials.user);
+                userTokenStore.set(userToken);
               })
               .catch(function (error) {
                 console.log(error);

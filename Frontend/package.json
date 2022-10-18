@@ -26,6 +26,7 @@
     "page": "^1.11.6",
     "sirv-cli": "^2.0.0",
     "svelte-geolocation": "^0.3.0",
+    "svelte-local-storage-store": "^0.3.1",
     "utf8": "^3.0.0"
   }
 }

@@ -8,11 +8,24 @@
   import Login from "./Pages/login.svelte";
   import Map from "./Pages/map.svelte";
   import router from "page";
+  import { auth } from "./firebase_conf";
+  import Logout from "./Pages/logout.svelte";
 
-  let page;
+  import { isLoggedIn, userTokenStore } from "./utility_functions";
 
+  let page, tokenSubscriber;
+
+  userTokenStore.subscribe((token) => {
+    tokenSubscriber = token;
+  });
+
+  console.log(tokenSubscriber);
+
+  let currentUser = null;
+  $: currentUser = auth.currentUser;
   router("/customer-signup", () => (page = CustomerSignup));
   router("/map", () => (page = Map));
+  router("/logout", () => (page = Logout));
   // router("/map", () => (page = FalseMap));
 
   router("/", () => (page = Home));
