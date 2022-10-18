@@ -2,31 +2,8 @@
   import { auth } from "../firebase_conf";
   import axios from "axios";
   import { userTokenStore } from "../utility_functions";
-
-  let tokenSubscriber;
-
-  userTokenStore.subscribe((token) => {
-    tokenSubscriber = token;
-  });
-  console.log(tokenSubscriber);
-  // console.log(auth.currentUser)
-  // console.log(window.lcoalStorage.getItem("userToken"));
-
-  // if (auth.currentUser !== null) {
-  //   auth.currentUser
-  //     .getIdToken(true)
-  //     .then(function (token) {
-  //       console.log("At home page, the user token:", token);
-  //       axios({
-  //         method: "post",
-  //         url: "http://127.0.0.1:8000/auth/verify_token",
-  //         data: { token: token },
-  //       });
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
+  
+  console.log(auth.currentUser);
 </script>
 
 <!-- ======= Hero Section ======= -->

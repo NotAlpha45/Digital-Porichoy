@@ -14,9 +14,6 @@
     formatted_phone;
 
   async function formSubmit() {
-    // if (auth.currentUser !== null) {
-    //   logOut();
-    // }
     if (checkPhoneNumber(phone)) {
       formatted_phone = "+88" + phone;
       console.log(phone, password);

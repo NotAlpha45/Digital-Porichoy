@@ -2,13 +2,11 @@
   import { logOut, isLoggedIn, userTokenStore } from "../utility_functions";
   import { onMount } from "svelte";
 
-  let subscriber;
+  let tokenSubscriber;
 
   userTokenStore.subscribe((token) => {
-    subscriber = token;
+    tokenSubscriber = token;
   });
-
-  console.log(subscriber);
 </script>
 
 <header id="header" class="header d-flex align-items-center">
@@ -26,7 +24,7 @@
 
         <li><a href="/store">My Store</a></li>
 
-        {#if subscriber}
+        {#if tokenSubscriber}
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/logout">Logout</a></li>
         {:else}
