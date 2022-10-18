@@ -3,7 +3,12 @@
   import axios from "axios";
   import { userTokenStore } from "../utility_functions";
 
-  console.log($userTokenStore);
+  let tokenSubscriber;
+
+  userTokenStore.subscribe((token) => {
+    tokenSubscriber = token;
+  });
+  console.log(tokenSubscriber);
   // console.log(auth.currentUser)
   // console.log(window.lcoalStorage.getItem("userToken"));
 

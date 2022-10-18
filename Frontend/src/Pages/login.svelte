@@ -39,7 +39,9 @@
 
             signInWithCustomToken(auth, userToken)
               .then(function (userCredentials) {
-                userTokenStore.set(userToken);
+                userTokenStore.update((token) => {
+                  return (token = userToken);
+                });
               })
               .catch(function (error) {
                 console.log(error);
