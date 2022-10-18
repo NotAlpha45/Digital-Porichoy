@@ -1,6 +1,13 @@
 <script>
   import axios from "axios";
   import router from "page";
+  import utf8 from "utf8";
+  import {
+    auth,
+    signInWithCustomToken,
+    browserLocalPersistence,
+  } from "../firebase_conf";
+
   import { checkPhoneNumber } from "../utility_functions";
 
   let password,
@@ -23,11 +30,22 @@
         data: request_body,
       })
         .then(function (response) {
-          console.log(response);
+          // console.log(response.data["userId"]);
+          // console.log(utf8.encode(response.data["userId"]));
 
-          if (response.data.userID === null) {
+          if (response.data["userId"] === null) {
             alert("এই তথ্যে ইউজার নেই। সঠিক তথ্য দিয়ে চেষ্টা করুন।");
           } else {
+            let userToken = utf8.encode(response.data["userId"]);
+
+            signInWithCustomToken(auth, userToken)
+              .then(function (userCredentials) {
+                console.log(userCredentials.user);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
             router.redirect("/");
           }
         })
