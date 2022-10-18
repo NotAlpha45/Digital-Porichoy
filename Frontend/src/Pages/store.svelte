@@ -1,5 +1,9 @@
 <script>
   import axios from "axios";
+  import Geolocation from "svelte-geolocation";
+  import { onMount } from "svelte";
+  import { bind } from "svelte/internal";
+
   let shopName;
   function mockGetStore() {
     axios
@@ -22,6 +26,9 @@
   mockGetStore();
 </script>
 
+<Geolocation getPosition let:coords>
+  {console.log(coords)}
+</Geolocation>
 <main id="main">
   <section id="blog" class="blog">
     <div class="container" data-aos="fade">
