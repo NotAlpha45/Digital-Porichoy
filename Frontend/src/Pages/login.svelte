@@ -47,7 +47,6 @@
     <div class="row gx-lg-0 gy-4">
       <div class="col-4" />
 
-<<<<<<< HEAD
       <div class="row gx-lg-0 gy-4">
 
       <div class="col-4"></div>

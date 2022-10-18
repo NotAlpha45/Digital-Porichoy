@@ -1,6 +1,6 @@
 <script>
   import Navbar from "./components/Navbar.svelte";
-  import CustomerSignup from "./Pages/customer-signup.svelte";
+  // import CustomerSignup from "./Pages/customer-signup.svelte";
   // import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
   import Store from "./Pages/store.svelte";
@@ -8,6 +8,7 @@
   import Login from "./Pages/login.svelte";
   import Map from "./Pages/map.svelte";
   import router from "page";
+  import StoreRegistration from "./Pages/store-registration.svelte";
 
   let page;
 
@@ -18,6 +19,7 @@
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
   router("/signup", () => (page = Signup));
+  router("/store-registration", () => (page = StoreRegistration));
   router("/store", () => (page = Store));
   router.start();
 
