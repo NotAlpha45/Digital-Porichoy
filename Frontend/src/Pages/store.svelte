@@ -29,6 +29,7 @@
 <Geolocation getPosition let:coords>
   {console.log(coords)}
 </Geolocation>
+
 <main id="main">
   <section id="blog" class="blog">
     <div class="container" data-aos="fade">
