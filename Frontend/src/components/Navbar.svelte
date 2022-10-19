@@ -15,11 +15,11 @@
         <ul>
           <li><a href="/">Home</a></li>
 
+
           <li><a href="/services">Services</a></li>
-
-          <li><a href="/store">My Store</a></li>
-
-          {#if $userTokenStore}
+          <li><a href="/map">Services Nearby</a></li>
+        {#if $userTokenStore}
+          <li><a href="/store-registration">Create Store</a></li>
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/logout">Logout</a></li>
         {:else}

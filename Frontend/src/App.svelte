@@ -3,15 +3,17 @@
   // import CustomerSignup from "./Pages/customer-signup.svelte";
   // import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
-  import Store from "./Pages/store.svelte";
   import Signup from "./Pages/signup.svelte";
   import Login from "./Pages/login.svelte";
   import Map from "./Pages/map.svelte";
   import router from "page";
   import StoreRegistration from "./Pages/store-registration.svelte";
+  import Store from "./Pages/store.svelte"
   import Services from "./Pages/services.svelte";
   import { auth } from "./firebase_conf";
   import Logout from "./Pages/logout.svelte";
+  
+  import Dashboard from "./Pages/dashboard.svelte";
 
   import { isLoggedIn, userTokenStore } from "./utility_functions";
 
@@ -27,6 +29,8 @@
   router("/signup", () => (page = Signup));
   router("/store-registration", () => (page = StoreRegistration));
   router("/store", () => (page = Store));
+  
+  router("/dashboard", () => (page = Dashboard));
   router.start();
 
   console.log(page);
