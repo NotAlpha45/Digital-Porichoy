@@ -24,7 +24,7 @@
 
         <li><a href="/store">My Store</a></li>
 
-        {#if tokenSubscriber}
+        {#if $userTokenStore}
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/logout">Logout</a></li>
         {:else}

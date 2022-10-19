@@ -36,7 +36,9 @@
 
             signInWithCustomToken(auth, userToken)
               .then(function (userCredentials) {
-                userTokenStore.set(userToken);
+                console.log(userCredentials);
+                localStorage.setItem("userToken", userToken);
+                userTokenStore.set(localStorage.getItem("userToken"));
               })
               .catch(function (error) {
                 console.log(error);

@@ -3,8 +3,18 @@ import { auth } from "./firebase_conf";
 import router from "page";
 // import { writable } from "svelte-local-storage-store";
 
+let initialToken = localStorage.getItem("userToken");
+let defaultToken;
 
-const userTokenStore = writable(null);
+if (initialToken) {
+  defaultToken = initialToken;
+}
+
+const userTokenStore = writable(initialToken);
+
+userTokenStore.subscribe((token) => {
+  localStorage.setItem("userToken", token);
+});
 
 const checkPassword = function (password, confirmPassword) {
   if (password != confirmPassword) {
@@ -38,6 +48,7 @@ const logOut = function () {
     });
   }
   userTokenStore.set(null);
+  localStorage.removeItem("userToken");
 };
 
 const isLoggedIn = () => {
@@ -47,7 +58,6 @@ const isLoggedIn = () => {
     flag = true;
   }
   return flag;
-
 };
 
 export { checkPassword, checkPhoneNumber, logOut, isLoggedIn, userTokenStore };
