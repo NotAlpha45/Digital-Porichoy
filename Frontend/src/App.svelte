@@ -28,8 +28,6 @@
   router("/store-registration", () => (page = StoreRegistration));
   router("/store", () => (page = Store));
   router.start();
-
-  console.log(page);
 </script>
 
 <main>
