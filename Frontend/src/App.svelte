@@ -10,6 +10,10 @@
   import router from "page";
   import StoreRegistration from "./Pages/store-registration.svelte";
   import Services from "./Pages/services.svelte";
+  import { auth } from "./firebase_conf";
+  import Logout from "./Pages/logout.svelte";
+
+  import { isLoggedIn, userTokenStore } from "./utility_functions";
 
   let page;
 
@@ -17,6 +21,7 @@
   router("/customer-login", () => (page = CustomerLogin));
   router("/map", () => (page = Map));
   router("/services", () => (page = Services));
+  router("/logout", () => (page = Logout));
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
   router("/signup", () => (page = Signup));
@@ -30,11 +35,6 @@
 <main>
   <Navbar />
   <svelte:component this={page} />
-  <!-- <h1>Hello {name}!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
-  </p> -->
 </main>
 
 <style>

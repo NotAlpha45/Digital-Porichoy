@@ -10,6 +10,13 @@ from .firebase_init import *
 import hashlib
 
 
+async def mock_token_verifier(request: HttpRequest):
+    request_body = json.loads(request.body.decode("utf-8"))
+    verified_obj = auth.verify_id_token(request_body["token"])
+    print("here is my obj",verified_obj["uid"])
+    return HttpResponse("OK")
+
+
 async def customer_login(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
@@ -28,11 +35,11 @@ async def customer_login(request: HttpRequest):
 
     if customer:
         user_id = auth.get_user_by_phone_number(phone).uid
-        
-        print(auth.create_custom_token(user_id))
-        
+
+        user_id_token = auth.create_custom_token(user_id).decode('utf-8')
+
         return JsonResponse({
-            "userId": user_id,
+            "userId": user_id_token,
             "role": "customer"
         })
     else:
