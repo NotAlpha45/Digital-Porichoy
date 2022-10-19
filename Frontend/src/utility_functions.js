@@ -1,3 +1,11 @@
+import { writable } from "svelte/store";
+import { auth } from "./firebase_conf";
+import router from "page";
+// import { writable } from "svelte-local-storage-store";
+
+
+const userTokenStore = writable(null);
+
 const checkPassword = function (password, confirmPassword) {
   if (password != confirmPassword) {
     alert("আপনার পাসওয়ার্ড ম্যাচ করে না। আবার লিখুন!");
@@ -19,4 +27,27 @@ const checkPhoneNumber = function (phoneNumber) {
   return true;
 };
 
-export { checkPassword, checkPhoneNumber };
+// userTokenStore.subscribe((token) => {
+//   localStorage.content = token;
+// });
+
+const logOut = function () {
+  if (auth.currentUser != null) {
+    auth.signOut().then(() => {
+      console.log("Logged Out");
+    });
+  }
+  userTokenStore.set(null);
+};
+
+const isLoggedIn = () => {
+  let flag = false;
+
+  if (auth.currentUser != null) {
+    flag = true;
+  }
+  return flag;
+
+};
+
+export { checkPassword, checkPhoneNumber, logOut, isLoggedIn, userTokenStore };

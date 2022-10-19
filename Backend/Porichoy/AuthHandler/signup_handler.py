@@ -36,8 +36,7 @@ async def signup(userdata, password, user_type: str):
         print(user.uid)
 
         return JsonResponse({
-            "userId": user.uid,
-            "role": userdata["names"]["role"]
+            "status": True
         })
 
     except auth.PhoneNumberAlreadyExistsError:
@@ -45,7 +44,7 @@ async def signup(userdata, password, user_type: str):
         if user_type == "customer":
             print("Account already exists")
             return JsonResponse({
-                "userId": None
+                "status": False
             })
 
         elif user_type == "provider":
@@ -60,10 +59,9 @@ async def signup(userdata, password, user_type: str):
 
                 collection.document(user.uid).set(userdata)
                 return JsonResponse({
-                    "userId": user.uid,
-                    "role": "provider"
+                    "status": True
                 })
             else:
                 return JsonResponse({
-                    "userId": None
+                    "status": False
                 })

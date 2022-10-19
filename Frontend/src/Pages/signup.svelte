@@ -45,7 +45,7 @@
         .then(function (response) {
           console.log(response);
 
-          if (response.data.userID == null) {
+          if (response.data.status == false) {
             alert("অ্যাকাউন্ট তৈরি করাই আছে। লগ ইন করুন।");
           } else {
             router.redirect("/");

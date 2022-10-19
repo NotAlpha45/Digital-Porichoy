@@ -1,45 +1,46 @@
 <script>
-  let isLoggedIn= () =>{
-    return false;
-  }
+  import { logOut, isLoggedIn, userTokenStore } from "../utility_functions";
+  import { onMount } from "svelte";
+
+  let tokenSubscriber;
+
+  userTokenStore.subscribe((token) => {
+    tokenSubscriber = token;
+  });
 </script>
 
+<header id="header" class="header d-flex align-items-center">
+  <div
+    class="container-fluid container-xl d-flex align-items-center justify-content-between"
+  >
+    <a href="/" class="logo d-flex align-items-center">
+      <h1><span>Digital </span>পরিচয়</h1>
+    </a>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
 
+        <li><a href="#services">Services</a></li>
 
-  <header id="header" class="header d-flex align-items-center">
+        <li><a href="/store">My Store</a></li>
 
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-      <a href="/" class="logo d-flex align-items-center">
-
-        <h1> <span>Digital </span>পরিচয়</h1>
-      </a>
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a href="/">Home</a></li>
-
-          <li><a href="#services">Services</a></li>
-
-          <li><a href="/store">My Store</a></li>
-
-          {#if isLoggedIn()}
+        {#if tokenSubscriber}
           <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/login">Logout</a></li>
-          {:else}
+          <li><a href="/logout">Logout</a></li>
+        {:else}
           <li><a href="/login">Login</a></li>
           <li><a href="/signup">Sign Up</a></li>
-          {/if}
+        {/if}
+      </ul>
+    </nav>
+    <!-- .navbar -->
 
-        </ul>
-      </nav><!-- .navbar -->
+    <i class="mobile-nav-toggle mobile-nav-show bi bi-list" />
+    <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x" />
+  </div>
+</header>
+<!-- End Header -->
 
-      <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
-      <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
-
-    </div>
-  </header><!-- End Header -->
-  <!-- End Header -->
-
-
+<!-- End Header -->
 <style>
-
 </style>
