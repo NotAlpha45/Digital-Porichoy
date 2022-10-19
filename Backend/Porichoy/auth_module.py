@@ -16,13 +16,20 @@ async def mock_token_verifier(request: HttpRequest):
     print("here is my obj", verified_obj["uid"])
     return HttpResponse("OK")
 
-
 async def get_user_info(request: HttpRequest):
     request_body = json.loads(request.body.decode("utf-8"))
-    print(request_body)
     verified_obj = auth.verify_id_token(request_body["token"])
-    print("here is my obj", verified_obj["uid"])
-    return HttpResponse("OK")
+    current_user_id = verified_obj["uid"]
+    # print("here is my obj", verified_obj["uid"])
+
+    # Search in both customer and provider collection, as the user may be anyone
+    current_customer_data = customers_collection.document(current_user_id).get()
+    current_provider_data = providers_collection.document(current_user_id).get()
+
+    if current_customer_data.exists:
+        return JsonResponse(current_customer_data.to_dict())
+    elif current_provider_data.exists:
+        return JsonResponse(current_provider_data.to_dict())
 
 
 async def customer_login(request: HttpRequest):

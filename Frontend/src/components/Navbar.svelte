@@ -1,6 +1,5 @@
 <script>
   import { userTokenStore } from "../utility_functions";
-  console.log($userTokenStore);
 </script>
 
 <header id="header" class="header d-flex align-items-center">

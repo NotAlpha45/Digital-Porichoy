@@ -3,8 +3,6 @@
   import { auth, signInWithCustomToken } from "../firebase_conf";
   import { userTokenStore } from "../utility_functions";
 
-  console.log($userTokenStore);
-
   // if (auth.currentUser == null) {
   //   if ($userTokenStore) {
   //     signInWithCustomToken(auth, $userTokenStore)
@@ -16,18 +14,25 @@
   //       });
   //   }
   // }
-  // let request_body = {
-  //   token: $userTokenStore,
-  // };
+  let request_body = {
+    token: $userTokenStore,
+  };
 
-  // axios
-  //   .post("http://127.0.0.1:8000/auth/get_user", request_body)
-  //   .then((response) => {
-  //     console.log(response);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+  let name, username, phone, role, userData;
+
+  axios
+    .post("http://127.0.0.1:8000/auth/get_user", request_body)
+    .then((response) => {
+      userData = response.data;
+      name = userData.names.name;
+      username = userData.names.username;
+      phone = userData.credentials.phone;
+      role = userData.names.role;
+      // console.log(userData);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 </script>
 
 <section id="contact" class="contact">
@@ -55,10 +60,21 @@
         <div class="row">
           <div class="col-lg-6">
             <ul>
-              <li><i class="bi bi-rounded-right" /> <strong>Name:</strong></li>
-              <li><i class="bi bi-rounded-right" /> <strong>Phone:</strong></li>
               <li>
-                <i class="bi bi-rounded-right" /> <strong>Profession:</strong>
+                <i class="bi bi-rounded-right" />
+                <strong>Name: </strong>{name}
+              </li>
+              <li>
+                <i class="bi bi-rounded-right" />
+                <strong>Username: </strong>{username}
+              </li>
+              <li>
+                <i class="bi bi-rounded-right" />
+                <strong>Phone: </strong>{phone}
+              </li>
+              <li>
+                <i class="bi bi-rounded-right" />
+                <strong>Role: </strong>{role}
               </li>
             </ul>
             <a href="edit_profile.php" class="btn-about">Edit Profile</a>
