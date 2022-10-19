@@ -10,12 +10,6 @@ from .firebase_init import *
 import hashlib
 
 
-async def mock_token_verifier(request: HttpRequest):
-    request_body = json.loads(request.body.decode("utf-8"))
-    verified_obj = auth.verify_id_token(request_body["token"])
-    print("here is my obj", verified_obj["uid"])
-    return HttpResponse("OK")
-
 async def get_user_info(request: HttpRequest):
     request_body = json.loads(request.body.decode("utf-8"))
     verified_obj = auth.verify_id_token(request_body["token"])
@@ -23,8 +17,10 @@ async def get_user_info(request: HttpRequest):
     # print("here is my obj", verified_obj["uid"])
 
     # Search in both customer and provider collection, as the user may be anyone
-    current_customer_data = customers_collection.document(current_user_id).get()
-    current_provider_data = providers_collection.document(current_user_id).get()
+    current_customer_data = customers_collection.document(
+        current_user_id).get()
+    current_provider_data = providers_collection.document(
+        current_user_id).get()
 
     if current_customer_data.exists:
         return JsonResponse(current_customer_data.to_dict())
