@@ -73,9 +73,7 @@
           <div class="form-group mt-3">
             <input
               type="text"
-              name="name"
               class="form-control"
-              id="name"
               placeholder="নিজের নাম লিখুন"
               required
               bind:value={name}
@@ -84,9 +82,8 @@
           <div class="form-group mt-3">
             <input
               type="text"
-              name="username"
               class="form-control"
-              id="username"
+              
               placeholder="নিজের ইউজার নাম লিখুন"
               required
               bind:value={username}
@@ -96,8 +93,7 @@
             <input
               type="text"
               class="form-control"
-              name="phone"
-              id="phone"
+              
               placeholder="নিজের ফোন নাম্বার লিখুন (যেমন: 01778654707)"
               required
               bind:value={phone}

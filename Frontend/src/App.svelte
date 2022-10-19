@@ -9,13 +9,14 @@
   import Map from "./Pages/map.svelte";
   import router from "page";
   import StoreRegistration from "./Pages/store-registration.svelte";
+  import Services from "./Pages/services.svelte";
 
   let page;
 
   router("/customer-signup", () => (page = CustomerSignup));
   router("/customer-login", () => (page = CustomerLogin));
   router("/map", () => (page = Map));
-
+  router("/services", () => (page = Services));
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
   router("/signup", () => (page = Signup));

@@ -52,16 +52,8 @@
       <div class="col-4"></div>
 
         <div class="col-4 align-self-center">
-          <form action="forms/contact.php" method="post" class="php-email-form">
-            <div class="form-group mt-3">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-              </div>
-              <div class="form-group mt-3">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-              </div>
-
-      <div class="col-4 align-self-center">
-        <form role="form" class="php-email-form">
+          
+        <form  class="php-email-form">
           <div class="form-group mt-3">
             <input
               type="text"

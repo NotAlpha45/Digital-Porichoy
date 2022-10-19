@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import { checkPhoneNumber, checkPassword } from "../utility_functions";
   import Geolocation from "svelte-geolocation";
-  let mycoords1, coords;
+  let mycoords = [], coords = [];
   let userID = "hovAKK91OuNE2qWWQIkkhjIly222",
     name,
     username,
@@ -15,12 +15,11 @@
     phone = "",
     formatted_phone;
 
-  onMount(() => {
-    coords = mycoords1;
-    console.log(coords);
-  });
+
+
   async function formSubmit() {
     formatted_phone = "+88" + phone;
+    mycoords = coords;
 
     let request_body = {
       credentials: {
@@ -32,8 +31,8 @@
       },
       location: {
         district: district,
-        long: coords[0],
-        lat: coords[1],
+        long: mycoords[0],
+        lat: mycoords[1],
       },
       offerings: [],
       ratings: [],
@@ -57,58 +56,60 @@
         console.log(err);
       });
   }
-  onMount(() => {
-  mapboxgl.accessToken =
-      "pk.eyJ1IjoibWFoZWVubWFzaHJ1ciIsImEiOiJjbDk5cnBxdW4xM2g3M3hsbWtwcnN6cHB2In0.38PIrzXSblk36C64gerW4w";
-    const map = new mapboxgl.Map({
-      container: "map-relative",
-      style: "mapbox://styles/mapbox/outdoors-v11",
-      center: [90.38, 23.94], // starting position
-      zoom: 15, // starting zoom
-    });
+//   onMount(() => {
+//   mapboxgl.accessToken =
+//       "pk.eyJ1IjoibWFoZWVubWFzaHJ1ciIsImEiOiJjbDk5cnBxdW4xM2g3M3hsbWtwcnN6cHB2In0.38PIrzXSblk36C64gerW4w";
+//     const map = new mapboxgl.Map({
+//       container: "map",
+//       style: "mapbox://styles/mapbox/outdoors-v11",
+//       center: [90.38, 23.94], // starting position
+//       zoom: 15, // starting zoom
+//     });
 
-    // // Fullscreen and navigation control
-    map.addControl(new mapboxgl.NavigationControl());
-    map.addControl(new mapboxgl.FullscreenControl());
+//     // // Fullscreen and navigation control
+//     map.addControl(new mapboxgl.NavigationControl());
+//     map.addControl(new mapboxgl.FullscreenControl());
 
-    let geoLocator = new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true,
-      },
-      // When active the map will receive updates to the device's location as it changes.
-      trackUserLocation: true,
-      // Draw an arrow next to the location dot to indicate which direction the device is heading.
-      showUserHeading: true,
-    });
+//     let geoLocator = new mapboxgl.GeolocateControl({
+//       positionOptions: {
+//         enableHighAccuracy: true,
+//       },
+//       // When active the map will receive updates to the device's location as it changes.
+//       trackUserLocation: true,
+//       // Draw an arrow next to the location dot to indicate which direction the device is heading.
+//       showUserHeading: true,
+//     });
 
-    // Add geolocate control to the map.
-    map.addControl(geoLocator);
+//     // Add geolocate control to the map.
+//     map.addControl(geoLocator);
 
-    geoLocator.on("geolocate", function (location) {
-      user_longitude = location.coords.longitude;
-      user_latitude = location.coords.latitude;
+//     geoLocator.on("geolocate", function (location) {
+//       user_longitude = location.coords.longitude;
+//       user_latitude = location.coords.latitude;
 
-      console.log(user_longitude, user_latitude);
-    });
+//       console.log(user_longitude, user_latitude);
+//     });
 
 
-    // Add mouse move control
-    // map.on("click", (e) => {
-    //   coords = {
-    //     longitude: e.lngLat.wrap().lng,
-    //     latitude: e.lngLat.wrap().lat,
-    //   };
-    //   console.log(coords);
-    // });
-  })
+//     // Add mouse move control
+//     // map.on("click", (e) => {
+//     //   coords = {
+//     //     longitude: e.lngLat.wrap().lng,
+//     //     latitude: e.lngLat.wrap().lat,
+//     //   };
+//     //   console.log(coords);
+//     // });
+//   })
 
 </script>
 
 <!-- <Geolocation getPosition bind:mycoords /> -->
-<Geolocation getPosition let:mycoords>
-  {(mycoords1 = mycoords)}
-</Geolocation>
-<div id="map"></div>
+
+<Geolocation getPosition bind:coords>
+    {console.log(coords)}
+    
+    
+  </Geolocation>
 <section id="contact" class="contact">
   <div class="container" data-aos="fade-up">
     <div class="section-header">
