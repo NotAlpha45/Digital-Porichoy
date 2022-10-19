@@ -61,8 +61,8 @@
 <section id="contact" class="contact">
   <div class="container" data-aos="fade-up">
     <div class="section-header">
-      <h2>Sign Up</h2>
-      <p>Get onboard and let out economy grow.</p>
+      <h2>Sign Up - সাইন আপ</h2>
+      <p>নিজের ব্যবসার পরিচিতি তৈরি করুন এক মুহূর্তেই!</p>
     </div>
 
     <div class="row gx-lg-0 gy-4">
@@ -133,7 +133,7 @@
             <button
               type="button"
               class="btn btn-success rounded-pill"
-              on:click={formSubmit}>Sign up (সাইন আপ করুন)</button
+              on:click={formSubmit}>Sign up - সাইন আপ করুন</button
             >
           </div>
         </form>

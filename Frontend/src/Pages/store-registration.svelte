@@ -127,7 +127,7 @@
               name="name"
               class="form-control"
               id="name"
-              placeholder="Store er নাম লিখুন"
+              placeholder="স্টোরের নাম লিখুন"
               required
               bind:value={name}
             />
@@ -138,7 +138,7 @@
               name="username"
               class="form-control"
               id="username"
-              placeholder="category select korun"
+              placeholder="স্টোরের ধরণ লিখুন"
               required
               bind:value={category}
             />
@@ -149,7 +149,7 @@
               class="form-control"
               name="phone"
               id="phone"
-              placeholder="store er ফোন নাম্বার লিখুন (যেমন: 01778654707)"
+              placeholder="স্টোরের ফোন নাম্বার লিখুন (যেমন: 01778654707)"
               required
               bind:value={phone}
             />
@@ -160,7 +160,7 @@
               class="form-control"
               name="password"
               id="text"
-              placeholder="district select korun"
+              placeholder="জেলার নাম লিখুন"
               required
               bind:value={district}
             />
@@ -171,19 +171,11 @@
               class="form-control"
               name="confirm-password"
               id="username"
-              placeholder="trade licence likhun"
+              placeholder="ট্রেড লাইসেন্স নাম্বার লিখুন"
               required
               bind:value={trade_license}
             />
           </div>
-          <!-- <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="7" placeholder="Message" required></textarea>
-              </div> -->
-          <!-- <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div> -->
           <div class="text-center form-group mt-3">
             <button
               type="button"
