@@ -13,7 +13,15 @@ import hashlib
 async def mock_token_verifier(request: HttpRequest):
     request_body = json.loads(request.body.decode("utf-8"))
     verified_obj = auth.verify_id_token(request_body["token"])
-    print("here is my obj",verified_obj["uid"])
+    print("here is my obj", verified_obj["uid"])
+    return HttpResponse("OK")
+
+
+async def get_user_info(request: HttpRequest):
+    request_body = json.loads(request.body.decode("utf-8"))
+    print(request_body)
+    verified_obj = auth.verify_id_token(request_body["token"])
+    print("here is my obj", verified_obj["uid"])
     return HttpResponse("OK")
 
 

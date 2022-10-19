@@ -36,13 +36,11 @@ const checkPhoneNumber = function (phoneNumber) {
 };
 
 const logOut = function () {
-  if (auth.currentUser != null) {
-    auth.signOut().then(() => {
-      console.log("Logged Out");
-    });
-  }
   userTokenStore.set(null);
-  localStorage.removeItem("userToken");
+  localStorage.setItem("userToken", null);
+  auth.signOut().then(() => {
+    console.log("Logged out");
+  });
 };
 
 const isLoggedIn = () => {

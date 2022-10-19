@@ -10,5 +10,5 @@ urlpatterns = [
     path('add_offering', service.add_offering),
     path('remove_offering', service.remove_offering),
     path('search_service', service.search_service),
-    path('verify_token', auth_module.mock_token_verifier)
+    path('get_user', auth_module.get_user_info)
 ]

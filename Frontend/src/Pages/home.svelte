@@ -2,6 +2,7 @@
   import { auth } from "../firebase_conf";
   import axios from "axios";
   import { userTokenStore } from "../utility_functions";
+
 </script>
 
 <!-- ======= Hero Section ======= -->
