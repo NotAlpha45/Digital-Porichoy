@@ -50,7 +50,7 @@ let shops = [];
             <div class="portfolio-wrap">
               <a href="assets/img/portfolio/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt=""></a>
               <div class="portfolio-info">
-                <h4><a href="portfolio-details.html" title="More Details">{shop.credentials.name}</a></h4>
+                <h4><a href="/store" title="More Details">{shop.credentials.name}</a></h4>
                 <p>Lorem ipsum, dolor sit amet consectetur</p>
               </div>
             </div>
