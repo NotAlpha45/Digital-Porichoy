@@ -63,8 +63,13 @@
     <div class="row gx-lg-0 gy-4">
       <div class="col-4" />
 
-      <div class="col-4 align-self-center">
-        <form role="form" class="php-email-form">
+      <div class="row gx-lg-0 gy-4">
+
+      <div class="col-4"></div>
+
+        <div class="col-4 align-self-center">
+          
+        <form  class="php-email-form">
           <div class="form-group mt-3">
             <input
               type="text"
@@ -87,7 +92,8 @@
               bind:value={password}
             />
           </div>
-          <!--             
+          <!--
+>>>>>>> main
             <div class="my-3">
               <div class="loading">Loading</div>
               <div class="error-message"></div>

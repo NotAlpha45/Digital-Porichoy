@@ -1,13 +1,15 @@
 <script>
   import Navbar from "./components/Navbar.svelte";
-  import CustomerSignup from "./Pages/customer-signup.svelte";
-  import CustomerLogin from "./Pages/customer-login.svelte";
+  // import CustomerSignup from "./Pages/customer-signup.svelte";
+  // import CustomerLogin from "./Pages/customer-login.svelte";
   import Home from "./Pages/home.svelte";
   import Store from "./Pages/store.svelte";
   import Signup from "./Pages/signup.svelte";
   import Login from "./Pages/login.svelte";
   import Map from "./Pages/map.svelte";
   import router from "page";
+  import StoreRegistration from "./Pages/store-registration.svelte";
+  import Services from "./Pages/services.svelte";
   import { auth } from "./firebase_conf";
   import Logout from "./Pages/logout.svelte";
 
@@ -16,15 +18,18 @@
   let page;
 
   router("/customer-signup", () => (page = CustomerSignup));
+  router("/customer-login", () => (page = CustomerLogin));
   router("/map", () => (page = Map));
+  router("/services", () => (page = Services));
   router("/logout", () => (page = Logout));
-  // router("/map", () => (page = FalseMap));
-
   router("/", () => (page = Home));
   router("/login", () => (page = Login));
   router("/signup", () => (page = Signup));
+  router("/store-registration", () => (page = StoreRegistration));
   router("/store", () => (page = Store));
   router.start();
+
+  console.log(page);
 </script>
 
 <main>
