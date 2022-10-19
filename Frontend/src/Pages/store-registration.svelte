@@ -1,8 +1,7 @@
 <script>
   import axios from "axios";
   import router from "page";
-  import { onMount } from "svelte";
-  import { checkPhoneNumber, checkPassword } from "../utility_functions";
+  import {userTokenStore } from "../utility_functions";
   import Geolocation from "svelte-geolocation";
   let mycoords = [], coords = [];
   let userID = "hovAKK91OuNE2qWWQIkkhjIly222",
