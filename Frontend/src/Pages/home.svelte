@@ -13,8 +13,7 @@
       >
         <h2>Welcome to <br /><span>Digital পরিচয়</span></h2>
         <p>
-          Sed autem laudantium dolores. Voluptatem itaque ea consequatur
-          eveniet. Eum quas beatae cumque eum quaerat.
+          A platform for small business-owners to create an online signature and for clients to connect with them.
         </p>
         <div class="d-flex justify-content-center justify-content-lg-start">
           <a href="#about" class="btn-get-started">Get Started</a>
@@ -44,7 +43,11 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-easel" /></div>
             <h4 class="title">
-              <a href="" class="stretched-link">Lorem Ipsum</a>
+              {#if $userTokenStore}
+              <a href="\store-registration" class="stretched-link">Create Store</a>
+              {:else}
+              <a href="\login" class="stretched-link">Create Store</a>
+              {/if}
             </h4>
           </div>
         </div>
@@ -54,7 +57,7 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-gem" /></div>
             <h4 class="title">
-              <a href="" class="stretched-link">Sed ut perspiciatis</a>
+              <a href="\services" class="stretched-link">Services</a>
             </h4>
           </div>
         </div>
@@ -64,7 +67,7 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-geo-alt" /></div>
             <h4 class="title">
-              <a href="" class="stretched-link">Magni Dolores</a>
+              <a href="\map" class="stretched-link">Services Near You</a>
             </h4>
           </div>
         </div>
@@ -74,7 +77,7 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-command" /></div>
             <h4 class="title">
-              <a href="" class="stretched-link">Nemo Enim</a>
+              <a href="\signup" class="stretched-link">Connect</a>
             </h4>
           </div>
         </div>

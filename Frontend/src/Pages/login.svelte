@@ -99,11 +99,13 @@
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
             </div> -->
+          
           <div class="text-center form-group mt-3">
+            <p>Don't have an account? <a href="\signup"> Sign Up</a></p>
             <button
               type="button"
               class="btn btn-success rounded-pill"
-              on:click={formSubmit}>Login (লগ ইন করুন)</button
+              on:click={formSubmit}>Login - লগ ইন করুন</button
             >
           </div>
         </form>
