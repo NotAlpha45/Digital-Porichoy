@@ -2,16 +2,6 @@
   import { auth } from "../firebase_conf";
   import axios from "axios";
   import { userTokenStore } from "../utility_functions";
-
-  let tokenSubscriber;
-  userTokenStore.subscribe((token) => {
-    tokenSubscriber = token;
-  });
-
-  if (tokenSubscriber) {
-    console.log("Not empty!");
-  }
-
 </script>
 
 <!-- ======= Hero Section ======= -->

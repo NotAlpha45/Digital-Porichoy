@@ -1,7 +1,5 @@
 import { writable } from "svelte/store";
 import { auth } from "./firebase_conf";
-import router from "page";
-// import { writable } from "svelte-local-storage-store";
 
 let initialToken = localStorage.getItem("userToken");
 let defaultToken;
@@ -36,10 +34,6 @@ const checkPhoneNumber = function (phoneNumber) {
   }
   return true;
 };
-
-// userTokenStore.subscribe((token) => {
-//   localStorage.content = token;
-// });
 
 const logOut = function () {
   if (auth.currentUser != null) {

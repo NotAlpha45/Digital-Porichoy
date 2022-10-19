@@ -13,16 +13,8 @@
 
   import { isLoggedIn, userTokenStore } from "./utility_functions";
 
-  let page, tokenSubscriber;
+  let page;
 
-  userTokenStore.subscribe((token) => {
-    tokenSubscriber = token;
-  });
-
-  console.log(tokenSubscriber);
-
-  let currentUser = null;
-  $: currentUser = auth.currentUser;
   router("/customer-signup", () => (page = CustomerSignup));
   router("/map", () => (page = Map));
   router("/logout", () => (page = Logout));
@@ -38,11 +30,6 @@
 <main>
   <Navbar />
   <svelte:component this={page} />
-  <!-- <h1>Hello {name}!</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
-  </p> -->
 </main>
 
 <style>

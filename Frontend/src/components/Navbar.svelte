@@ -1,12 +1,6 @@
 <script>
-  import { logOut, isLoggedIn, userTokenStore } from "../utility_functions";
-  import { onMount } from "svelte";
+  import {userTokenStore } from "../utility_functions";
 
-  let tokenSubscriber;
-
-  userTokenStore.subscribe((token) => {
-    tokenSubscriber = token;
-  });
 </script>
 
 <header id="header" class="header d-flex align-items-center">
