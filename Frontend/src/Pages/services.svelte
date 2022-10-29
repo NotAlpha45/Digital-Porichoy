@@ -1,7 +1,6 @@
 <script>
-import axios from "axios";
-
-let shops = [];
+  import axios from "axios";
+  let shops = [];
   function mockGetStore() {
     axios
       .get("http://127.0.0.1:8000/services/search_service", {
@@ -20,43 +19,61 @@ let shops = [];
   }
 
   mockGetStore();
-
 </script>
 
 <section id="portfolio" class="portfolio sections-bg">
-    <div class="container" data-aos="fade-up">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <h2>Stores and Services</h2>
+    </div>
 
-      <div class="section-header">
-        <h2>Stores and Services</h2>
-      </div>
-
-      <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order" data-aos="fade-up" data-aos-delay="100">
-
-        <div>
-          <ul class="portfolio-flters">
-            <!-- <li data-filter="*" class="filter-active">All</li>
+    <div
+      class="portfolio-isotope"
+      data-portfolio-filter="*"
+      data-portfolio-layout="masonry"
+      data-portfolio-sort="original-order"
+      data-aos="fade-up"
+      data-aos-delay="100"
+    >
+      <div>
+        <ul class="portfolio-flters">
+          <!-- <li data-filter="*" class="filter-active">All</li>
             <li data-filter=".filter-app">App</li>
             <li data-filter=".filter-product">Product</li>
             <li data-filter=".filter-branding">Branding</li>
             <li data-filter=".filter-books">Books</li> -->
-          </ul><!-- End Portfolio Filters -->
-        </div>
+        </ul>
+        <!-- End Portfolio Filters -->
+      </div>
 
-        <div class="row gy-4 portfolio-container">
-{#each shops as shop}
-    
-
+      <div class="row gy-4 portfolio-container">
+        {#each shops as shop}
           <div class="col-xl-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-wrap">
-              <a href="assets/img/portfolio/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt=""></a>
+              <a
+                href="assets/img/portfolio/app-1.jpg"
+                data-gallery="portfolio-gallery-app"
+                class="glightbox"
+                ><img
+                  src="assets/img/portfolio/app-1.jpg"
+                  class="img-fluid"
+                  alt=""
+                  href="/store"
+                /></a
+              >
               <div class="portfolio-info">
-                <h4><a href="/store" title="More Details">{shop.credentials.name}</a></h4>
+                <h4>
+                  <a href="/store" title="More Details"
+                    >{shop.credentials.name}</a
+                  >
+                </h4>
                 <p>Lorem ipsum, dolor sit amet consectetur</p>
               </div>
             </div>
-          </div><!-- End Portfolio Item -->
-{/each}
-          <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-product">
+          </div>
+          <!-- End Portfolio Item -->
+        {/each}
+        <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-product">
             <div class="portfolio-wrap">
               <a href="assets/img/portfolio/product-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="assets/img/portfolio/product-1.jpg" class="img-fluid" alt=""></a>
               <div class="portfolio-info">
@@ -66,7 +83,7 @@ let shops = [];
             </div>
           </div><!-- End Portfolio Item -->
 
-          <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-branding">
+        <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-branding">
             <div class="portfolio-wrap">
               <a href="assets/img/portfolio/branding-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="assets/img/portfolio/branding-1.jpg" class="img-fluid" alt=""></a>
               <div class="portfolio-info">
@@ -164,16 +181,13 @@ let shops = [];
                 <p>Lorem ipsum, dolor sit amet consectetur</p>
               </div>
             </div>
-          </div>End Portfolio Item --> 
-
-        </div><!-- End Portfolio Container -->
-
+          </div>End Portfolio Item -->
       </div>
-
+      <!-- End Portfolio Container -->
     </div>
-  </section><!-- End Portfolio Section -->
+  </div>
+</section>
 
-
+<!-- End Portfolio Section -->
 <style>
-    
 </style>
