@@ -33,3 +33,6 @@ providers_collection = firestore_database.collection(
 
 services_collection = firestore_database.collection(
     configs["service_collection"])
+
+# auth_obj =
+# id_token_verifier = auth.verify_id_token

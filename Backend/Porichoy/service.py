@@ -106,7 +106,7 @@ async def search_service(request: HttpRequest):
 
     # Only taking the instances who's distance is less than or equal to the specified distance
     result = [x for x in result if (((x["location"]["long"] - customer_long)**2 +
-                                     (x["location"]["lat"] - customer_lat)**2)**0.5) <= distance]
+                                     (x["location"]["lat"] - customer_lat)**2)**0.5)*111 <= distance]
 
     result.sort(key=lambda x: (
         (((x["location"]["long"] - customer_long)**2 +
