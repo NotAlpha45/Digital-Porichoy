@@ -4,6 +4,7 @@
   import { userTokenStore } from "../utility_functions";
   import Geolocation from "svelte-geolocation";
   import { auth } from "../firebase_conf";
+
   let mycoords = [],
     coords = [];
   let userID,

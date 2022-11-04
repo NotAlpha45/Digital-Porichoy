@@ -8,6 +8,7 @@ if (initialToken) {
   defaultToken = initialToken;
 }
 
+// Stores the currently selected service id, useful for navigation
 const serviceIdStore = writable("null");
 
 const userTokenStore = writable(initialToken);
@@ -54,4 +55,11 @@ const isLoggedIn = () => {
   return flag;
 };
 
-export { checkPassword, checkPhoneNumber, logOut, isLoggedIn, userTokenStore };
+export {
+  checkPassword,
+  checkPhoneNumber,
+  logOut,
+  isLoggedIn,
+  userTokenStore,
+  serviceIdStore,
+};

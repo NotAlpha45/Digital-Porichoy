@@ -3,9 +3,11 @@
   import Geolocation from "svelte-geolocation";
   import { onMount } from "svelte";
   import { bind } from "svelte/internal";
+  import { serviceIdStore } from "../utility_functions";
 
   let shops = [],
     shop,
+    selectedShop,
     shopName,
     category,
     description,
@@ -13,6 +15,13 @@
     openingTime,
     closingTime,
     closingDay;
+
+  serviceIdStore.subscribe((value) => {
+    selectedShop = value;
+  });
+
+  console.log(selectedShop);
+
   function mockGetStore() {
     axios
       .get("http://127.0.0.1:8000/services/search_service", {

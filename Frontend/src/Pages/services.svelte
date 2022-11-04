@@ -1,6 +1,10 @@
 <script>
   import axios from "axios";
   import router from "page";
+  import { serviceIdStore } from "../utility_functions";
+
+  let category = null,
+    shopIndex = null;
 
   function getStore() {
     router.redirect("/store");
@@ -12,7 +16,7 @@
       .get("http://127.0.0.1:8000/services/search_service", {
         params: {
           district: "gazipur",
-          category: "mechanic",
+          category: category,
           long: 90.38090089366824,
           lat: 23.948577732828085,
           distance: 10,
@@ -21,11 +25,18 @@
       })
       .then(function (response) {
         shops = response.data.result;
-        console.log(shops);
+        // console.log(shops);
       });
   }
 
-  mockGetStore();
+  // This section activates whenever an element (category is changed)
+  $: {
+    if (category !== null) {
+      console.log(shopIndex);
+      console.log(category);
+      mockGetStore();
+    }
+  }
 </script>
 
 <section id="portfolio" class="portfolio sections-bg">
@@ -34,13 +45,31 @@
       <h2>Stores and Services</h2>
     </div>
 
+    <div class="row gx-lg-0 gy-4 align-items-center">
+      <div class="col-4">
+        <div class="form-group mt-3">
+          ধরণ পছন্দ করুন
+          <select
+            class="form-select"
+            aria-label="select-store"
+            bind:value={category}
+            placeholder="Select"
+          >
+            <option value="mechanic">Mechanic-মেকানিক</option>
+            <option value="business">Business-ব্যবসা</option>
+            <option value="labour">Labour-শ্রমিক</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <div
       class="portfolio-isotope"
       data-portfolio-filter="*"
       data-portfolio-layout="masonry"
       data-portfolio-sort="original-order"
       data-aos="fade-up"
-      data-aos-delay="100"
+      data-aos-delay="10"
     >
       <div>
         <ul class="portfolio-flters">
@@ -73,13 +102,19 @@
                   <button
                     type="button"
                     class="btn btn-success rounded-pill"
-                    on:click={getStore}>{shop.credentials.name}</button
+                    on:click={getStore}
+                    on:click={() => {
+                      shopIndex = shop.credentials.provider_id;
+                      serviceIdStore.set(shopIndex);
+                    }}
                   >
+                    {shop.credentials.name}
+                  </button>
                   <!-- <a href="/store" title="More Details"
                     >{shop.credentials.name}</a
                   > -->
                 </h4>
-                <p>Lorem ipsum, dolor sit amet consectetur</p>
+                <p>{shop.credentials.store_description}</p>
               </div>
             </div>
           </div>
