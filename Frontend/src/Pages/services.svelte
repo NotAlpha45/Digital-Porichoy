@@ -43,10 +43,13 @@
       <h2>Stores and Services</h2>
     </div>
 
-    <div class="row gx-lg-0 gy-4 align-items-center">
+    <div class="row gx-lg-0 gy-4 justify-content-center">
       <div class="col-4">
+        <div class="form-group mt-3 align-items-center">
+          <h5>ধরণ পছন্দ করুন</h5>
+        </div>
+
         <div class="form-group mt-3">
-          ধরণ পছন্দ করুন
           <select
             class="form-select"
             aria-label="select-store"
