@@ -55,9 +55,12 @@
       .then(function (response) {
         console.log(response);
 
-        if (response.data.userID == null) {
+        if (response.data.provider_id == "exists") {
           alert("এই স্টোর তৈরি করাই আছে।");
+        } else if (response.data.provider_id == null) {
+          alert("আপনি কোনো সেবাদাতা নন!");
         } else {
+          console.log(response.data.provider_id);
           router.redirect("/store");
         }
       })
