@@ -3,6 +3,7 @@
 services handles all the requests that are related to services. 
 """
 import json
+from unittest import result
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, Http404, JsonResponse
 from .firebase_init import *
@@ -82,6 +83,19 @@ async def remove_offering(request: HttpRequest):
         return HttpResponse('''
         <h1>The service does not exist!</h1>
         ''')
+
+
+async def get_service_by_id(request: HttpRequest):
+    request_params = request.GET
+    service_id = request_params["service_id"]
+
+    result = services_collection.document(service_id).get().to_dict()
+
+    # print(result)
+
+    return JsonResponse(
+        result
+    )
 
 
 async def search_service(request: HttpRequest):

@@ -32,8 +32,6 @@
   // This section activates whenever an element (category is changed)
   $: {
     if (category !== null) {
-      console.log(shopIndex);
-      console.log(category);
       mockGetStore();
     }
   }

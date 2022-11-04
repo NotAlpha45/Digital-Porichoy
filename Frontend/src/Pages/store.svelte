@@ -4,6 +4,7 @@
   import { onMount } from "svelte";
   import { bind } from "svelte/internal";
   import { serviceIdStore } from "../utility_functions";
+  import Map from "./map.svelte";
 
   let shops = [],
     shop,
@@ -24,18 +25,14 @@
 
   function mockGetStore() {
     axios
-      .get("http://127.0.0.1:8000/services/search_service", {
+      .get("http://127.0.0.1:8000/services/get_service", {
         params: {
-          district: "gazipur",
-          category: "mechanic",
-          long: 90.38090089366824,
-          lat: 23.948577732828085,
-          distance: 10,
-          search_limit: 50,
+          service_id: selectedShop,
         },
       })
       .then(function (response) {
-        shops = response.data.result;
+        console.log(response.data);
+        shops.push(response.data);
         shop = shops[0];
         shopName = shop.credentials.name;
         category = shop.credentials.category;
@@ -47,12 +44,15 @@
         console.log(shopName);
       });
   }
-  mockGetStore();
+  $: {
+    mockGetStore();
+  }
+  // mockGetStore();
 </script>
 
-<Geolocation getPosition let:coords>
+<!-- <Geolocation getPosition let:coords>
   {console.log(coords)}
-</Geolocation>
+</Geolocation> -->
 <main id="main">
   <section id="blog" class="blog">
     <div class="container" data-aos="fade">
@@ -75,6 +75,9 @@
             </div>
             <!-- End meta top -->
           </article>
+          <!-- <div>
+            <Map />
+          </div> -->
         </div>
 
         <div class="col-lg-4">
