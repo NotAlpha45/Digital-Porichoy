@@ -10,19 +10,20 @@
     name,
     username,
     trade_license,
-    category,
+    category = "",
     district,
     email = "",
     phone = "",
     formatted_phone,
     openingTime,
     closingTime,
-    ownerName;
+    ownerName,
+    description,
+    closingDay;
 
   async function formSubmit() {
     formatted_phone = "+88" + phone;
     mycoords = coords;
-    console.log(typeof openingTime);
 
     ownerName = auth.currentUser.displayName;
     userID = auth.currentUser.uid;
@@ -37,6 +38,8 @@
         owner: ownerName,
         opening_time: openingTime,
         closing_time: closingTime,
+        closing_day: closingDay,
+        store_description: description,
       },
       location: {
         district: district,
@@ -140,19 +143,21 @@
             />
           </div>
           <div class="form-group mt-3">
-            <input
-              type="text"
-              name="username"
-              class="form-control"
-              id="username"
-              placeholder="স্টোরের ধরণ লিখুন"
-              required
+            ধরণ পছন্দ করুন
+            <select
+              class="form-select"
+              aria-label="select-store"
               bind:value={category}
-            />
+              placeholder="Select"
+            >
+              <option value="mechanic">Mechanic-মেকানিক</option>
+              <option value="business">Business-ব্যবসা</option>
+              <option value="labour">Labour-শ্রমিক</option>
+            </select>
           </div>
 
           <div class="form-group mt-3">
-            খোলার সময় ও বন্ধ করার সময় সিলেক্ট করুন
+            খোলার সময়, বন্ধ করার সময় এবং ছুটির দিন সিলেক্ট করুন
             <input
               type="time"
               name="openingTime"
@@ -171,6 +176,20 @@
               required
               bind:value={closingTime}
             />
+            <select
+              class="form-select"
+              aria-label="select-holiday"
+              bind:value={closingDay}
+              placeholder="Select"
+            >
+              <option value="Saturday-শনিবার">Saturday-শনিবার</option>
+              <option value="Sunday-রবিবার">Sunday-রবিবার</option>
+              <option value="Monday-সোমবার">Monday-সোমবার</option>
+              <option value="Tuesday-মঙ্গলবার">Tuesday-মঙ্গলবার</option>
+              <option value="Wednesday-বুধবার">Wednesday-বুধবার</option>
+              <option value="Thursday-বৃহষ্পতিবার">Thursday-বৃহষ্পতিবার</option>
+              <option value="Friday-শুক্রবার">Friday-শুক্রবার</option>
+            </select>
           </div>
 
           <div class="form-group mt-3">
@@ -199,13 +218,25 @@
             <input
               type="text"
               class="form-control"
-              name="confirm-password"
-              id="username"
+              name="trade-license"
+              id="trade-license"
               placeholder="ট্রেড লাইসেন্স নাম্বার লিখুন"
               required
               bind:value={trade_license}
             />
           </div>
+
+          <div class="form-group mt-3">
+            <textarea
+              class="form-control"
+              name="description"
+              id="desciption"
+              placeholder="নিজের সেবা সম্পর্কে লিখুন"
+              required
+              bind:value={description}
+            />
+          </div>
+
           <div class="text-center form-group mt-3">
             <button
               type="button"

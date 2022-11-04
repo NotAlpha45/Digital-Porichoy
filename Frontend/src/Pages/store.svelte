@@ -4,7 +4,15 @@
   import { onMount } from "svelte";
   import { bind } from "svelte/internal";
 
-  let shops = [], shop, shopName, category, description = "This is a shop", proprietor = "Mr. X";
+  let shops = [],
+    shop,
+    shopName,
+    category,
+    description,
+    proprietor,
+    openingTime,
+    closingTime,
+    closingDay;
   function mockGetStore() {
     axios
       .get("http://127.0.0.1:8000/services/search_service", {
@@ -22,12 +30,15 @@
         shop = shops[0];
         shopName = shop.credentials.name;
         category = shop.credentials.category;
-        console.log(shopName)
-
+        description = shop.credentials.store_description;
+        proprietor = shop.credentials.owner;
+        openingTime = shop.credentials.opening_time;
+        closingTime = shop.credentials.closing_time;
+        closingDay = shop.credentials.closing_day;
+        console.log(shopName);
       });
   }
-mockGetStore();
-
+  mockGetStore();
 </script>
 
 <Geolocation getPosition let:coords>
@@ -51,15 +62,10 @@ mockGetStore();
                   <i class="bi bi-person" />
                   <a href="blog-details.html">{proprietor}</a>
                 </li>
-                
               </ul>
             </div>
             <!-- End meta top -->
-
-            
-
-            
-
+          </article>
         </div>
 
         <div class="col-lg-4">
@@ -67,7 +73,7 @@ mockGetStore();
             <div class="sidebar-item categories">
               <h3 class="sidebar-title">Category</h3>
               <ul class="mt-3">
-                <li>{category} </li>
+                <li>{category}</li>
               </ul>
             </div>
             <!-- End sidebar categories-->
@@ -77,7 +83,7 @@ mockGetStore();
             <div class="sidebar-item categories">
               <h3 class="sidebar-title">About</h3>
               <ul class="mt-3">
-                <li>{description} </li>
+                <li>{description}</li>
               </ul>
             </div>
             <!-- End sidebar categories-->
@@ -87,9 +93,9 @@ mockGetStore();
             <div class="sidebar-item categories">
               <h3 class="sidebar-title">Service Hours</h3>
               <ul class="mt-3">
-                <li><b>Opens:</b> 8:00 am </li>
-                <li><b>Closes:</b> 8:00 pm </li>
-                <li><b>Off-day:</b> Friday </li>
+                <li><b>Opens:</b> {openingTime}</li>
+                <li><b>Closes:</b> {closingTime}</li>
+                <li><b>Off-day:</b> {closingDay}</li>
               </ul>
             </div>
             <!-- End sidebar categories-->

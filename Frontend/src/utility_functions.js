@@ -8,6 +8,8 @@ if (initialToken) {
   defaultToken = initialToken;
 }
 
+const serviceIdStore = writable("null");
+
 const userTokenStore = writable(initialToken);
 
 userTokenStore.subscribe((token) => {
