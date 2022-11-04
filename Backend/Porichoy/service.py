@@ -20,18 +20,24 @@ async def create_service(request: HttpRequest):
         if not service_instance.exists:
             services_collection.document(user_id).set(service_data)
 
-            return HttpResponse('''
-            <h1>Your Service Created!</h1>
-            ''')
+            return JsonResponse(
+                {
+                    "provider_id": service_data["credentials"]["provider_id"]
+                }
+            )
         else:
-            return HttpResponse('''
-            <h1>Service Already Exists</h1>
-            ''')
+            return JsonResponse(
+                {
+                    "provider_id": "exists"
+                }
+            )
 
     except auth.UserNotFoundError:
-        return HttpResponse('''
-        <h1>Not A valid provider!</h1>
-        ''')
+        return JsonResponse(
+            {
+                "provider_id": None
+            }
+        )
 
 
 async def add_offering(request: HttpRequest):

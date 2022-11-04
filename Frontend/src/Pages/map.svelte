@@ -5,6 +5,8 @@
   let user_longitude = null,
     user_latitude = null;
 
+  const categories = ["mechanic-মেকানিক", "shop-দোকান", "cleaning-পরিচ্ছনতাকর্মী", "labour-শ্রমিক"];
+  let currentCategory, selectCategory;
   // onMount function renders something after the html containers has been mounted
   onMount(() => {
     const location_data = {
@@ -104,7 +106,25 @@
   });
 </script>
 
-<div id="map" />
+<div class="d-flex justify-content-center">
+  <div class="dropdown sticky-top">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+     ধরণ সিলেক্ট করুন
+    </button>
+    <ul class="dropdown-menu">
+      {#each categories as category}
+        <li><a class="dropdown-item" href="#">{category}</a></li>
+      {/each}
+    </ul>
+  </div>
+
+  <div id="map" class="h-80 w-75" />
+</div>
 
 <style>
   .mapboxgl-popup {

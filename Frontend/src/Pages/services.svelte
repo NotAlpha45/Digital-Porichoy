@@ -1,5 +1,11 @@
 <script>
   import axios from "axios";
+  import router from "page";
+
+  function getStore() {
+    router.redirect("/store");
+  }
+
   let shops = [];
   function mockGetStore() {
     axios
@@ -15,6 +21,7 @@
       })
       .then(function (response) {
         shops = response.data.result;
+        console.log(shops);
       });
   }
 
@@ -63,9 +70,14 @@
               >
               <div class="portfolio-info">
                 <h4>
-                  <a href="/store" title="More Details"
-                    >{shop.credentials.name}</a
+                  <button
+                    type="button"
+                    class="btn btn-success rounded-pill"
+                    on:click={getStore}>{shop.credentials.name}</button
                   >
+                  <!-- <a href="/store" title="More Details"
+                    >{shop.credentials.name}</a
+                  > -->
                 </h4>
                 <p>Lorem ipsum, dolor sit amet consectetur</p>
               </div>
