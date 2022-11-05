@@ -4,182 +4,212 @@
   import { empty } from "svelte/internal";
   import { auth, signInWithCustomToken } from "../firebase_conf";
   import { userTokenStore } from "../utility_functions";
-  import { checkPassword } from "../utility_functions";
+  import { checkPassword, checkPhoneNumber } from "../utility_functions";
+  import FormData from "form-data";
 
-  let newName, newPhone, newUsername, newRole, newPass, newRetypePass;
+  let user_token = $userTokenStore,
+    name,
+    role,
+    username,
+    phone,
+    formattedPhone,
+    userData,
+    password = "",
+    confirmPassword = "",
+    imageFile = null;
 
   let request_body = {
-    token: $userTokenStore,
+    token: user_token,
   };
 
-  const editProfile = () => {
-    newName = document.forms["editProfileForm"]["newName"].value;
-    newPass = document.forms["editProfileForm"]["newPass"].value;
-    newUsername = document.forms["editProfileForm"]["newUsername"].value;
-    newRetypePass = document.forms["editProfileForm"]["newRetypePass"].value;
-
-    if (!newName) {
-      newName = name;
-    }
-
-    if (!newUsername) {
-      newUsername = username;
-    }
-
-    if (checkPassword(newPass, newRetypePass)) {
-      console.log("New name: ", newName);
-      console.log("old name:", name);
-      console.log("New username: ", newUsername);
-      console.log("old username:", username);
-      console.log("New pass: ", newPass);
-      console.log("old pass:", pass);
-
-      router.redirect("/dashboard");
-    }
-  };
-  let name, username, phone, role, userData, pass;
-  let namePlaceholder, phonePlaceholder, usernamePlaceholder, passPlaceholder;
-  let txt1 = "Currently: ";
   axios
     .post("http://127.0.0.1:8000/auth/get_user", request_body)
     .then((response) => {
       userData = response.data;
       name = userData.names.name;
       username = userData.names.username;
-      phone = userData.credentials.phone;
+      phone = userData.credentials.phone.slice(3);
       role = userData.names.role;
-      pass = "Hidden Pass";
-
-      namePlaceholder = txt1.concat(name);
-      phonePlaceholder = txt1.concat(phone);
-      usernamePlaceholder = txt1.concat(username);
-      passPlaceholder = txt1.concat(pass);
+      // console.log(userData);
     })
     .catch((error) => {
       console.log(error);
     });
+
+  function handleSubmit() {
+    let request_body;
+
+    if (password != "" && confirmPassword != "") {
+      if (checkPassword(password, confirmPassword) && checkPhoneNumber(phone)) {
+        formattedPhone = "+88" + phone;
+
+        request_body = {
+          token: user_token,
+          name: name,
+          phone: formattedPhone,
+          username: username,
+          password: password,
+          confirm_password: confirmPassword,
+          role: role,
+        };
+
+        axios
+          .post("http://127.0.0.1:8000/auth/update_user", request_body)
+          .then((response) => {
+            console.log(response);
+            router.redirect("/dashboard");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    } else if (password == "" && confirmPassword == "") {
+      if (checkPhoneNumber(phone)) {
+        formattedPhone = "+88" + phone;
+
+        request_body = {
+          token: user_token,
+          name: name,
+          phone: formattedPhone,
+          username: username,
+          password: "",
+          confirm_password: "",
+          role: role,
+        };
+
+        axios
+          .post("http://127.0.0.1:8000/auth/update_user", request_body)
+          .then((response) => {
+            console.log(response);
+            router.redirect("/dashboard");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }
+  }
+
+  function changeImage() {
+
+  }
 </script>
 
-<link
+<!-- <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
   crossorigin="anonymous"
-/>
+/> -->
 
-<div class="container">
-  <h1>Edit Profile</h1>
-  <hr />
-  <div class="row">
-    <!-- left column -->
-    <div class="col-md-3">
-      <div class="text-center">
-        <img
-          src="http://127.0.0.1:8000/images/get_image?filename=blank-profile-pic"
-          class="avatar img-circle"
-          alt="avatar"
-          width="320px"
-          height="320px"
-        />
-        <h6>Upload a different photo...</h6>
+<section id="contact" class="contact">
+  <div class="container">
+    <h1>Edit Profile</h1>
+    <hr />
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-4">
+        <div class="text-center">
+          <img
+            src="http://127.0.0.1:8000/images/get_image?filename=blank-profile-pic"
+            class="avatar img-circle"
+            alt="avatar"
+            width="320px"
+            height="320px"
+          />
+          <h6>অন্য ছবি আপলোড করুন</h6>
+          <form class="php-email-form">
+            <input type="file" class="form-control" />
+            <div class="form-group mt-3">
+              <button
+                type="button"
+                class="btn btn-success rounded-pill"
+                on:click={changeImage}>নতুন ছবি দিন</button
+              >
+            </div>
+          </form>
+          <!-- <input type="file" class="form-control" /> -->
+        </div>
+      </div>
 
-        <input type="file" class="form-control" />
+      <!-- edit form column -->
+      <div class="col-md-8 personal-info">
+        <h3>Personal info</h3>
+        <div class="col-8 align-self-center">
+          <form class="php-email-form">
+            <div class="form-group mt-3">
+              <label class="col-lg-5 control-label">নতুন নাম লিখুন:</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="নিজের নাম লিখুন"
+                bind:value={name}
+              />
+            </div>
+            <div class="form-group mt-3">
+              <label class="col-lg-5 control-label">নতুন ইউজার নাম লিখুন:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="নিজের ইউজার নাম লিখুন"
+                bind:value={username}
+              />
+            </div>
+            <div class="form-group mt-3">
+              <label class="col-lg-3 control-label">নতুন নাম্বার লিখুন:</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="নিজের ফোন নাম্বার লিখুন (পূর্বের নাম্বার: {phone})"
+                bind:value={phone}
+              />
+            </div>
+            <div class="form-group mt-3">
+              <label class="col-lg-5 control-label">নতুন পাসওয়ার্ড লিখুন:</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder="নিজের নতুন পাসওয়ার্ড লিখুন"
+                bind:value={password}
+              />
+            </div>
+            <div class="form-group mt-3">
+              <label class="col-lg-5 control-label"
+                >নতুন পাসওয়ার্ড আবার লিখুন:</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                name="confirm-password"
+                id="confirm-password"
+                placeholder="নতুন পাসওয়ার্ড আবার লিখুন"
+                bind:value={confirmPassword}
+              />
+            </div>
+
+            <div class="text-center form-group mt-3">
+              <button
+                type="button"
+                class="btn btn-success rounded-pill"
+                on:click={handleSubmit}>পরিবর্তন করুন</button
+              >
+              <span />
+              <input
+                type="reset"
+                class="btn btn-default rounded-pill"
+                value="বাতিল করুন"
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-
-    <!-- edit form column -->
-    <div class="col-md-9 personal-info">
-      <h3>Personal info</h3>
-
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label class="col-lg-3 control-label">First name:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="text" value="Jane" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Last name:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="text" value="Bishop" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Company:</label>
-          <div class="col-lg-8">
-            <input class="form-control" type="text" value="" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Email:</label>
-          <div class="col-lg-8">
-            <input
-              class="form-control"
-              type="text"
-              value="janesemail@gmail.com"
-            />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label">Time Zone:</label>
-          <div class="col-lg-8">
-            <div class="ui-select">
-              <select id="user_time_zone" class="form-control">
-                <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                <option value="Alaska">(GMT-09:00) Alaska</option>
-                <option value="Pacific Time (US &amp; Canada)"
-                  >(GMT-08:00) Pacific Time (US &amp; Canada)</option
-                >
-                <option value="Arizona">(GMT-07:00) Arizona</option>
-                <option value="Mountain Time (US &amp; Canada)"
-                  >(GMT-07:00) Mountain Time (US &amp; Canada)</option
-                >
-                <option
-                  value="Central Time (US &amp; Canada)"
-                  selected="selected"
-                  >(GMT-06:00) Central Time (US &amp; Canada)</option
-                >
-                <option value="Eastern Time (US &amp; Canada)"
-                  >(GMT-05:00) Eastern Time (US &amp; Canada)</option
-                >
-                <option value="Indiana (East)"
-                  >(GMT-05:00) Indiana (East)</option
-                >
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Username:</label>
-          <div class="col-md-8">
-            <input class="form-control" type="text" value="janeuser" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Password:</label>
-          <div class="col-md-8">
-            <input class="form-control" type="password" value="11111122333" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label">Confirm password:</label>
-          <div class="col-md-8">
-            <input class="form-control" type="password" value="11111122333" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-3 control-label" />
-          <div class="col-md-8">
-            <input type="button" class="btn btn-primary" value="Save Changes" />
-            <span />
-            <input type="reset" class="btn btn-default" value="Cancel" />
-          </div>
-        </div>
-      </form>
-    </div>
   </div>
-</div>
-<hr />
+</section>
 
 <!-- End Contact Section -->
 <style>

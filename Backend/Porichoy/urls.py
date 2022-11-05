@@ -13,6 +13,7 @@ urlpatterns = [
     path('search_service', service.search_service),
     path('get_service', service.get_service_by_id),
     path('get_user', auth_module.get_user_info),
+    path('update_user', auth_module.update_user_info),
     path('save_image', image.save_image),
     path('get_image', image.get_image),
 ]

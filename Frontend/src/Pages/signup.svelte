@@ -14,7 +14,7 @@
   async function formSubmit() {
     if (checkPassword(password, retype_password) && checkPhoneNumber(phone)) {
       formatted_phone = "+88" + phone;
-      console.log(phone, password);
+      // console.log(phone, password);
 
       let request_body = {
         userdata: {
