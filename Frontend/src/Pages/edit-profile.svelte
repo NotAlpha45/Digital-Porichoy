@@ -6,6 +6,8 @@
   import { userTokenStore } from "../utility_functions";
   import { checkPassword, checkPhoneNumber } from "../utility_functions";
   import FormData from "form-data";
+  // import {readFile} from 'fs';
+
 
   let user_token = $userTokenStore,
     name,
@@ -16,7 +18,7 @@
     userData,
     password = "",
     confirmPassword = "",
-    imageFile = null;
+    imageFilePath = null;
 
   let request_body = {
     token: user_token,
@@ -91,7 +93,29 @@
   }
 
   function changeImage() {
+    let formData = new FormData();
+    // The name that we will give the file is the user's phone and current timestamp
+    let filename = phone + String(Date.now());
 
+    formData.append("filename", filename);
+    formData.append("token", $userTokenStore);
+    console.log(typeof imageFilePath);
+
+    const imageFile = readFile(imageFilePath);
+
+    formData.append("content", imageFile, imageFilePath);
+
+    axios
+      .post("http://127.0.0.1:8000/auth/update_user_image", formData, {
+        "Content-Type": "multipart/form-data",
+      })
+      .then((response) => {
+        //handle success
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 </script>
 
@@ -119,7 +143,11 @@
           />
           <h6>অন্য ছবি আপলোড করুন</h6>
           <form class="php-email-form">
-            <input type="file" class="form-control" />
+            <input
+              type="file"
+              class="form-control"
+              bind:value={imageFilePath}
+            />
             <div class="form-group mt-3">
               <button
                 type="button"

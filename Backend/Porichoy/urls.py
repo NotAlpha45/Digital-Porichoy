@@ -14,6 +14,7 @@ urlpatterns = [
     path('get_service', service.get_service_by_id),
     path('get_user', auth_module.get_user_info),
     path('update_user', auth_module.update_user_info),
+    path('update_user_image', auth_module.update_user_image),
     path('save_image', image.save_image),
     path('get_image', image.get_image),
 ]

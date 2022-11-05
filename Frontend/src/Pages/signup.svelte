@@ -22,6 +22,7 @@
             email: email,
             phone: formatted_phone,
             password: password,
+            image_url: "",
           },
           names: {
             name: name,
@@ -83,7 +84,6 @@
             <input
               type="text"
               class="form-control"
-              
               placeholder="নিজের ইউজার নাম লিখুন"
               required
               bind:value={username}
@@ -93,7 +93,6 @@
             <input
               type="text"
               class="form-control"
-              
               placeholder="নিজের ফোন নাম্বার লিখুন (যেমন: 01778654707)"
               required
               bind:value={phone}

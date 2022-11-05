@@ -8,6 +8,21 @@ from django.http import HttpRequest, HttpResponse, Http404, JsonResponse
 from .AuthHandler.signup_handler import signup
 from .firebase_init import *
 import hashlib
+from .models import ImageStore
+
+
+def update_user_image(request: HttpRequest):
+    request_data = request.POST
+
+    filename = request_data["filename"]
+    image = request.POST["content"]
+
+    print(image, filename)
+
+    # image_store_obj = ImageStore(image_name=filename, image_content=image)
+    # image_store_obj.save()
+
+    return HttpResponse("""OK""")
 
 
 async def update_user_info(request: HttpRequest):
