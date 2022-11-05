@@ -24,6 +24,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("auth/", include('Porichoy.urls')),
-    path("services/", include('Porichoy.urls'))
-]+static(settings.MEDIA_ROOT, document_root=settings.MEDIA_ROOT)
+    path("services/", include('Porichoy.urls')),
+    path("images/", include('Porichoy.urls')),
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # /auth/customer-signup

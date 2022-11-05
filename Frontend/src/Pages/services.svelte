@@ -2,23 +2,25 @@
   import axios from "axios";
   import router from "page";
   import { serviceIdStore } from "../utility_functions";
+  import Geolocation from "svelte-geolocation";
 
   let category = null,
-    shopIndex = null;
+    shopIndex = null,
+    coords = [];
 
   function getStore() {
     router.redirect("/store");
   }
 
   let shops = [];
-  function mockGetStore() {
+  async function mockGetStore() {
     axios
       .get("http://127.0.0.1:8000/services/search_service", {
         params: {
           district: "gazipur",
           category: category,
-          long: 90.38090089366824,
-          lat: 23.948577732828085,
+          long: coords[0],
+          lat: coords[1],
           distance: 10,
           search_limit: 50,
         },
@@ -31,7 +33,13 @@
 
   // This section activates whenever an element (category is changed)
   $: {
-    if (category !== null) {
+    navigator.geolocation.getCurrentPosition(function (location) {
+      coords.push(location.coords.longitude);
+      coords.push(location.coords.latitude);
+    });
+
+    if (category !== null && coords) {
+      console.log(coords);
       mockGetStore();
     }
   }
