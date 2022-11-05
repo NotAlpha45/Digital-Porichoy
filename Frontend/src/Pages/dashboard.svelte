@@ -44,7 +44,7 @@
     <div class="row">
       <div class="col-lg-4">
         <img
-          src="..\assets\img\team\team-1.jpg"
+          src="http://127.0.0.1:8000/images/get_image?filename=blank-profile-pic"
           class="img-fluid"
           alt=""
           width="320px"

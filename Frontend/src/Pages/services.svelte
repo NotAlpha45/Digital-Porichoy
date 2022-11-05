@@ -96,11 +96,11 @@
           <div class="col-xl-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-wrap">
               <a
-                href="assets/img/portfolio/app-1.jpg"
+                href="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic1"
                 data-gallery="portfolio-gallery-app"
                 class="glightbox"
                 ><img
-                  src="assets/img/portfolio/app-1.jpg"
+                  src="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic1"
                   class="img-fluid"
                   alt=""
                   href="/store"
