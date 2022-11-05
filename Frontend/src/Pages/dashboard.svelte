@@ -77,7 +77,7 @@
                 <strong>Role: </strong>{role}
               </li>
             </ul>
-            <a href="edit_profile.php" class="btn-about">Edit Profile</a>
+            <a href="/edit-profile" class="btn-about">Edit Profile</a>
           </div>
         </div>
       </div>
