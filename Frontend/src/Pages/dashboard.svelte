@@ -18,7 +18,12 @@
     token: $userTokenStore,
   };
 
-  let name, username, phone, role, userData;
+  let name,
+    username,
+    phone,
+    role,
+    userData,
+    imageUrl = "blank-profile-pic";
 
   axios
     .post("http://127.0.0.1:8000/auth/get_user", request_body)
@@ -28,6 +33,7 @@
       username = userData.names.username;
       phone = userData.credentials.phone;
       role = userData.names.role;
+      imageUrl = userData.credentials.image_url;
       // console.log(userData);
     })
     .catch((error) => {
@@ -44,7 +50,7 @@
     <div class="row">
       <div class="col-lg-4">
         <img
-          src="http://127.0.0.1:8000/images/get_image?filename=blank-profile-pic"
+          src={`http://127.0.0.1:8000/images/get_image?filename=${imageUrl}`}
           class="img-fluid"
           alt=""
           width="320px"
