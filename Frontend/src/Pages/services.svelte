@@ -13,23 +13,6 @@
   }
 
   let shops = [];
-  async function mockGetStore() {
-    axios
-      .get("http://127.0.0.1:8000/services/search_service", {
-        params: {
-          district: "gazipur",
-          category: category,
-          long: coords[0],
-          lat: coords[1],
-          distance: 10,
-          search_limit: 50,
-        },
-      })
-      .then(function (response) {
-        shops = response.data.result;
-        // console.log(shops);
-      });
-  }
 
   // This section activates whenever an element (category is changed)
   $: {
@@ -38,8 +21,26 @@
       coords.push(location.coords.latitude);
     });
 
-    if (category !== null && coords) {
-      console.log(coords);
+    async function mockGetStore() {
+      await axios
+        .get("http://127.0.0.1:8000/services/search_service", {
+          params: {
+            district: "gazipur",
+            category: category,
+            long: coords[0],
+            lat: coords[1],
+            distance: 10,
+            search_limit: 50,
+          },
+        })
+        .then(function (response) {
+          shops = response.data.result;
+          // console.log(shops);
+        });
+    }
+
+    console.log(coords);
+    if (category !== null && coords !== []) {
       mockGetStore();
     }
   }
@@ -96,11 +97,11 @@
           <div class="col-xl-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-wrap">
               <a
-                href="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic1"
+                href="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic2"
                 data-gallery="portfolio-gallery-app"
                 class="glightbox"
                 ><img
-                  src="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic1"
+                  src="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic2"
                   class="img-fluid"
                   alt=""
                   href="/store"
