@@ -6,7 +6,7 @@
 
   let category = null,
     shopIndex = null,
-    coords = [];
+    coords = [-1, -1];
 
   function getStore() {
     router.redirect("/store");
@@ -14,32 +14,30 @@
 
   let shops = [];
 
+  async function mockGetStore() {
+    await axios
+      .get("http://127.0.0.1:8000/services/search_service", {
+        params: {
+          district: "gazipur",
+          category: category,
+          long: coords[0],
+          lat: coords[1],
+          distance: 10,
+          search_limit: 50,
+        },
+      })
+      .then(function (response) {
+        shops = response.data.result;
+        // console.log(shops);
+      });
+  }
+
   // This section activates whenever an element (category is changed)
   $: {
     navigator.geolocation.getCurrentPosition(function (location) {
-      coords.push(location.coords.longitude);
-      coords.push(location.coords.latitude);
+      coords[0] = location.coords.longitude;
+      coords[1] = location.coords.latitude;
     });
-
-    async function mockGetStore() {
-      await axios
-        .get("http://127.0.0.1:8000/services/search_service", {
-          params: {
-            district: "gazipur",
-            category: category,
-            long: coords[0],
-            lat: coords[1],
-            distance: 10,
-            search_limit: 50,
-          },
-        })
-        .then(function (response) {
-          shops = response.data.result;
-          // console.log(shops);
-        });
-    }
-
-    console.log(coords);
     if (category !== null && coords !== []) {
       mockGetStore();
     }
