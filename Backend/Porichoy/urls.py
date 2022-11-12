@@ -1,6 +1,7 @@
 from django.urls import path
 from . import auth_module
 from . import service
+from . import image
 
 urlpatterns = [
     path('customer_auth/login', auth_module.customer_login),
@@ -10,5 +11,10 @@ urlpatterns = [
     path('add_offering', service.add_offering),
     path('remove_offering', service.remove_offering),
     path('search_service', service.search_service),
-    path('verify_token', auth_module.mock_token_verifier)
+    path('get_service', service.get_service_by_id),
+    path('get_user', auth_module.get_user_info),
+    path('update_user', auth_module.update_user_info),
+    path('update_user_image', auth_module.update_user_image),
+    path('save_image', image.save_image),
+    path('get_image', image.get_image),
 ]

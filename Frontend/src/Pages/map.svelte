@@ -5,6 +5,13 @@
   let user_longitude = null,
     user_latitude = null;
 
+  const categories = [
+    "mechanic-মেকানিক",
+    "shop-দোকান",
+    "cleaning-পরিচ্ছনতাকর্মী",
+    "labour-শ্রমিক",
+  ];
+  let currentCategory, selectCategory;
   // onMount function renders something after the html containers has been mounted
   onMount(() => {
     const location_data = {
@@ -41,7 +48,7 @@
       container: "map",
       style: "mapbox://styles/mapbox/outdoors-v11",
       center: [90.38, 23.94], // starting position
-      zoom: 15, // starting zoom
+      zoom: 14, // starting zoom
     });
 
     // // Fullscreen and navigation control
@@ -104,7 +111,9 @@
   });
 </script>
 
-<div id="map" />
+<!-- <div class="d-flex justify-content-center"> -->
+  <div id="map" class="h-50 w-50" />
+<!-- </div> -->
 
 <style>
   .mapboxgl-popup {

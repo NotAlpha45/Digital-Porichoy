@@ -14,7 +14,7 @@
   async function formSubmit() {
     if (checkPassword(password, retype_password) && checkPhoneNumber(phone)) {
       formatted_phone = "+88" + phone;
-      console.log(phone, password);
+      // console.log(phone, password);
 
       let request_body = {
         userdata: {
@@ -22,6 +22,7 @@
             email: email,
             phone: formatted_phone,
             password: password,
+            image_url: "",
           },
           names: {
             name: name,
@@ -61,8 +62,8 @@
 <section id="contact" class="contact">
   <div class="container" data-aos="fade-up">
     <div class="section-header">
-      <h2>Sign Up</h2>
-      <p>Get onboard and let out economy grow.</p>
+      <h2>Sign Up - সাইন আপ</h2>
+      <p>নিজের ব্যবসার পরিচিতি তৈরি করুন এক মুহূর্তেই!</p>
     </div>
 
     <div class="row gx-lg-0 gy-4">
@@ -83,7 +84,6 @@
             <input
               type="text"
               class="form-control"
-              
               placeholder="নিজের ইউজার নাম লিখুন"
               required
               bind:value={username}
@@ -93,7 +93,6 @@
             <input
               type="text"
               class="form-control"
-              
               placeholder="নিজের ফোন নাম্বার লিখুন (যেমন: 01778654707)"
               required
               bind:value={phone}
@@ -133,7 +132,7 @@
             <button
               type="button"
               class="btn btn-success rounded-pill"
-              on:click={formSubmit}>Sign up (সাইন আপ করুন)</button
+              on:click={formSubmit}>Sign up - সাইন আপ করুন</button
             >
           </div>
         </form>

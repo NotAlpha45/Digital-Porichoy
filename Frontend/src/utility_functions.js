@@ -8,6 +8,9 @@ if (initialToken) {
   defaultToken = initialToken;
 }
 
+// Stores the currently selected service id, useful for navigation
+const serviceIdStore = writable("null");
+
 const userTokenStore = writable(initialToken);
 
 userTokenStore.subscribe((token) => {
@@ -36,13 +39,11 @@ const checkPhoneNumber = function (phoneNumber) {
 };
 
 const logOut = function () {
-  if (auth.currentUser != null) {
-    auth.signOut().then(() => {
-      console.log("Logged Out");
-    });
-  }
   userTokenStore.set(null);
-  localStorage.removeItem("userToken");
+  localStorage.setItem("userToken", null);
+  auth.signOut().then(() => {
+    console.log("Logged out");
+  });
 };
 
 const isLoggedIn = () => {
@@ -54,4 +55,11 @@ const isLoggedIn = () => {
   return flag;
 };
 
-export { checkPassword, checkPhoneNumber, logOut, isLoggedIn, userTokenStore };
+export {
+  checkPassword,
+  checkPhoneNumber,
+  logOut,
+  isLoggedIn,
+  userTokenStore,
+  serviceIdStore,
+};

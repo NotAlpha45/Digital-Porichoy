@@ -36,9 +36,15 @@
 
             signInWithCustomToken(auth, userToken)
               .then(function (userCredentials) {
-                console.log(userCredentials);
-                localStorage.setItem("userToken", userToken);
-                userTokenStore.set(localStorage.getItem("userToken"));
+                auth.currentUser
+                  .getIdToken(true)
+                  .then((token) => {
+                    localStorage.setItem("userToken", token);
+                    userTokenStore.set(localStorage.getItem("userToken"));
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
               })
               .catch(function (error) {
                 console.log(error);
@@ -64,53 +70,52 @@
       <div class="col-4" />
 
       <div class="row gx-lg-0 gy-4">
-
-      <div class="col-4"></div>
+        <div class="col-4" />
 
         <div class="col-4 align-self-center">
-          
-        <form  class="php-email-form">
-          <div class="form-group mt-3">
-            <input
-              type="text"
-              name="phone"
-              class="form-control"
-              id="phone"
-              placeholder="ফোন নাম্বার লিখুন"
-              required
-              bind:value={phone}
-            />
-          </div>
-          <div class="form-group mt-3">
-            <input
-              type="password"
-              class="form-control"
-              name="password"
-              id="password"
-              placeholder="পাসওয়ার্ড লিখুন"
-              required
-              bind:value={password}
-            />
-          </div>
-          <!--
+          <form class="php-email-form">
+            <div class="form-group mt-3">
+              <input
+                type="text"
+                name="phone"
+                class="form-control"
+                id="phone"
+                placeholder="ফোন নাম্বার লিখুন"
+                required
+                bind:value={phone}
+              />
+            </div>
+            <div class="form-group mt-3">
+              <input
+                type="password"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder="পাসওয়ার্ড লিখুন"
+                required
+                bind:value={password}
+              />
+            </div>
+            <!--
 >>>>>>> main
             <div class="my-3">
               <div class="loading">Loading</div>
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
             </div> -->
-          
-          <div class="text-center form-group mt-3">
-            <p>Don't have an account? <a href="\signup"> Sign Up</a></p>
-            <button
-              type="button"
-              class="btn btn-success rounded-pill"
-              on:click={formSubmit}>Login - লগ ইন করুন</button
-            >
-          </div>
-        </form>
+
+            <div class="text-center form-group mt-3">
+              <p>Don't have an account? <a href="\signup"> Sign Up</a></p>
+              <button
+                type="button"
+                class="btn btn-success rounded-pill"
+                on:click={formSubmit}>Login - লগ ইন করুন</button
+              >
+            </div>
+          </form>
+        </div>
+        <!-- End Contact Form -->
       </div>
-      <!-- End Contact Form -->
     </div>
   </div>
 </section>

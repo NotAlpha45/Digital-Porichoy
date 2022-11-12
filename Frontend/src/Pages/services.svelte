@@ -1,62 +1,135 @@
 <script>
-import axios from "axios";
+  import axios from "axios";
+  import router from "page";
+  import { serviceIdStore } from "../utility_functions";
+  import Geolocation from "svelte-geolocation";
 
-let shops = [];
-  function mockGetStore() {
+  let category = null,
+    shopIndex = null,
+    coords = [];
+
+  function getStore() {
+    router.redirect("/store");
+  }
+
+  let shops = [];
+  async function mockGetStore() {
     axios
       .get("http://127.0.0.1:8000/services/search_service", {
         params: {
           district: "gazipur",
-          category: "mechanic",
-          long: 90.38090089366824,
-          lat: 23.948577732828085,
+          category: category,
+          long: coords[0],
+          lat: coords[1],
           distance: 10,
           search_limit: 50,
         },
       })
       .then(function (response) {
         shops = response.data.result;
+        // console.log(shops);
       });
   }
 
-  mockGetStore();
+  // This section activates whenever an element (category is changed)
+  $: {
+    navigator.geolocation.getCurrentPosition(function (location) {
+      coords.push(location.coords.longitude);
+      coords.push(location.coords.latitude);
+    });
 
+    if (category !== null && coords) {
+      console.log(coords);
+      mockGetStore();
+    }
+  }
 </script>
 
 <section id="portfolio" class="portfolio sections-bg">
-    <div class="container" data-aos="fade-up">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <h2>Stores and Services</h2>
+    </div>
 
-      <div class="section-header">
-        <h2>Stores and Services</h2>
+    <div class="row gx-lg-0 gy-4 justify-content-center">
+      <div class="col-4">
+        <div class="form-group mt-3 align-items-center">
+          <h5>ধরণ পছন্দ করুন</h5>
+        </div>
+
+        <div class="form-group mt-3">
+          <select
+            class="form-select"
+            aria-label="select-store"
+            bind:value={category}
+            placeholder="Select"
+          >
+            <option value="mechanic">Mechanic-মেকানিক</option>
+            <option value="business">Business-ব্যবসা</option>
+            <option value="labour">Labour-শ্রমিক</option>
+          </select>
+        </div>
       </div>
+    </div>
 
-      <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry" data-portfolio-sort="original-order" data-aos="fade-up" data-aos-delay="100">
-
-        <div>
-          <ul class="portfolio-flters">
-            <!-- <li data-filter="*" class="filter-active">All</li>
+    <div
+      class="portfolio-isotope"
+      data-portfolio-filter="*"
+      data-portfolio-layout="masonry"
+      data-portfolio-sort="original-order"
+      data-aos="fade-up"
+      data-aos-delay="10"
+    >
+      <div>
+        <ul class="portfolio-flters">
+          <!-- <li data-filter="*" class="filter-active">All</li>
             <li data-filter=".filter-app">App</li>
             <li data-filter=".filter-product">Product</li>
             <li data-filter=".filter-branding">Branding</li>
             <li data-filter=".filter-books">Books</li> -->
-          </ul><!-- End Portfolio Filters -->
-        </div>
+        </ul>
+        <!-- End Portfolio Filters -->
+      </div>
 
-        <div class="row gy-4 portfolio-container">
-{#each shops as shop}
-    
-
+      <div class="row gy-4 portfolio-container">
+        {#each shops as shop}
           <div class="col-xl-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-wrap">
-              <a href="assets/img/portfolio/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="assets/img/portfolio/app-1.jpg" class="img-fluid" alt=""></a>
+              <a
+                href="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic1"
+                data-gallery="portfolio-gallery-app"
+                class="glightbox"
+                ><img
+                  src="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic1"
+                  class="img-fluid"
+                  alt=""
+                  href="/store"
+                /></a
+              >
               <div class="portfolio-info">
-                <h4><a href="/store" title="More Details">{shop.credentials.name}</a></h4>
-                <p>Lorem ipsum, dolor sit amet consectetur</p>
+                <h4>
+                  <button
+                    type="button"
+                    class="btn btn-success rounded-pill"
+                    on:click={getStore}
+                    on:click={() => {
+                      shopIndex = shop.credentials.provider_id;
+                      serviceIdStore.set(shopIndex);
+                    }}
+                  >
+                    {shop.credentials.name}
+                  </button>
+                  <!-- <a href="/store" title="More Details"
+                    >{shop.credentials.name}</a
+                  > -->
+                </h4>
+                <p>{shop.credentials.store_description}</p>
               </div>
             </div>
-          </div><!-- End Portfolio Item -->
-{/each}
-          <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-product">
+          </div>
+          <!-- End Portfolio Item -->
+        {/each}
+        <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-product">
             <div class="portfolio-wrap">
               <a href="assets/img/portfolio/product-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="assets/img/portfolio/product-1.jpg" class="img-fluid" alt=""></a>
               <div class="portfolio-info">
@@ -66,7 +139,7 @@ let shops = [];
             </div>
           </div><!-- End Portfolio Item -->
 
-          <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-branding">
+        <!-- <div class="col-xl-4 col-md-6 portfolio-item filter-branding">
             <div class="portfolio-wrap">
               <a href="assets/img/portfolio/branding-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="assets/img/portfolio/branding-1.jpg" class="img-fluid" alt=""></a>
               <div class="portfolio-info">
@@ -164,16 +237,13 @@ let shops = [];
                 <p>Lorem ipsum, dolor sit amet consectetur</p>
               </div>
             </div>
-          </div>End Portfolio Item --> 
-
-        </div><!-- End Portfolio Container -->
-
+          </div>End Portfolio Item -->
       </div>
-
+      <!-- End Portfolio Container -->
     </div>
-  </section><!-- End Portfolio Section -->
+  </div>
+</section>
 
-
+<!-- End Portfolio Section -->
 <style>
-    
 </style>
