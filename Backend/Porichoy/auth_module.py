@@ -15,9 +15,6 @@ def update_user_image(request: HttpRequest):
     image = request.FILES["content"]
     name = request.POST["filename"]
 
-    image_store_obj = ImageStore(image_name=name, image_content=image)
-    image_store_obj.save()
-
     verified_obj = auth.verify_id_token(request.POST["token"])
     current_user_id = verified_obj["uid"]
     current_user_role = request.POST["role"]
@@ -30,7 +27,14 @@ def update_user_image(request: HttpRequest):
         current_collection = providers_collection
 
     user_instance = current_collection.document(current_user_id)
-    # print(user_instance)
+
+    previous_image = user_instance.get().to_dict()["credentials"]["image_url"]
+
+    ImageStore.objects.filter(image_name=previous_image).delete()
+
+    image_store_obj = ImageStore(image_name=name, image_content=image)
+    image_store_obj.save()
+
     user_instance.update({
         "credentials.image_url": name
     })
