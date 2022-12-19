@@ -87,15 +87,18 @@ async def remove_offering(request: HttpRequest):
 
 async def get_service_by_id(request: HttpRequest):
     request_params = request.GET
-    service_id = request_params["service_id"]
+
+    verified_obj = auth.verify_id_token(request_params["user_token"])
+
+    service_id = verified_obj["uid"]
 
     result = services_collection.document(service_id).get().to_dict()
 
-    # print(result)
+    response_data = {
+        "result": result
+    }
 
-    return JsonResponse(
-        result
-    )
+    return JsonResponse(response_data)
 
 
 async def search_service(request: HttpRequest):

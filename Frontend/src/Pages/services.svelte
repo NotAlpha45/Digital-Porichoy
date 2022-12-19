@@ -38,7 +38,7 @@
       coords[0] = location.coords.longitude;
       coords[1] = location.coords.latitude;
     });
-    if (category !== null && coords !== []) {
+    if (category !== null && coords !== []) { 
       mockGetStore();
     }
   }
