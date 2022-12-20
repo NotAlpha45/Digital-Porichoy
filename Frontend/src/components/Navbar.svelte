@@ -1,7 +1,6 @@
 <script>
   import { userTokenStore } from "../utility_functions";
   import axios from "axios";
-  import { auth } from "../firebase_conf";
 
   let userService = null;
   // auth.currentUser.getIdToken(true).then((userToken) => {

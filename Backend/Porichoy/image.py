@@ -10,9 +10,9 @@ def save_image(request: HttpRequest):
     image_store_obj = ImageStore(image_name=name, image_content=image)
     image_store_obj.save()
 
-    return HttpResponse("""
-    ok
-    """)
+    return JsonResponse({
+        "status": "ok"
+    })
 
 
 def get_image(request: HttpRequest):

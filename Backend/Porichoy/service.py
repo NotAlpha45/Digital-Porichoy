@@ -7,6 +7,7 @@ from unittest import result
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, Http404, JsonResponse
 from .firebase_init import *
+from .models import ImageStore
 
 
 async def create_service(request: HttpRequest):
@@ -41,32 +42,47 @@ async def create_service(request: HttpRequest):
         )
 
 
-async def add_offering(request: HttpRequest):
+def add_offering(request: HttpRequest):
 
-    request_body = json.loads(request.body.decode("utf-8"))
-    service_id = request_body["service_id"]
-    new_offering = request_body["new_offering"]
+    request_body = request.POST
+    verified_obj = auth.verify_id_token(request_body["user_token"])
+    service_id = verified_obj["uid"]
+
+    offering_name = request_body["offering_name"]
+    offering_description = request_body["offering_description"]
+    offering_image_url = request_body["offering_image_url"]
+    offering_image = request.FILES["offering_image"]
 
     service_instance = services_collection.document(service_id)
     service_data = service_instance.get()
 
     if service_data.exists:
+        image_store_obj = ImageStore(
+            image_name=offering_image_url, image_content=offering_image)
+        image_store_obj.save()
         service_instance.update({
-            "offerings": firestore.ArrayUnion([new_offering])
+            "offerings": firestore.ArrayUnion([{
+                "offering_name": offering_name,
+                "offering_description": offering_description,
+                "offering_image_url": offering_image_url
+            }])
         })
-        return HttpResponse('''
-        <h1>New service offering added!</h1>
-        ''')
+        return JsonResponse({
+            "status": "ok"
+        })
     else:
-        return HttpResponse('''
-        <h1>The service does not exist!</h1>
-        ''')
+        return JsonResponse({
+            "status": "unavailable"
+        })
 
 
 async def remove_offering(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
-    service_id = request_body["service_id"]
+
+    verified_obj = auth.verify_id_token(request_body["user_token"])
+    service_id = verified_obj["uid"]
+
     deleted_offering = request_body["deleted_offering"]
 
     service_instance = services_collection.document(service_id)

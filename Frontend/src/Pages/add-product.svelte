@@ -1,98 +1,140 @@
 <script>
-    
-  </script>
+  import { userTokenStore } from "../utility_functions";
+  import axios from "axios";
+  import { onMount } from "svelte";
 
-  <section id="contact" class="contact">
-    <div class="container">
-      <h1>প্রোডাক্ট / সার্ভিস সংযুক্ত করুন </h1> 
-      <hr />
-      <div class="row">
-        <!-- left column -->
-        <div class="col-md-4">
-          <div class="text-center">
-            <img
-              src=""
-              class="avatar img-circle"
-              alt="product"
-              width="320px"
-              height="320px"
-            />
-            <h6>ছবি সংযুক্ত করুন</h6>
-  
-            <form
-              class="php-email-form"
-              method="post"
-              action=""
-              enctype="multipart/form-data"
-            >
-              <input
-                type="hidden"
-                class="form-control"
-                name="filename"
-              />
-              <input
-                type="hidden"
-                class="form-control"
-                name="role"
-              />
-              <input
-                type="hidden"
-                class="form-control"
-                name="token"
-              />
-              <input type="file" class="form-control" name="content" />
-              <div class="form-group mt-3">
-                <button type="submit" class="btn btn-success rounded-pill"
-                  >সংযুক্ত করুন </button
-                >
-              </div>
-            </form>
-  
-            <!-- <input type="file" class="form-control" /> -->
-          </div>
+  let imageUrl = "blank-product-pic",
+    filename,
+    role,
+    userToken;
+
+  // Image name for a service = store/user id + current time
+  $: {
+    userToken = $userTokenStore;
+    filename = $userTokenStore.slice(0, 5) + String(Date.now());
+    console.log(filename);
+  }
+
+  onMount(() => {
+    const form = document.getElementById("addProductForm");
+
+    // Listen for the submit event on the form
+    form.addEventListener("submit", function (event) {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+
+      // Get the form data
+      const formData = new FormData(form);
+
+      // Make an HTTP request to the server
+      fetch("http://127.0.0.1:8000/services/add_offering", {
+        method: "POST",
+        body: formData,
+      })
+        .then(function (response) {
+          // Read the response from the server
+          let status = response.body["status"];
+          console.log(status);
+
+          if (status == "ok") {
+            alert("আপনার পণ্য/সার্ভিস যোগ হয়েছে");
+          } else if (status == "unavailable") {
+            alert("আপনার কোনো স্টোর নেই");
+          }
+        })
+        .catch((error) => {
+          alert("কোনো একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+        });
+    });
+  });
+</script>
+
+<section>
+  <div class="container h-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-6">
+      <h1 class="text-center mb-4">Add Your Product</h1>
+      <form id="addProductForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="productName">পণ্য/সার্ভিসের নাম লিখুনঃ</label>
+          <input
+            type="text"
+            class="form-control"
+            id="productName"
+            name="offering_name"
+            required
+          />
         </div>
-  
-        <!-- edit form column -->
-        <div class="col-md-8 personal-info">
-          <h3>প্রোডাক্ট / সার্ভিস তথ্য</h3>
-          <div class="col-8 align-self-center">
-            <form class="php-email-form">
-              <div class="form-group mt-3">
-                <label class="col-lg-5 control-label">প্রোডাক্ট / সার্ভিস এর নাম:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="প্রোডাক্ট / সার্ভিস এর নাম লিখুন"
-                />
-              </div>
-              
-              <div class="form-group mt-3">
-                <label class="col-lg-3 control-label">মূল্য: </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="প্রোডাক্ট / সার্ভিস এর মূল্য প্রদান করুন"
-                  
-                />
-              </div>
-              
-  
-              <div class="text-center form-group mt-3">
-                <button
-                  type="button"
-                  class="btn btn-success rounded-pill"
-                  >সংযুক্ত করুন </button
-                >
-                
-              </div>
-            </form>
-          </div>
+        <div class="form-group">
+          <label for="productDescription">পণ্য/সার্ভিসের নাম বর্ণনা দিনঃ</label>
+          <textarea
+            class="form-control"
+            id="productDescription"
+            name="offering_description"
+            rows="3"
+            required
+          />
         </div>
-      </div>
+
+        <div class="form-group">
+          <label for="productPrice">পণ্য ব সার্ভিসের দাম লিখুনঃ</label>
+          <input
+            type="number"
+            class="form-control"
+            id="productPrice"
+            name="productPrice"
+            min="0"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="productImage">পণ্য বা সার্ভিসের ছবি দিনঃ</label>
+          <input
+            type="file"
+            class="form-control-file"
+            id="productImage"
+            name="offering_image"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="hidden"
+            class="form-control-file"
+            id="productImage"
+            name="offering_image_url"
+            value={filename}
+          />
+          <input
+            type="hidden"
+            class="form-control-file"
+            id="productImage"
+            name="user_token"
+            value={userToken}
+          />
+        </div>
+
+        <button type="submit" class="btn btn-success rounded-pill"
+          >পণ্য যোগ করুন</button
+        >
+      </form>
     </div>
-  </section>
-  
-  <!-- End Contact Section -->
-  <style>
-  </style>
-  
+  </div>
+</section>
+
+<style>
+  #addProductForm .form-group {
+    margin-bottom: 20px;
+  }
+
+  #addProductForm .btn {
+    margin-top: 40px;
+    width: 100%;
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+  }
+</style>
