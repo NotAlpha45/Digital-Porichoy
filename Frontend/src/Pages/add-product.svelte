@@ -32,15 +32,14 @@
         body: formData,
       })
         .then(function (response) {
-          // Read the response from the server
-          let status = response.body["status"];
-          console.log(status);
-
-          if (status == "ok") {
-            alert("আপনার পণ্য/সার্ভিস যোগ হয়েছে");
-          } else if (status == "unavailable") {
-            alert("আপনার কোনো স্টোর নেই");
-          }
+          response.json().then(function (data) {
+            let status = data.status;
+            if (status == "ok") {
+              alert("আপনার পণ্য/সার্ভিস যোগ হয়েছে");
+            } else if (status == "unavailable") {
+              alert("আপনার কোনো স্টোর নেই");
+            }
+          });
         })
         .catch((error) => {
           alert("কোনো একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।");

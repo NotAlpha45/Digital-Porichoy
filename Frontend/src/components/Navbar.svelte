@@ -15,9 +15,7 @@
     .then((response) => {
       // console.log(response);
       userService = response.data.result;
-      console.log(userService);
     });
-    
 </script>
 
 <header id="header" class="header d-flex align-items-center">
