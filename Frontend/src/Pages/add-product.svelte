@@ -12,7 +12,6 @@
   $: {
     userToken = $userTokenStore;
     filename = $userTokenStore.slice(0, 5) + String(Date.now());
-    console.log(filename);
   }
 
   onMount(() => {
