@@ -93,7 +93,7 @@ async def get_offerings(request: HttpRequest):
     })
 
 
-async def remove_offering(request: HttpRequest):
+def remove_offering(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
 
@@ -109,13 +109,15 @@ async def remove_offering(request: HttpRequest):
         service_instance.update({
             "offerings": firestore.ArrayRemove([deleted_offering])
         })
-        return HttpResponse('''
-        <h1>Service offering deleted!</h1>
-        ''')
+        ImageStore.objects.filter(
+            image_name=deleted_offering["offering_image_url"]).delete()
+        return JsonResponse({
+            "status": "ok"
+        })
     else:
-        return HttpResponse('''
-        <h1>The service does not exist!</h1>
-        ''')
+        return JsonResponse({
+            "status": "unavailable"
+        })
 
 
 async def get_service_by_id(request: HttpRequest):

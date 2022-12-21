@@ -31,7 +31,6 @@
     userToken = $userTokenStore;
     filename = $userTokenStore.slice(0, 5) + String(Date.now());
     getOfferings();
-    // console.log(offerings);
   }
 
   onMount(() => {

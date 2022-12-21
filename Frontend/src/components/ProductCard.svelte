@@ -1,4 +1,26 @@
 <script>
+  import axios from "axios";
+  import { userTokenStore } from "../utility_functions";
+
+  function deleteOffering(offering) {
+    axios
+      .post("http://127.0.0.1:8000/services/remove_offering", {
+        user_token: $userTokenStore,
+        deleted_offering: offering,
+      })
+      .then((response) => {
+        let confirmation = response.data.status;
+        if (confirmation == "ok") {
+          alert("আপনার পণ্য/সার্ভিস বাতিল করা হয়েছে");
+        } else {
+          alert("কোনো একটি সমস্যা হয়েছে, আবার চেষ্টা করুন");
+        }
+      })
+      .catch((error) => {
+        alert("কোনো একটি সমস্যা হয়েছে, আবার চেষ্টা করুন");
+        console.log(error);
+      });
+  }
   export let cardContent;
 </script>
 
@@ -19,9 +41,13 @@
         <p class="card-text">
           {cardContent.offering_description}
         </p>
-        <p class="card-text">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </p>
+        <button
+          type="submit"
+          on:click={() => {
+            deleteOffering(cardContent);
+          }}
+          class="btn btn-danger rounded-pill">পণ্য/সার্ভিস বাতিল করুন</button
+        >
       </div>
     </div>
   </div>
