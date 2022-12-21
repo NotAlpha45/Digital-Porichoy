@@ -49,6 +49,7 @@ def add_offering(request: HttpRequest):
     service_id = verified_obj["uid"]
 
     offering_name = request_body["offering_name"]
+    offering_price = request_body["offering_price"]
     offering_description = request_body["offering_description"]
     offering_image_url = request_body["offering_image_url"]
     offering_image = request.FILES["offering_image"]
@@ -64,6 +65,7 @@ def add_offering(request: HttpRequest):
             "offerings": firestore.ArrayUnion([{
                 "offering_name": offering_name,
                 "offering_description": offering_description,
+                "offering_price": offering_price,
                 "offering_image_url": offering_image_url
             }])
         })
@@ -74,6 +76,21 @@ def add_offering(request: HttpRequest):
         return JsonResponse({
             "status": "unavailable"
         })
+
+
+async def get_offerings(request: HttpRequest):
+    request_body = request.GET
+    verified_obj = auth.verify_id_token(request_body["user_token"])
+    service_id = verified_obj["uid"]
+
+    service_instance = services_collection.document(service_id)
+    service_data = service_instance.get().to_dict()
+
+    offering_data = list(service_data["offerings"])
+
+    return JsonResponse({
+        "offerings": offering_data
+    })
 
 
 async def remove_offering(request: HttpRequest):

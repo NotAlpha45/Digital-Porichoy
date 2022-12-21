@@ -17,4 +17,5 @@ urlpatterns = [
     path('update_user_image', auth_module.update_user_image),
     path('save_image', image.save_image),
     path('get_image', image.get_image),
+    path('get_offerings', service.get_offerings)
 ]

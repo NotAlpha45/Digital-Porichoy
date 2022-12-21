@@ -2,6 +2,24 @@
   import { userTokenStore } from "../utility_functions";
   import axios from "axios";
   import { onMount } from "svelte";
+  import ProductCard from "../components/ProductCard.svelte";
+
+  let offerings = [];
+
+  async function getOfferings() {
+    await axios
+      .get("http://127.0.0.1:8000/services/get_offerings", {
+        params: {
+          user_token: $userTokenStore,
+        },
+      })
+      .then((response) => {
+        offerings = (response.data.offerings).reverse();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 
   let imageUrl = "blank-product-pic",
     filename,
@@ -12,6 +30,8 @@
   $: {
     userToken = $userTokenStore;
     filename = $userTokenStore.slice(0, 5) + String(Date.now());
+    getOfferings();
+    // console.log(offerings);
   }
 
   onMount(() => {
@@ -35,6 +55,7 @@
             let status = data.status;
             if (status == "ok") {
               alert("আপনার পণ্য/সার্ভিস যোগ হয়েছে");
+              getOfferings();
             } else if (status == "unavailable") {
               alert("আপনার কোনো স্টোর নেই");
             }
@@ -50,10 +71,10 @@
 <section>
   <div class="container h-100 d-flex justify-content-center align-items-center">
     <div class="col-md-6">
-      <h1 class="text-center mb-4">Add Your Product</h1>
+      <h1 class="text-center mb-4">পণ্য/সেবা যোগ করুন</h1>
       <form id="addProductForm" enctype="multipart/form-data">
         <div class="form-group">
-          <label for="productName">পণ্য/সার্ভিসের নাম লিখুনঃ</label>
+          <label for="productName">পণ্য/সেবার নাম লিখুনঃ</label>
           <input
             type="text"
             class="form-control"
@@ -63,7 +84,7 @@
           />
         </div>
         <div class="form-group">
-          <label for="productDescription">পণ্য/সার্ভিসের নাম বর্ণনা দিনঃ</label>
+          <label for="productDescription">পণ্য/সেবার নাম বর্ণনা দিনঃ</label>
           <textarea
             class="form-control"
             id="productDescription"
@@ -74,19 +95,19 @@
         </div>
 
         <div class="form-group">
-          <label for="productPrice">পণ্য ব সার্ভিসের দাম লিখুনঃ</label>
+          <label for="productPrice">পণ্য বা সেবার দাম লিখুনঃ</label>
           <input
             type="number"
             class="form-control"
             id="productPrice"
-            name="productPrice"
+            name="offering_price"
             min="0"
             required
           />
         </div>
 
         <div class="form-group">
-          <label for="productImage">পণ্য বা সার্ভিসের ছবি দিনঃ</label>
+          <label for="productImage">পণ্য বা সেবার ছবি দিনঃ</label>
           <input
             type="file"
             class="form-control-file"
@@ -117,6 +138,17 @@
           >পণ্য যোগ করুন</button
         >
       </form>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container h-100 d-flex justify-content-center align-items-center">
+    <div class="col-md-6">
+      <h1 class="text-center mb-4">আপনার পণ্য/সেবা সমূহ</h1>
+      {#each offerings as offering}
+        <ProductCard cardContent={offering} />
+      {/each}
     </div>
   </div>
 </section>
