@@ -112,7 +112,7 @@
 </script>
 
 <!-- <div class="d-flex justify-content-center"> -->
-  <div id="map" class="h-50 w-50" />
+  <div id="map"/>
 <!-- </div> -->
 
 <style>

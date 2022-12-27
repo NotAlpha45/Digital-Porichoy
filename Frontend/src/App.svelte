@@ -15,6 +15,8 @@
   import Logout from "./Pages/logout.svelte";
 
   import Dashboard from "./Pages/dashboard.svelte";
+  
+  import addProduct from "./Pages/add-product.svelte";
 
   import { isLoggedIn, userTokenStore } from "./utility_functions";
 
@@ -33,6 +35,7 @@
   router("/store", () => (page = Store));
 
   router("/dashboard", () => (page = Dashboard));
+  router("/add-product", () => (page = addProduct));
   router.start();
 </script>
 

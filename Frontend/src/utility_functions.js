@@ -2,6 +2,7 @@ import { writable } from "svelte/store";
 import { auth } from "./firebase_conf";
 
 let initialToken = localStorage.getItem("userToken");
+let initialSelectedService = localStorage.getItem("selectedService");
 let defaultToken;
 
 if (initialToken) {
@@ -9,7 +10,11 @@ if (initialToken) {
 }
 
 // Stores the currently selected service id, useful for navigation
-const serviceIdStore = writable("null");
+const serviceIdStore = writable(initialSelectedService);
+
+serviceIdStore.subscribe((serviceId) => {
+  localStorage.setItem("selectedService", serviceId);
+});
 
 const userTokenStore = writable(initialToken);
 

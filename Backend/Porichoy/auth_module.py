@@ -12,17 +12,34 @@ from .models import ImageStore
 
 
 def update_user_image(request: HttpRequest):
-    request_data = request.POST
+    image = request.FILES["content"]
+    name = request.POST["filename"]
 
-    filename = request_data["filename"]
-    image = request.POST["content"]
+    verified_obj = auth.verify_id_token(request.POST["token"])
+    current_user_id = verified_obj["uid"]
+    current_user_role = request.POST["role"]
 
-    print(image, filename)
+    current_collection = None
 
-    # image_store_obj = ImageStore(image_name=filename, image_content=image)
-    # image_store_obj.save()
+    if current_user_role == "customer":
+        current_collection = customers_collection
+    elif current_user_role == "provider":
+        current_collection = providers_collection
 
-    return HttpResponse("""OK""")
+    user_instance = current_collection.document(current_user_id)
+
+    previous_image = user_instance.get().to_dict()["credentials"]["image_url"]
+
+    ImageStore.objects.filter(image_name=previous_image).delete()
+
+    image_store_obj = ImageStore(image_name=name, image_content=image)
+    image_store_obj.save()
+
+    user_instance.update({
+        "credentials.image_url": name
+    })
+
+    return HttpResponse(200)
 
 
 async def update_user_info(request: HttpRequest):

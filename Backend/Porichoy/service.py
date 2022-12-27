@@ -7,6 +7,7 @@ from unittest import result
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, Http404, JsonResponse
 from .firebase_init import *
+from .models import ImageStore
 
 
 async def create_service(request: HttpRequest):
@@ -41,32 +42,64 @@ async def create_service(request: HttpRequest):
         )
 
 
-async def add_offering(request: HttpRequest):
+def add_offering(request: HttpRequest):
 
-    request_body = json.loads(request.body.decode("utf-8"))
-    service_id = request_body["service_id"]
-    new_offering = request_body["new_offering"]
+    request_body = request.POST
+    verified_obj = auth.verify_id_token(request_body["user_token"])
+    service_id = verified_obj["uid"]
+
+    offering_name = request_body["offering_name"]
+    offering_price = request_body["offering_price"]
+    offering_description = request_body["offering_description"]
+    offering_image_url = request_body["offering_image_url"]
+    offering_image = request.FILES["offering_image"]
 
     service_instance = services_collection.document(service_id)
     service_data = service_instance.get()
 
     if service_data.exists:
+        image_store_obj = ImageStore(
+            image_name=offering_image_url, image_content=offering_image)
+        image_store_obj.save()
         service_instance.update({
-            "offerings": firestore.ArrayUnion([new_offering])
+            "offerings": firestore.ArrayUnion([{
+                "offering_name": offering_name,
+                "offering_description": offering_description,
+                "offering_price": offering_price,
+                "offering_image_url": offering_image_url
+            }])
         })
-        return HttpResponse('''
-        <h1>New service offering added!</h1>
-        ''')
+        return JsonResponse({
+            "status": "ok"
+        })
     else:
-        return HttpResponse('''
-        <h1>The service does not exist!</h1>
-        ''')
+        return JsonResponse({
+            "status": "unavailable"
+        })
 
 
-async def remove_offering(request: HttpRequest):
+async def get_offerings(request: HttpRequest):
+    request_body = request.GET
+    verified_obj = auth.verify_id_token(request_body["user_token"])
+    service_id = verified_obj["uid"]
+
+    service_instance = services_collection.document(service_id)
+    service_data = service_instance.get().to_dict()
+
+    offering_data = list(service_data["offerings"])
+
+    return JsonResponse({
+        "offerings": offering_data
+    })
+
+
+def remove_offering(request: HttpRequest):
 
     request_body = json.loads(request.body.decode("utf-8"))
-    service_id = request_body["service_id"]
+
+    verified_obj = auth.verify_id_token(request_body["user_token"])
+    service_id = verified_obj["uid"]
+
     deleted_offering = request_body["deleted_offering"]
 
     service_instance = services_collection.document(service_id)
@@ -76,26 +109,45 @@ async def remove_offering(request: HttpRequest):
         service_instance.update({
             "offerings": firestore.ArrayRemove([deleted_offering])
         })
-        return HttpResponse('''
-        <h1>Service offering deleted!</h1>
-        ''')
+        ImageStore.objects.filter(
+            image_name=deleted_offering["offering_image_url"]).delete()
+        return JsonResponse({
+            "status": "ok"
+        })
     else:
-        return HttpResponse('''
-        <h1>The service does not exist!</h1>
-        ''')
+        return JsonResponse({
+            "status": "unavailable"
+        })
+
+
+async def get_my_service(request: HttpRequest):
+    request_params = request.GET
+
+    verified_obj = auth.verify_id_token(request_params["user_token"])
+
+    service_id = verified_obj["uid"]
+
+    result = services_collection.document(service_id).get().to_dict()
+
+    response_data = {
+        "result": result
+    }
+
+    return JsonResponse(response_data)
 
 
 async def get_service_by_id(request: HttpRequest):
     request_params = request.GET
+
     service_id = request_params["service_id"]
 
     result = services_collection.document(service_id).get().to_dict()
 
-    # print(result)
+    response_data = {
+        "result": result
+    }
 
-    return JsonResponse(
-        result
-    )
+    return JsonResponse(response_data)
 
 
 async def search_service(request: HttpRequest):

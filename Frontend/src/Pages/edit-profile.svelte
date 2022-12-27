@@ -7,7 +7,7 @@
   import { checkPassword, checkPhoneNumber } from "../utility_functions";
   import FormData from "form-data";
 
-  let user_token = $userTokenStore,
+  let userToken = $userTokenStore,
     name,
     role,
     username,
@@ -16,10 +16,10 @@
     userData,
     password = "",
     confirmPassword = "",
-    imageFilePath = null;
+    imageUrl = "blank-profile-pic";
 
   let request_body = {
-    token: user_token,
+    token: userToken,
   };
 
   axios
@@ -30,11 +30,23 @@
       username = userData.names.username;
       phone = userData.credentials.phone.slice(3);
       role = userData.names.role;
-      // console.log(userData);
+
+      // console.log(userData.credentials.image_url);
+
+      if (userData.credentials.image_url != "") {
+        imageUrl = userData.credentials.image_url;
+      }
     })
     .catch((error) => {
       console.log(error);
     });
+
+  let filename;
+
+  $: {
+    filename = phone + String(Date.now());
+    console.log(imageUrl);
+  }
 
   function handleSubmit() {
     let request_body;
@@ -44,7 +56,7 @@
         formattedPhone = "+88" + phone;
 
         request_body = {
-          token: user_token,
+          token: userToken,
           name: name,
           phone: formattedPhone,
           username: username,
@@ -68,7 +80,7 @@
         formattedPhone = "+88" + phone;
 
         request_body = {
-          token: user_token,
+          token: userToken,
           name: name,
           phone: formattedPhone,
           username: username,
@@ -89,28 +101,6 @@
       }
     }
   }
-
-  function changeImage() {
-    // let formData = new FormData();
-    // // The name that we will give the file is the user's phone and current timestamp
-    // let filename = phone + String(Date.now());
-    // formData.append("filename", filename);
-    // formData.append("token", $userTokenStore);
-    // console.log(typeof imageFilePath);
-    // const imageFile = fs.readFile(imageFilePath);
-    // formData.append("content", imageFile, imageFilePath);
-    // axios
-    //   .post("http://127.0.0.1:8000/auth/update_user_image", formData, {
-    //     "Content-Type": "multipart/form-data",
-    //   })
-    //   .then((response) => {
-    //     //handle success
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-  }
 </script>
 
 <!-- <link
@@ -129,27 +119,46 @@
       <div class="col-md-4">
         <div class="text-center">
           <img
-            src="http://127.0.0.1:8000/images/get_image?filename=blank-profile-pic"
+            src={`http://127.0.0.1:8000/images/get_image?filename=${imageUrl}`}
             class="avatar img-circle"
             alt="avatar"
             width="320px"
             height="320px"
           />
           <h6>অন্য ছবি আপলোড করুন</h6>
-          <form class="php-email-form">
+
+          <form
+            class="php-email-form"
+            method="post"
+            action="http://127.0.0.1:8000/auth/update_user_image"
+            enctype="multipart/form-data"
+          >
             <input
-              type="file"
+              type="hidden"
               class="form-control"
-              bind:value={imageFilePath}
+              name="filename"
+              value={filename}
             />
+            <input
+              type="hidden"
+              class="form-control"
+              name="role"
+              value={role}
+            />
+            <input
+              type="hidden"
+              class="form-control"
+              name="token"
+              value={userToken}
+            />
+            <input type="file" class="form-control" name="content" />
             <div class="form-group mt-3">
-              <button
-                type="button"
-                class="btn btn-success rounded-pill"
-                on:click={changeImage}>নতুন ছবি দিন</button
+              <button type="submit" class="btn btn-success rounded-pill"
+                >নতুন ছবি দিন</button
               >
             </div>
           </form>
+
           <!-- <input type="file" class="form-control" /> -->
         </div>
       </div>

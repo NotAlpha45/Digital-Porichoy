@@ -1,5 +1,21 @@
 <script>
   import { userTokenStore } from "../utility_functions";
+  import axios from "axios";
+
+  let userService = null;
+  // auth.currentUser.getIdToken(true).then((userToken) => {
+  //   console.log(userToken);
+  // });
+  axios
+    .get("http://127.0.0.1:8000/services/get_my_service", {
+      params: {
+        user_token: $userTokenStore,
+      },
+    })
+    .then((response) => {
+      // console.log(response);
+      userService = response.data.result;
+    });
 </script>
 
 <header id="header" class="header d-flex align-items-center">
@@ -16,7 +32,12 @@
         <li><a href="/services">Services</a></li>
         <li><a href="/map">Services Nearby</a></li>
         {#if $userTokenStore != "null" && $userTokenStore}
-          <li><a href="/store-registration">Create Store</a></li>
+          {#if userService !== null}
+            <li><a href="/add-product">Edit Store</a></li>
+          {:else}
+            <li><a href="/store-registration">Create Store</a></li>
+          {/if}
+
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/logout">Logout</a></li>
         {:else}
