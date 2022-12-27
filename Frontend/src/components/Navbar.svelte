@@ -7,7 +7,7 @@
   //   console.log(userToken);
   // });
   axios
-    .get("http://127.0.0.1:8000/services/get_service", {
+    .get("http://127.0.0.1:8000/services/get_my_service", {
       params: {
         user_token: $userTokenStore,
       },

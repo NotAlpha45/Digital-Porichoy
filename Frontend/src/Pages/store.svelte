@@ -2,9 +2,12 @@
   import axios from "axios";
   import Geolocation from "svelte-geolocation";
   import { onMount } from "svelte";
-  import { bind } from "svelte/internal";
   import { serviceIdStore } from "../utility_functions";
   import Map from "./map.svelte";
+
+  serviceIdStore.set(localStorage.getItem("selectedService"));
+
+  console.log(localStorage.getItem("selectedService"));
 
   let shops = [],
     shop,
@@ -17,22 +20,15 @@
     closingTime,
     closingDay;
 
-  serviceIdStore.subscribe((value) => {
-    selectedShop = value;
-  });
-
-  console.log(selectedShop);
-
   function mockGetStore() {
     axios
       .get("http://127.0.0.1:8000/services/get_service", {
         params: {
-          service_id: selectedShop,
+          service_id: $serviceIdStore,
         },
       })
       .then(function (response) {
-        console.log(response.data);
-        shops.push(response.data);
+        shops.push(response.data.result);
         shop = shops[0];
         shopName = shop.credentials.name;
         category = shop.credentials.category;
