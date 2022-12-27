@@ -58,7 +58,11 @@
       coords[1] = location.coords.latitude;
     });
 
-    if (coords !== [] && category !== null && district !== null) {
+    if (
+      (coords[0] != -1 || coords[1] != -1) &&
+      category !== null &&
+      district !== null
+    ) {
       let selectedCategory = category.split("/")[0].toLowerCase();
       let selectedDistrict = district.split("/")[0].toLowerCase();
       mockGetStore(selectedCategory, selectedDistrict);
@@ -177,8 +181,13 @@
                     class="btn btn-success rounded-pill"
                     on:click={getStore}
                     on:click={() => {
-                      let shopIndex = shop.credentials.provider_id;
-                      serviceIdStore.set(shopIndex);
+                      let serviceId = shop.credentials.provider_id;
+                      // serviceIdStore.set(shopIndex);
+
+                      localStorage.setItem("selectedService", serviceId);
+                      serviceIdStore.set(
+                        localStorage.getItem("selectedService")
+                      );
                     }}
                   >
                     {shop.credentials.name}
