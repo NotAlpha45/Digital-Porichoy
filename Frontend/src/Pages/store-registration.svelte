@@ -150,10 +150,11 @@
               aria-label="select-store"
               bind:value={category}
               placeholder="Select"
+              required
             >
               <option value="mechanic">Mechanic-মেকানিক</option>
               <option value="business">Business-ব্যবসা</option>
-              <option value="labour">Labour-শ্রমিক</option>
+              <option value="labour">Service/সেবা</option>
             </select>
           </div>
 
@@ -182,6 +183,7 @@
               aria-label="select-holiday"
               bind:value={closingDay}
               placeholder="Select"
+              required
             >
               <option value="Saturday-শনিবার">Saturday-শনিবার</option>
               <option value="Sunday-রবিবার">Sunday-রবিবার</option>
