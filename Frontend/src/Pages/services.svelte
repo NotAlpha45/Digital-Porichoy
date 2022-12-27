@@ -71,144 +71,114 @@
   }
 </script>
 
-<section id="portfolio" class="portfolio sections-bg">
-  <div class="container" data-aos="fade-up">
-    <div class="section-header">
-      <h2>Search For Service</h2>
-      <div class="row gx-lg-0 gy-4 justify-content-center">
-        <div class="col-4">
-          <div class="form-group mt-3 align-items-center">
-            <h5>খোঁজার অপশন দিন</h5>
-          </div>
-
-          <div class="form-container">
-            <form class="form-inline">
-              <div class="form-group mb-2">
-                <label for="category" class="sr-only">ধরণ পছন্দ করুন</label>
-                <select
-                  class="form-control"
-                  id="category"
-                  bind:value={category}
-                >
-                  <option>Mechanic/মেকানিক</option>
-                  <option>Service/সার্ভিস</option>
-                  <option>Business/ব্যবসা</option>
-                </select>
-              </div>
-              <div class="form-group mb-2">
-                <label for="district" class="sr-only">জেলা পছন্দ করুন</label>
-                <select
-                  class="form-control"
-                  id="district"
-                  bind:value={district}
-                >
-                  <option>Gazipur/গাজীপুর</option>
-                  <option>Dhaka/ঢাকা</option>
-                  <option>Rajshahi/রাজশাহী</option>
-                  <option>Rangpur/রংপুর</option>
-                </select>
-              </div>
-              <div class="form-check mb-2">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="show-all"
-                  bind:checked={showAll}
-                />
-                <label class="form-check-label" for="show-all"
-                  >সব দোকান/সেবা দেখান</label
-                >
-              </div>
-              <!-- <button
-                type="submit"
-                class="btn btn-success rounded-pill"
-                on:click={submit}>দোকান/সার্ভিস খুঁজুন</button
-              > -->
-            </form>
-          </div>
-
-          <!-- <div class="form-group mt-3">
-            <select
-              class="form-select"
-              aria-label="select-store"
-              bind:value={category}
-              placeholder="Select"
-            >
-              <option value="mechanic">Mechanic-মেকানিক</option>
-              <option value="business">Business-ব্যবসা</option>
-              <option value="labour">Labour-শ্রমিক</option>
-            </select>
-          </div> -->
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="portfolio" class="portfolio sections-bg">
-  <div class="container" data-aos="fade-up">
-    <div class="section-header">
-      <h2>Stores and Services</h2>
-    </div>
-
-    <div
-      class="portfolio-isotope"
-      data-portfolio-filter="*"
-      data-portfolio-layout="masonry"
-      data-portfolio-sort="original-order"
-      data-aos="fade-up"
-      data-aos-delay="10"
-    >
-      <div class="row gy-4 portfolio-container">
-        {#each shops as shop}
-          <div class="col-xl-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <a
-                href="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic2"
-                data-gallery="portfolio-gallery-app"
-                class="glightbox"
-                ><img
-                  src="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic2"
-                  class="img-fluid"
-                  alt=""
-                  href="/store"
-                /></a
-              >
-              <div class="portfolio-info">
-                <h4>
-                  <button
-                    type="button"
-                    class="btn btn-success rounded-pill"
-                    on:click={getStore}
-                    on:click={() => {
-                      let serviceId = shop.credentials.provider_id;
-                      // serviceIdStore.set(shopIndex);
-
-                      localStorage.setItem("selectedService", serviceId);
-                      serviceIdStore.set(
-                        localStorage.getItem("selectedService")
-                      );
-                    }}
-                  >
-                    {shop.credentials.name}
-                  </button>
-                  <!-- <a href="/store" title="More Details"
-                    >{shop.credentials.name}</a
-                  > -->
-                </h4>
-                <p>{shop.credentials.store_description}</p>
-              </div>
+  <!-- ======= Breadcrumbs ======= -->
+  <div class="breadcrumbs">
+    <div></div>
+      <div class="page-header d-flex align-items-center" style="background-image: url('');">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <div class="form-container">
+                  <form class="form-inline">
+                    <div class="form-group mb-2">
+                      <br>
+                      <label for="category" style="color: rgba(255, 255, 255, 0.8); font-weight: 900 ">ধরণ পছন্দ করুন</label>
+                      <select
+                        class="form-control"
+                        id="category"
+                        bind:value={category}
+                      >
+                        <option>Mechanic/মেকানিক</option>
+                        <option>Service/সার্ভিস</option>
+                        <option>Business/ব্যবসা</option>
+                      </select>
+                    </div>
+                    <div class="form-group mb-2">
+                      <label for="district" class="sr-only" style="color: rgba(255, 255, 255, 0.8); font-weight: 900 ">জেলা পছন্দ করুন</label>
+                      <select
+                        class="form-control"
+                        id="district"
+                        bind:value={district}
+                      >
+                        <option>Gazipur/গাজীপুর</option>
+                        <option>Dhaka/ঢাকা</option>
+                        <option>Rajshahi/রাজশাহী</option>
+                        <option>Rangpur/রংপুর</option>
+                      </select>
+                    </div>
+                    <div class="form-check col-md-4">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="show-all"
+                        bind:checked={showAll}
+                      />
+                      <label class="form-check-label" for="show-all" style="color: rgba(255, 255, 255, 0.8); font-weight: 900 "
+                        >সব দোকান/সেবা দেখান</label
+                      >
+                    </div>
+                    <!-- <button
+                      type="submit"
+                      class="btn btn-success rounded-pill"
+                      on:click={submit}>দোকান/সার্ভিস খুঁজুন</button
+                    > -->
+                  </form>
+                </div>
+      
             </div>
           </div>
-          <!-- End Portfolio Item -->
-        {/each}
+        </div>
       </div>
-      <!-- End Portfolio Container -->
-    </div>
-  </div>
-</section>
+      
+    </div><!-- End Breadcrumbs -->
 
-<!-- End Portfolio Section -->
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-in">
+
+        <div class="row gy-4 posts-list">
+          {#each shops as shop}
+          <div class="col-xl-4 col-md-6">
+            <article>
+
+              <div class="post-img">
+                <img src="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic2" alt="" class="img-fluid">
+              </div>
+
+              <p class="post-category">{shop.credentials.category}</p>
+
+              <h2 class="title">
+                  <button
+                  type="button"
+                  class="storebutton"
+                  on:click={getStore}
+                  on:click={() => {
+                    let serviceId = shop.credentials.provider_id;
+                    // serviceIdStore.set(shopIndex);
+
+                    localStorage.setItem("selectedService", serviceId);
+                    serviceIdStore.set(
+                      localStorage.getItem("selectedService")
+                    );
+                  }}
+                >
+                  {shop.credentials.name}
+                </button>
+              </h2>
+
+              
+
+            </article>
+          </div>
+          {/each}
+
+        </div><!-- End blog posts list -->
+
+        
+
+      </div>
+    </section><!-- End Blog Section -->
+
 <style>
   .form-container {
     display: flex;
@@ -216,4 +186,8 @@
     align-items: center;
     height: 100vh;
   }
+
+  
 </style>
+
+

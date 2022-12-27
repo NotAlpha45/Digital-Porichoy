@@ -11,6 +11,7 @@
   import StoreRegistration from "./Pages/store-registration.svelte";
   import Store from "./Pages/store.svelte";
   import Services from "./Pages/services.svelte";
+  import Services_Temp from "./Pages/services_temp.svelte";
   import { auth } from "./firebase_conf";
   import Logout from "./Pages/logout.svelte";
 
@@ -26,6 +27,7 @@
   router("/customer-login", () => (page = CustomerLogin));
   router("/map", () => (page = Map));
   router("/services", () => (page = Services));
+  router("/servicestemp", () => (page = Services_Temp));
   router("/logout", () => (page = Logout));
   router("/", () => (page = Home));
   router("/login", () => (page = Login));

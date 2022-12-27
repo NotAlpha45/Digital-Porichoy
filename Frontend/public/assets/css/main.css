@@ -2090,6 +2090,25 @@ section {
   color: var(--color-white);
 }
 
+.blog .storebutton {
+  background-color: #d1e4e4; 
+  border: none;
+  color: rgb(46, 156, 147);
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 8px;
+  
+}
+
+.blog .storebutton:hover {background-color: #96dbcc;}
+
 /*--------------------------------------------------------------
 # Blog Posts List
 --------------------------------------------------------------*/
