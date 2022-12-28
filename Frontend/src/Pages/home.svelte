@@ -1,5 +1,6 @@
 <script>
   import { auth } from "../firebase_conf";
+  
   import axios from "axios";
   import { userTokenStore } from "../utility_functions";
 
@@ -19,7 +20,7 @@
         <div class="d-flex justify-content-center justify-content-lg-start">
           <a href="#about" class="btn-get-started">Get Started - শুরু করুন</a>
           <a
-            href="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+            href= Map
             class="glightbox btn-watch-video d-flex align-items-center"
             ><i class="bi bi-play-circle" /><span>Watch Video - ভিডিও দেখুন</span></a
           >
