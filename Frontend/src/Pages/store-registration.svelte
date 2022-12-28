@@ -240,10 +240,9 @@
             />
           </div>
 
-          <div class="text-center form-group mt-3">
+          <div class="text-center">
             <button
               type="button"
-              class="btn btn-success rounded-pill"
               on:click={formSubmit}>Register - রেজিস্টার</button
             >
           </div>

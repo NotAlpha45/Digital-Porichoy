@@ -58,7 +58,7 @@
         />
       </div>
       <div class="col-lg-8 pt-4 pt-lg-0 content">
-        <h3>Name</h3>
+        <h3>{name}</h3>
         <div>
           <br />
         </div>
@@ -66,10 +66,7 @@
         <div class="row">
           <div class="col-lg-6">
             <ul>
-              <li>
-                <i class="bi bi-rounded-right" />
-                <strong>Name: </strong>{name}
-              </li>
+              
               <li>
                 <i class="bi bi-rounded-right" />
                 <strong>Username: </strong>{username}
