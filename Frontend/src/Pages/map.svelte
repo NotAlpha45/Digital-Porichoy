@@ -2,6 +2,7 @@
   //   import mapboxgl from "mapbox-gl/dist/mapbox-gl";
   import { onMount } from "svelte";
   import axios from "axios";
+  import router from "page";
 
   let user_longitude = null,
     user_latitude = null;
@@ -9,6 +10,10 @@
   let shops = [],
     category = "Mechanic/মেকানিক",
     district = "Gazipur/গাজীপুর";
+
+  function getStore() {
+    router.redirect("/store");
+  }
 
   async function mockGetStore(category, district) {
     await axios
@@ -73,6 +78,9 @@
     //   console.log(coords);
     // });
   }
+  function displayButton() {
+    console.log("I was pressed again!");
+  }
 
   function displayShopsOnMap(shops) {
     console.log(shops);
@@ -87,20 +95,43 @@
       marker.style.backgroundImage = "url(images/placeholder.png)";
       marker.style.width = "18px";
       marker.style.height = "16px";
-      //   marker.style.borderRadius = "50%";
+      marker.style.borderRadius = "50%";
 
       // make a marker for each shop and add to the map
 
-      new mapboxgl.Marker(marker)
-        .setLngLat([shop.location.long, shop.location.lat])
-        .setPopup(
-          new mapboxgl.Popup({ offset: 25 }) // add popups
-            .setHTML(
-              `<h3>${shop.credentials.name}</h3><p>${shop.credentials.category}</p>`
-            )
-        )
-        .addTo(map);
+      let popupObject = new mapboxgl.Popup({ offset: 25 }) // add popups
+        .setHTML(
+          `
+          
+            <div class="col-xl-4 col-md-6">
+            <article>
+              <p class="post-category">${shop.credentials.category}</p>
+
+              <h6 class="title">
+                  ${shop.credentials.name}
+              </h6>
+            </article>
+          </div>`
+        );
+
+      // popupObject.getElementById().addEventListener("click", () => {
+      //   // your logic here
+      //   console.log("OK");
+      // });
+      popupObject.setLngLat([shop.location.long, shop.location.lat]).addTo(map);
+      // new mapboxgl.Marker(marker)
+      //   .setLngLat([shop.location.long, shop.location.lat])
+      //   .setPopup(popupObject)
+      //   .addTo(map);
+
+      // document.getElementById("storeButton").addEventListener("click", () => {
+      //   alert("OK");
+      // });
     }
+    // const btn = document.getElementsById("storeButton");
+    // btn.addEventListener("click", () => {
+    //   console.log("hello");
+    // });
   }
 
   $: {

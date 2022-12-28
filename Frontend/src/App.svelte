@@ -10,6 +10,7 @@
   import router from "page";
   import StoreRegistration from "./Pages/store-registration.svelte";
   import Store from "./Pages/store.svelte";
+  import MyStore from "./Pages/my-store.svelte";
   import Services from "./Pages/services.svelte";
   import Services_Temp from "./Pages/services_temp.svelte";
   import { auth } from "./firebase_conf";
@@ -35,6 +36,7 @@
   router("/signup", () => (page = Signup));
   router("/store-registration", () => (page = StoreRegistration));
   router("/store", () => (page = Store));
+  router("/mystore", () => (page = MyStore));
 
   router("/dashboard", () => (page = Dashboard));
   router("/add-product", () => (page = addProduct));
