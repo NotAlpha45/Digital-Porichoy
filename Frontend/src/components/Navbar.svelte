@@ -33,7 +33,7 @@
         <li><a href="/map">Services Nearby</a></li>
         {#if $userTokenStore != "null" && $userTokenStore}
           {#if userService !== null}
-            <li><a href="/add-product">Edit Store</a></li>
+            <li><a href="/mystore">My Store</a></li>
           {:else}
             <li><a href="/store-registration">Create Store</a></li>
           {/if}

@@ -1,4 +1,5 @@
 <script>
+  import Map from "./map.svelte"
   import axios from "axios";
   import router, { show } from "page";
   import { serviceIdStore } from "../utility_functions";
@@ -135,6 +136,8 @@
     <!-- ======= Blog Section ======= -->
     <section id="blog" class="blog">
       <div class="container" data-aos="fade-in">
+        
+    
 
         <div class="row gy-4 posts-list">
           {#each shops as shop}
@@ -171,6 +174,7 @@
             </article>
           </div>
           {/each}
+          
 
         </div><!-- End blog posts list -->
 

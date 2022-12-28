@@ -1,5 +1,6 @@
 <script>
   import { auth } from "../firebase_conf";
+  
   import axios from "axios";
   import { userTokenStore } from "../utility_functions";
 
@@ -17,9 +18,9 @@
           A platform for small business-owners to create an online signature and for clients to connect with them.
         </p>
         <div class="d-flex justify-content-center justify-content-lg-start">
-          <a href="#about" class="btn-get-started">Get Started - শুরু করুন</a>
+          <a href=services class="btn-get-started">Get Started - শুরু করুন</a>
           <a
-            href="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+            href= "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             class="glightbox btn-watch-video d-flex align-items-center"
             ><i class="bi bi-play-circle" /><span>Watch Video - ভিডিও দেখুন</span></a
           >
