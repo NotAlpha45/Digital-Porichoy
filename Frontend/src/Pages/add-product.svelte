@@ -67,11 +67,13 @@
   });
 </script>
 
-<section>
+<section id="contact" class="contact">
   <div class="container h-100 d-flex justify-content-center align-items-center">
     <div class="col-md-6">
-      <h1 class="text-center mb-4">পণ্য/সেবা যোগ করুন</h1>
-      <form id="addProductForm" enctype="multipart/form-data">
+      <div class="section-header">
+        <h2>পণ্য/সেবা যোগ করুন</h2>
+      </div>
+      <form class="php-email-form" id="addProductForm" enctype="multipart/form-data">
         <div class="form-group">
           <label for="productName">পণ্য/সেবার নাম লিখুনঃ</label>
           <input
