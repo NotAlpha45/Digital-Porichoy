@@ -2,7 +2,6 @@
   import axios from "axios";
   import router from "page";
   import { checkPhoneNumber, checkPassword } from "../utility_functions";
-  import Map from "./map.svelte";
 
   let name,
     username,
@@ -62,7 +61,6 @@
 
 <section id="contact" class="contact">
   <div class="container" data-aos="fade-up">
-    <Map/>
     <div class="section-header">
       <h2>Sign Up - সাইন আপ</h2>
       <p>নিজের ব্যবসার পরিচিতি তৈরি করুন এক মুহূর্তেই!</p>

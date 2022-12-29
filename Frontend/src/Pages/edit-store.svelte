@@ -4,13 +4,10 @@
   import { onMount } from "svelte";
   import { serviceIdStore } from "../utility_functions";
   import { userTokenStore } from "../utility_functions";
-  import Map from "./map.svelte";
+  import router from "page";
 
-  import ProductCard from "../components/ProductCard.svelte";
-
-  serviceIdStore.set(localStorage.getItem("selectedService"));
-
-  console.log(localStorage.getItem("selectedService"));
+  const placeHolderImage = "assets/img/blog/blog-1.jpg";
+  let displayImage = placeHolderImage;
 
   let shops = [],
     shop = "",
@@ -21,14 +18,19 @@
     proprietor = "",
     openingTime = "",
     closingTime = "",
-    closingDay = "";
+    closingDay = "",
+    imageUrl = "",
+    serviceId = "";
+
   let offerings = [];
+
+  let imageName = "";
 
   function mockGetStore() {
     axios
-      .get("http://127.0.0.1:8000/services/get_service", {
+      .get("http://127.0.0.1:8000/services/get_my_service", {
         params: {
-          service_id: $serviceIdStore,
+          user_token: $userTokenStore,
         },
       })
       .then(function (response) {
@@ -42,18 +44,59 @@
         closingTime = shop.credentials.closing_time;
         closingDay = shop.credentials.closing_day;
         offerings = shop.offerings;
-        console.log(offerings);
+        serviceId = shop.credentials.provider_id;
+
+        try {
+          imageUrl = shop.credentials.image_url;
+          displayImage = `http://127.0.0.1:8000/images/get_image?filename=${imageUrl}`;
+        } catch (err) {
+          console.error(err);
+          displayImage = placeHolderImage;
+        }
       });
   }
   $: {
     mockGetStore();
+
+    imageName = "store" + $userTokenStore.slice(0, 5) + String(Date.now());
   }
+
+  onMount(() => {
+    const imageForm = document.getElementById("imageForm");
+
+    imageForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const imageFormData = new FormData(imageForm);
+
+      // Make an HTTP request to the server
+      fetch("http://127.0.0.1:8000/services/edit_service_image", {
+        method: "POST",
+        body: imageFormData,
+      })
+        .then(function (response) {
+          response.json().then(function (data) {
+            let status = data.status;
+            console.log(status);
+            if (status == "ok") {
+              alert("আপনার ছবি যোগ হয়েছে");
+              router.redirect("/mystore");
+            } else if (status == "unavailable") {
+              alert("আপনার কোনো স্টোর নেই");
+            }
+          });
+        })
+        .catch((error) => {
+          alert("কোনো একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+        });
+    });
+  });
   // mockGetStore();
 </script>
 
 <!-- <Geolocation getPosition let:coords>
-  {console.log(coords)}
-</Geolocation> -->
+      {console.log(coords)}
+    </Geolocation> -->
 <main id="main">
   <section id="blog" class="blog">
     <div class="container" data-aos="fade">
@@ -61,7 +104,33 @@
         <div class="col-lg-8">
           <article class="blog-details">
             <div class="post-img">
-              <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid" />
+              <img src={displayImage} alt="" class="img-fluid" />
+            </div>
+            <div>
+              <form
+                id="imageForm"
+                class="php-email-form"
+                enctype="multipart/form-data"
+              >
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="filename"
+                  value={imageName}
+                />
+                <input
+                  type="hidden"
+                  class="form-control"
+                  name="service_id"
+                  value={serviceId}
+                />
+                <input type="file" class="form-control" name="content" />
+                <div class="form-group mt-3">
+                  <button type="submit" class="btn btn-success rounded-pill"
+                    >নতুন ছবি দিন</button
+                  >
+                </div>
+              </form>
             </div>
 
             <h1 class="title">{shopName}</h1>
@@ -70,54 +139,17 @@
               <ul>
                 <li class="d-flex align-items-center">
                   <i class="bi bi-person" />
-                  <h5>{proprietor}</h5>
+                  <a href="blog-details.html">{proprietor}</a>
                 </li>
               </ul>
             </div>
             <!-- End meta top -->
           </article>
           <br />
-          <article class="blog-details">
-            <h1 class="title">Products/Services</h1>
-
-            <div
-              class="container h-100 d-flex justify-content-center align-items-center"
-            >
-              <div class="col-md-12">
-                {#each offerings as offering}
-                  <br />
-                  <article class="blog-details">
-                    <div class="row no-gutters">
-                      <div class="col-md-4">
-                        <img
-                          src={`http://127.0.0.1:8000/images/get_image?filename=${offering.offering_image_url}`}
-                          alt=""
-                          class="card-img"
-                        />
-                      </div>
-
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h4 class="card-title">
-                            <strong>{offering.offering_name}</strong>
-                          </h4>
-                          <h5 class="card-text">
-                            দামঃ {offering.offering_price}৳
-                          </h5>
-                          <p class="card-text">
-                            {offering.offering_description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                {/each}
-              </div>
-            </div>
-          </article>
+          <article class="blog-details" />
           <!-- <div>
-            <Map />
-          </div> -->
+                <Map />
+              </div> -->
         </div>
 
         <div class="col-lg-4">
@@ -156,6 +188,7 @@
             <!-- End sidebar categories-->
           </div>
           <br />
+
           <!-- End Blog Sidebar -->
         </div>
       </div>

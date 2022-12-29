@@ -2,20 +2,26 @@
   import { userTokenStore } from "../utility_functions";
   import axios from "axios";
 
-  let userService = null;
+  let serviceExists = false;
   // auth.currentUser.getIdToken(true).then((userToken) => {
   //   console.log(userToken);
   // });
-  axios
-    .get("http://127.0.0.1:8000/services/get_my_service", {
-      params: {
-        user_token: $userTokenStore,
-      },
-    })
-    .then((response) => {
-      // console.log(response);
-      userService = response.data.result;
-    });
+  $: {
+    axios
+      .get("http://127.0.0.1:8000/services/service_exists", {
+        params: {
+          user_token: $userTokenStore,
+        },
+      })
+      .then((response) => {
+        // console.log(response);
+        serviceExists = response.data.status;
+        // console.log(serviceExists);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 </script>
 
 <header id="header" class="header d-flex align-items-center">
@@ -32,7 +38,7 @@
         <li><a href="/services">Services</a></li>
         <li><a href="/map">Services Nearby</a></li>
         {#if $userTokenStore != "null" && $userTokenStore}
-          {#if userService !== null}
+          {#if serviceExists != false}
             <li><a href="/mystore">My Store</a></li>
           {:else}
             <li><a href="/store-registration">Create Store</a></li>

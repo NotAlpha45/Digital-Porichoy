@@ -42,6 +42,63 @@ async def create_service(request: HttpRequest):
         )
 
 
+def edit_service_image(request: HttpRequest):
+    request_body = request.POST
+    service_id = request_body["service_id"]
+    filename = request_body["filename"]
+    image = request.FILES["content"]
+
+    service_instance = services_collection.document(service_id)
+
+    if service_instance.get().exists:
+        service_instance.update({
+            "credentials.image_url": filename
+        })
+        image_store_obj = ImageStore(image_name=filename, image_content=image)
+        image_store_obj.save()
+
+        return JsonResponse({
+            "status": "ok"
+        })
+    else:
+        return JsonResponse({
+            "status": "unavailable"
+        })
+
+
+async def edit_service(requrest: HttpRequest):
+    request_body = requrest.POST
+    verified_obj = auth.verify_id_token(request_body["user_token"])
+    service_id = verified_obj["uid"]
+    service_instance = services_collection.document(service_id)
+
+    new_closing_day = request_body["new_closing_day"]
+    new_opening_time = request_body["new_opening_time"]
+    new_closing_time = request_body["new_closing_time"]
+
+    new_name = request_body["new_name"]
+    new_phone = request_body["new_phone"]
+    new_store_description = request_body["new_store_description"]
+
+    if service_instance.get().exists:
+        service_instance.update({
+            "credentials.name": new_name,
+            "credentials.store_decription": new_store_description,
+            "credentials.phone": new_phone,
+            "credentials.closing_day": new_closing_day,
+            "credentials.closing_time": new_closing_time,
+            "credentials.opening_time": new_opening_time
+        })
+
+        return JsonResponse({
+            "status": "ok"
+        })
+    else:
+        return JsonResponse({
+            "status": "unavailable"
+        })
+
+
 def add_offering(request: HttpRequest):
 
     request_body = request.POST
@@ -134,6 +191,25 @@ async def get_my_service(request: HttpRequest):
     }
 
     return JsonResponse(response_data)
+
+
+async def service_exists(request: HttpRequest):
+    request_params = request.GET
+
+    verified_obj = auth.verify_id_token(request_params["user_token"])
+
+    service_id = verified_obj["uid"]
+
+    service_instance = services_collection.document(service_id).get()
+
+    if service_instance.exists:
+        return JsonResponse({
+            "status": True
+        })
+    else:
+        return JsonResponse({
+            "status": False
+        })
 
 
 async def get_service_by_id(request: HttpRequest):

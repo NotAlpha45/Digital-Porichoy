@@ -10,16 +10,20 @@
 
   console.log(localStorage.getItem("selectedService"));
 
+  const placeHolderImage = "assets/img/blog/blog-1.jpg";
+  let displayImage = placeHolderImage;
+
   let shops = [],
-    shop,
+    shop = "",
     selectedShop,
-    shopName,
-    category,
-    description,
-    proprietor,
-    openingTime,
-    closingTime,
-    closingDay;
+    shopName = "",
+    category = "",
+    description = "",
+    proprietor = "",
+    openingTime = "",
+    closingTime = "",
+    closingDay = "",
+    imageUrl = "";
 
   let offerings = [];
 
@@ -42,6 +46,14 @@
         closingDay = shop.credentials.closing_day;
         offerings = shop.offerings;
         console.log(offerings);
+
+        try {
+          imageUrl = shop.credentials.image_url;
+          displayImage = `http://127.0.0.1:8000/images/get_image?filename=${imageUrl}`;
+        } catch (err) {
+          console.error(err);
+          displayImage = placeHolderImage;
+        }
       });
   }
   $: {
@@ -60,7 +72,7 @@
         <div class="col-lg-8">
           <article class="blog-details">
             <div class="post-img">
-              <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid" />
+              <img src={displayImage} alt="" class="img-fluid" />
             </div>
 
             <h1 class="title">{shopName}</h1>
@@ -69,7 +81,7 @@
               <ul>
                 <li class="d-flex align-items-center">
                   <i class="bi bi-person" />
-                  <a href="blog-details.html">{proprietor}</a>
+                  <a href="/dashboard"><h5>{proprietor}</h5></a>
                 </li>
               </ul>
             </div>
@@ -158,9 +170,17 @@
           <div class="sidebar">
             <div class="sidebar-item categories">
               <ul class="mt-3">
-                <li><a href="/add-product" style="color: teal;"><i class="bi bi-plus-circle"></i> Add Product</a></li>
-                
-                <li><a href="/editstore" style="color: teal;"><i class="bi bi-pencil-square"></i> Edit Store</a></li>
+                <li>
+                  <a href="/add-product" style="color: teal;"
+                    ><i class="bi bi-plus-circle" /> Add Product</a
+                  >
+                </li>
+
+                <li>
+                  <a href="/editstore" style="color: teal;"
+                    ><i class="bi bi-pencil-square" /> Edit Store</a
+                  >
+                </li>
               </ul>
             </div>
 

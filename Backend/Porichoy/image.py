@@ -19,7 +19,10 @@ def get_image(request: HttpRequest):
 
     name = request.GET["filename"]
 
-    response = HttpResponse(ImageStore.objects.get(
-        image_name=name).image_content.read(), content_type="image/jpeg")
-
-    return response
+    try:
+        response = HttpResponse(ImageStore.objects.get(
+            image_name=name).image_content.read(), content_type="image/jpeg")
+        return response
+    except ImageStore.DoesNotExist:
+        return HttpResponse(ImageStore.objects.get(
+            image_name="store_placeholder").image_content.read(), content_type="image/jpeg")

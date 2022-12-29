@@ -17,8 +17,10 @@
   import Logout from "./Pages/logout.svelte";
 
   import Dashboard from "./Pages/dashboard.svelte";
-  
+
   import addProduct from "./Pages/add-product.svelte";
+
+  import EditStore from "./Pages/edit-store.svelte";
 
   import { isLoggedIn, userTokenStore } from "./utility_functions";
 
@@ -37,6 +39,9 @@
   router("/store-registration", () => (page = StoreRegistration));
   router("/store", () => (page = Store));
   router("/mystore", () => (page = MyStore));
+  router("/editstore", () => {
+    page = EditStore;
+  });
 
   router("/dashboard", () => (page = Dashboard));
   router("/add-product", () => (page = addProduct));
