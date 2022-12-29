@@ -20,7 +20,8 @@
     closingTime = "",
     closingDay = "",
     imageUrl = "",
-    serviceId = "";
+    serviceId = "",
+    shopPhone = "";
 
   let offerings = [];
 
@@ -45,6 +46,7 @@
         closingDay = shop.credentials.closing_day;
         offerings = shop.offerings;
         serviceId = shop.credentials.provider_id;
+        shopPhone = shop.credentials.phone;
 
         try {
           imageUrl = shop.credentials.image_url;
@@ -63,6 +65,34 @@
 
   onMount(() => {
     const imageForm = document.getElementById("imageForm");
+    const editProfileForm = document.getElementById("editProfileForm");
+
+    editProfileForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const editProfileFormData = new FormData(editProfileForm);
+
+      // Make an HTTP request to the server
+      fetch("http://127.0.0.1:8000/services/edit_service", {
+        method: "POST",
+        body: editProfileFormData,
+      })
+        .then(function (response) {
+          response.json().then(function (data) {
+            let status = data.status;
+            console.log(status);
+            if (status == "ok") {
+              alert("আপনার সার্ভিস আপডেট হয়েছে হয়েছে");
+              router.redirect("/mystore");
+            } else if (status == "unavailable") {
+              alert("কোনো সমস্যা হয়েছে, আবার চেষ্টা করুন");
+            }
+          });
+        })
+        .catch((error) => {
+          alert("কোনো একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+        });
+    });
 
     imageForm.addEventListener("submit", function (event) {
       event.preventDefault();
@@ -146,7 +176,103 @@
             <!-- End meta top -->
           </article>
           <br />
-          <article class="blog-details" />
+          <article class="blog-details">
+            <div class="container" data-aos="fade-up">
+              <div class="section-header">
+                <h2>নিজের স্টোর আপডেট করুন</h2>
+              </div>
+
+              <div class="row gx-lg-0 gy-4">
+                <div class="col-4" />
+                <div class="col-4">
+                  <form class="php-email-form" id="editProfileForm">
+                    <input
+                      type="hidden"
+                      class="form-control"
+                      name="user_token"
+                      value={$userTokenStore}
+                    />
+                    <div class="form-group mt-3">
+                      দোকানের নাম পরিবর্তন করুন
+                      <input
+                        type="text"
+                        name="new_name"
+                        class="form-control"
+                        required
+                        bind:value={shopName}
+                      />
+                    </div>
+
+                    <div class="form-group mt-3">
+                      খোলার সময়, বন্ধ করার সময় এবং ছুটির দিন সিলেক্ট করুন
+                      <input
+                        type="time"
+                        class="form-control"
+                        name="new_opening_time"
+                        placeholder="খোলার সময় সিলেক্ট করুন"
+                        bind:value={openingTime}
+                      />
+                      <input
+                        type="time"
+                        class="form-control"
+                        name="new_closing_time"
+                        placeholder="বন্ধ করার সময় সিলেক্ট করুন"
+                        bind:value={closingTime}
+                      />
+                      <select
+                        class="form-select"
+                        aria-label="select-holiday"
+                        name="new_closing_day"
+                        bind:value={closingDay}
+                      >
+                        <option value="Saturday-শনিবার">Saturday-শনিবার</option>
+                        <option value="Sunday-রবিবার">Sunday-রবিবার</option>
+                        <option value="Monday-সোমবার">Monday-সোমবার</option>
+                        <option value="Tuesday-মঙ্গলবার"
+                          >Tuesday-মঙ্গলবার</option
+                        >
+                        <option value="Wednesday-বুধবার"
+                          >Wednesday-বুধবার</option
+                        >
+                        <option value="Thursday-বৃহষ্পতিবার"
+                          >Thursday-বৃহষ্পতিবার</option
+                        >
+                        <option value="Friday-শুক্রবার">Friday-শুক্রবার</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group mt-3">
+                      স্টোরের ফোন পরিবর্তন করুন
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="new_phone"
+                        id="phone"
+                        bind:value={shopPhone}
+                      />
+                    </div>
+
+                    <div class="form-group mt-3">
+                      স্টোরের বর্ণনা লিখুন
+                      <textarea
+                        class="form-control"
+                        name="new_store_description"
+                        id="desciption"
+                        bind:value={description}
+                      />
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-success rounded-pill"
+                        >আপডেট করুন</button
+                      >
+                    </div>
+                  </form>
+                </div>
+                <!-- End Contact Form -->
+              </div>
+            </div>
+          </article>
           <!-- <div>
                 <Map />
               </div> -->
