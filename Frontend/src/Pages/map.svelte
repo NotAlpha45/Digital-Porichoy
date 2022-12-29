@@ -3,6 +3,8 @@
   import { onMount } from "svelte";
   import axios from "axios";
   import router from "page";
+  
+  import { serviceIdStore } from "../utility_functions";
 
   let user_longitude = null,
     user_latitude = null;
@@ -169,13 +171,12 @@
 <!-- <div class="d-flex justify-content-center"> -->
 <div id="map" />
 <div class="breadcrumbs">
-  <div />
   <div
     class="page-header d-flex align-items-center"
     style="background-image: url(''); background-color:transparent; max-width:110vh; max-height:50vh"
   >
     <div class="col-lg-6 text-center">
-      <div class="row d-flex justify-content-center">
+      <div class="row d-flex justify-content-left" style="padding-left: 2vh;">
         <div class="col-lg-6 text-center">
           <div class="form-container">
             <form class="form-inline" id="searchForm">
@@ -216,13 +217,55 @@
                 >দোকান/সার্ভিস খুঁজুন</button
               >
             </form>
+
+            
           </div>
         </div>
+
+        
+
       </div>
+      
     </div>
+    
   </div>
+  
 </div>
 <!-- End Breadcrumbs -->
+<div class="fixed-bottom">
+  <section id="blog" class="blog" style="padding-bottom: 3vh ; padding-top:1vh">
+  <div class="row gy-4 posts-list" style="padding-left: 1vh; ">
+    {#each shops as shop}
+    <div class="col-sm-1">
+      
+
+            <button
+            type="button"
+            style="padding: 1vh; width: 15vh; box-shadow: 0 5px 5px 0 rgba(0,0,0,0.1), 0 6px 10px 0 rgba(0,0,0,0.19);"
+            class="storebutton"
+            on:click={getStore}
+            on:click={() => {
+              let serviceId = shop.credentials.provider_id;
+              // serviceIdStore.set(shopIndex);
+
+              localStorage.setItem("selectedService", serviceId);
+              serviceIdStore.set(
+                localStorage.getItem("selectedService")
+              );
+            }}
+          >
+            {shop.credentials.name}
+          </button>
+
+        
+    </div>
+    {/each}
+   
+
+  </div><!-- End blog posts list -->
+ </section></div>
+
+
 
 <!-- </div> -->
 <style>
