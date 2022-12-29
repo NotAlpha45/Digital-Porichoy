@@ -39,7 +39,9 @@ def update_user_image(request: HttpRequest):
         "credentials.image_url": name
     })
 
-    return HttpResponse(200)
+    return JsonResponse({
+        "status": "ok"
+    })
 
 
 async def update_user_info(request: HttpRequest):

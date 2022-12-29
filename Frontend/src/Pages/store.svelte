@@ -13,15 +13,17 @@
   console.log(localStorage.getItem("selectedService"));
 
   let shops = [],
-    shop,
-    selectedShop,
-    shopName,
-    category,
-    description,
-    proprietor,
-    openingTime,
-    closingTime,
-    closingDay;
+    shop = "",
+    selectedShop = "",
+    shopName = "",
+    category = "",
+    description = "",
+    proprietor = "",
+    openingTime = "",
+    closingTime = "",
+    closingDay = "",
+    phone = "";
+    
   let offerings = [];
 
   function mockGetStore() {
@@ -42,7 +44,8 @@
         closingTime = shop.credentials.closing_time;
         closingDay = shop.credentials.closing_day;
         offerings = shop.offerings;
-        console.log(offerings);
+        phone = shop.credentials.phone;
+        // console.log(offerings);
       });
   }
   $: {
@@ -70,13 +73,13 @@
               <ul>
                 <li class="d-flex align-items-center">
                   <i class="bi bi-person" />
-                  <a href="blog-details.html">{proprietor}</a>
+                  <h5>{proprietor} {phone}</h5>
                 </li>
               </ul>
             </div>
             <!-- End meta top -->
           </article>
-          <br>
+          <br />
           <article class="blog-details">
             <h1 class="title">Products/Services</h1>
 
@@ -98,12 +101,15 @@
 
                       <div class="col-md-8">
                         <div class="card-body">
-                          <h4 class="card-title"><strong>{offering.offering_name}</strong></h4>
-                          <h5 class="card-text">দামঃ {offering.offering_price}৳</h5>
+                          <h4 class="card-title">
+                            <strong>{offering.offering_name}</strong>
+                          </h4>
+                          <h5 class="card-text">
+                            দামঃ {offering.offering_price}৳
+                          </h5>
                           <p class="card-text">
                             {offering.offering_description}
                           </p>
-                          
                         </div>
                       </div>
                     </div>
@@ -125,10 +131,10 @@
                 <li>{category}</li>
               </ul>
             </div>
-            
+
             <!-- End sidebar categories-->
           </div>
-<br>
+          <br />
           <div class="sidebar">
             <div class="sidebar-item categories">
               <h3 class="sidebar-title">About</h3>
@@ -136,10 +142,10 @@
                 <li>{description}</li>
               </ul>
             </div>
-            
+
             <!-- End sidebar categories-->
           </div>
-<br>
+          <br />
           <div class="sidebar">
             <div class="sidebar-item categories">
               <h3 class="sidebar-title">Service Hours</h3>
@@ -149,10 +155,11 @@
                 <li><b>Off-day:</b> {closingDay}</li>
               </ul>
             </div>
-            
+
             <!-- End sidebar categories-->
           </div>
-<br>          <!-- End Blog Sidebar -->
+          <br />
+          <!-- End Blog Sidebar -->
         </div>
       </div>
     </div>

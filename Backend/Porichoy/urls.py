@@ -19,4 +19,7 @@ urlpatterns = [
     path('get_image', image.get_image),
     path('get_offerings', service.get_offerings),
     path('get_my_service', service.get_my_service),
+    path('service_exists', service.service_exists),
+    path('edit_service', service.edit_service),
+    path("edit_service_image", service.edit_service_image)
 ]

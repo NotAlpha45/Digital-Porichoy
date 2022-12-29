@@ -1,7 +1,7 @@
 <script>
   import axios from "axios";
   import router from "page";
-  import { empty } from "svelte/internal";
+  import { empty, onMount } from "svelte/internal";
   import { auth, signInWithCustomToken } from "../firebase_conf";
   import { userTokenStore } from "../utility_functions";
   import { checkPassword, checkPhoneNumber } from "../utility_functions";
@@ -101,6 +101,37 @@
       }
     }
   }
+
+  onMount(() => {
+    const userImageForm = document.getElementById("userImageForm");
+
+    userImageForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const userImageFormData = new FormData(userImageForm);
+
+      // Make an HTTP request to the server
+      fetch("http://127.0.0.1:8000/auth/update_user_image", {
+        method: "POST",
+        body: userImageFormData,
+      })
+        .then(function (response) {
+          response.json().then(function (data) {
+            let status = data.status;
+            console.log(status);
+            if (status == "ok") {
+              alert("আপনার ছবি যোগ হয়েছে");
+              router.redirect("/dashboard");
+            } else if (status == "unavailable") {
+              alert("আপনার কোনো স্টোর নেই");
+            }
+          });
+        })
+        .catch((error) => {
+          alert("কোনো একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।");
+        });
+    });
+  });
 </script>
 
 <!-- <link
@@ -128,9 +159,8 @@
           <h6>অন্য ছবি আপলোড করুন</h6>
 
           <form
+            id="userImageForm"
             class="php-email-form"
-            method="post"
-            action="http://127.0.0.1:8000/auth/update_user_image"
             enctype="multipart/form-data"
           >
             <input

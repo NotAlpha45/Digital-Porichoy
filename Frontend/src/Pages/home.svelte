@@ -1,9 +1,27 @@
 <script>
   import { auth } from "../firebase_conf";
-  
+
   import axios from "axios";
   import { userTokenStore } from "../utility_functions";
 
+  let serviceExists = false;
+
+  $: {
+    axios
+      .get("http://127.0.0.1:8000/services/service_exists", {
+        params: {
+          user_token: $userTokenStore,
+        },
+      })
+      .then((response) => {
+        // console.log(response);
+        serviceExists = response.data.status;
+        console.log(serviceExists);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 </script>
 
 <!-- ======= Hero Section ======= -->
@@ -15,14 +33,17 @@
       >
         <h2>Welcome to <br /><span>Digital পরিচয়</span></h2>
         <p>
-          A platform for small business-owners to create an online signature and for clients to connect with them.
+          A platform for small business-owners to create an online signature and
+          for clients to connect with them.
         </p>
         <div class="d-flex justify-content-center justify-content-lg-start">
-          <a href=services class="btn-get-started">Get Started - শুরু করুন</a>
+          <a href="services" class="btn-get-started">Get Started - শুরু করুন</a>
           <a
-            href= "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
             class="glightbox btn-watch-video d-flex align-items-center"
-            ><i class="bi bi-play-circle" /><span>Watch Video - ভিডিও দেখুন</span></a
+            ><i class="bi bi-play-circle" /><span
+              >Watch Video - ভিডিও দেখুন</span
+            ></a
           >
         </div>
       </div>
@@ -45,10 +66,20 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-easel" /></div>
             <h4 class="title">
-              {#if $userTokenStore}
-              <a href="\store-registration" class="stretched-link">Create Store<br>স্টোর তৈরি করুন</a>
+              {#if $userTokenStore != "null" && $userTokenStore}
+                {#if serviceExists != true}
+                  <a href="\store-registration" class="stretched-link"
+                    >Create Store<br />সেবা/স্টোর তৈরি করুন</a
+                  >
+                {:else}
+                  <a href="/mystore" class="stretched-link"
+                    >My Store<br />নিজের সেবা/স্টোর দেখুব</a
+                  >
+                {/if}
               {:else}
-              <a href="\login" class="stretched-link">Create Store<br>স্টোর তৈরি করুন</a>
+                <a href="\login" class="stretched-link"
+                  >Create Store<br />সেবা/স্টোর তৈরি করুন</a
+                >
               {/if}
             </h4>
           </div>
@@ -59,7 +90,9 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-gem" /></div>
             <h4 class="title">
-              <a href="\services" class="stretched-link">Services <br> সার্ভিসের তালিকা দেখুন</a>
+              <a href="\services" class="stretched-link"
+                >Services <br /> সার্ভিসের তালিকা দেখুন</a
+              >
             </h4>
           </div>
         </div>
@@ -69,7 +102,9 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-geo-alt" /></div>
             <h4 class="title">
-              <a href="\map" class="stretched-link">Services Near You <br> আপনার নিকটবর্তী সার্ভিস</a>
+              <a href="\map" class="stretched-link"
+                >Services Near You <br /> আপনার নিকটবর্তী সার্ভিস</a
+              >
             </h4>
           </div>
         </div>
@@ -79,7 +114,9 @@
           <div class="icon-box">
             <div class="icon"><i class="bi bi-command" /></div>
             <h4 class="title">
-              <a href="\signup" class="stretched-link">Connect <br> যুক্ত হউন</a>
+              <a href="\signup" class="stretched-link"
+                >Connect <br /> যুক্ত হউন</a
+              >
             </h4>
           </div>
         </div>

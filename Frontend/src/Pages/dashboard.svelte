@@ -75,10 +75,6 @@
                 <i class="bi bi-rounded-right" />
                 <strong>Phone: </strong>{phone}
               </li>
-              <li>
-                <i class="bi bi-rounded-right" />
-                <strong>Role: </strong>{role}
-              </li>
             </ul>
             <a href="/edit-profile" class="btn-about">Edit Profile</a>
           </div>
