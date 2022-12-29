@@ -23,7 +23,8 @@
     openingTime = "",
     closingTime = "",
     closingDay = "",
-    imageUrl = "";
+    imageUrl = "",
+    phone = "";
 
   let offerings = [];
 
@@ -45,6 +46,7 @@
         closingTime = shop.credentials.closing_time;
         closingDay = shop.credentials.closing_day;
         offerings = shop.offerings;
+        phone = shop.credentials.phone;
         console.log(offerings);
 
         try {
@@ -81,7 +83,7 @@
               <ul>
                 <li class="d-flex align-items-center">
                   <i class="bi bi-person" />
-                  <a href="/dashboard"><h5>{proprietor}</h5></a>
+                  <a href="/dashboard"><h5>{proprietor} {phone}</h5></a>
                 </li>
               </ul>
             </div>

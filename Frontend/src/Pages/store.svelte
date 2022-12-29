@@ -21,7 +21,9 @@
     proprietor = "",
     openingTime = "",
     closingTime = "",
-    closingDay = "";
+    closingDay = "",
+    phone = "";
+    
   let offerings = [];
 
   function mockGetStore() {
@@ -42,7 +44,8 @@
         closingTime = shop.credentials.closing_time;
         closingDay = shop.credentials.closing_day;
         offerings = shop.offerings;
-        console.log(offerings);
+        phone = shop.credentials.phone;
+        // console.log(offerings);
       });
   }
   $: {
@@ -70,7 +73,7 @@
               <ul>
                 <li class="d-flex align-items-center">
                   <i class="bi bi-person" />
-                  <h5>{proprietor}</h5>
+                  <h5>{proprietor} {phone}</h5>
                 </li>
               </ul>
             </div>
