@@ -83,7 +83,7 @@
               <ul>
                 <li class="d-flex align-items-center">
                   <i class="bi bi-person" />
-                  <a href="/dashboard"><h5>{proprietor} {phone}</h5></a>
+                  <a href="/dashboard"><h5>{proprietor}</h5></a>
                 </li>
               </ul>
             </div>
@@ -163,6 +163,17 @@
                 <li><b>Opens:</b> {openingTime}</li>
                 <li><b>Closes:</b> {closingTime}</li>
                 <li><b>Off-day:</b> {closingDay}</li>
+              </ul>
+            </div>
+
+            <!-- End sidebar categories-->
+          </div>
+          <br />
+          <div class="sidebar">
+            <div class="sidebar-item categories">
+              <h3 class="sidebar-title">Contacts</h3>
+              <ul class="mt-3">
+                <li><b>Phone:</b> {phone}</li>
               </ul>
             </div>
 
