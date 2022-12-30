@@ -12,6 +12,9 @@
 
   console.log(localStorage.getItem("selectedService"));
 
+  const placeHolderImage = "assets/img/blog/blog-1.jpg";
+  let displayImage = placeHolderImage;
+
   let shops = [],
     shop = "",
     selectedShop = "",
@@ -22,8 +25,9 @@
     openingTime = "",
     closingTime = "",
     closingDay = "",
+    imageUrl = "",
     phone = "";
-    
+
   let offerings = [];
 
   function mockGetStore() {
@@ -46,10 +50,20 @@
         offerings = shop.offerings;
         phone = shop.credentials.phone;
         // console.log(offerings);
+
+        try {
+          imageUrl = shop.credentials.image_url;
+          // console.log(imageUrl);
+          displayImage = `http://127.0.0.1:8000/images/get_image?filename=${imageUrl}`;
+        } catch (err) {
+          console.error(err);
+          displayImage = placeHolderImage;
+        }
       });
   }
   $: {
     mockGetStore();
+    // console.log(displayImage);
   }
   // mockGetStore();
 </script>
@@ -64,7 +78,7 @@
         <div class="col-lg-8">
           <article class="blog-details">
             <div class="post-img">
-              <img src="assets/img/blog/blog-1.jpg" alt="" class="img-fluid" />
+              <img src={displayImage} alt="" class="img-fluid" />
             </div>
 
             <h1 class="title">{shopName}</h1>

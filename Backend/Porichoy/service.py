@@ -83,7 +83,7 @@ async def edit_service(requrest: HttpRequest):
     if service_instance.get().exists:
         service_instance.update({
             "credentials.name": new_name,
-            "credentials.store_decription": new_store_description,
+            "credentials.store_description": new_store_description,
             "credentials.phone": new_phone,
             "credentials.closing_day": new_closing_day,
             "credentials.closing_time": new_closing_time,
