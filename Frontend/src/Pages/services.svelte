@@ -145,7 +145,7 @@
             <article>
 
               <div class="post-img">
-                <img src="http://127.0.0.1:8000/images/get_image?filename=blank-mechanic-pic2" alt="" class="img-fluid">
+                <img src="http://127.0.0.1:8000/images/get_image?filename=${shop.credentials.imageUrl}" alt="" class="img-fluid">
               </div>
 
               <p class="post-category">{shop.credentials.category}</p>
