@@ -213,7 +213,7 @@
                 </select>
               </div>
 
-              <button type="submit" class="btn btn-success rounded-pill"
+              <button type="submit" class="normalbutton"
                 >দোকান/সার্ভিস খুঁজুন</button
               >
             </form>

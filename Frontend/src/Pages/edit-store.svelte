@@ -156,7 +156,7 @@
                 />
                 <input type="file" class="form-control" name="content" />
                 <div class="form-group mt-3">
-                  <button type="submit" class="btn btn-success rounded-pill"
+                  <button type="submit" class="normalbutton"
                     >নতুন ছবি দিন</button
                   >
                 </div>
@@ -178,13 +178,13 @@
           <br />
           <article class="blog-details">
             <div class="container" data-aos="fade-up">
-              <div class="section-header">
-                <h2>নিজের স্টোর আপডেট করুন</h2>
-              </div>
+              
+                <h1 class="title">স্টোর আপডেট করুন</h1>
+              
 
               <div class="row gx-lg-0 gy-4">
-                <div class="col-4" />
-                <div class="col-4">
+                <div class="col-lg-12" />
+                <div class="col-lg-12">
                   <form class="php-email-form" id="editProfileForm">
                     <input
                       type="hidden"
@@ -261,9 +261,10 @@
                         bind:value={description}
                       />
                     </div>
+                    <br>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-success rounded-pill"
+                      <button type="submit" class="normalbutton"
                         >আপডেট করুন</button
                       >
                     </div>
