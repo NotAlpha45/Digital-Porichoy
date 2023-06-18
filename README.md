@@ -1,2 +1,3 @@
 # Digital-Porichoy
- An online signature for small business and service provider
+ Creating an online signature for small business owners and service providers
+
