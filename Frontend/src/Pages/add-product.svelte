@@ -70,6 +70,7 @@
 <section id="contact" class="contact">
   <div class="container h-100 d-flex justify-content-center align-items-center">
     <div class="col-md-6">
+      <br>
       <div class="section-header">
         <h2>পণ্য/সেবা যোগ করুন</h2>
       </div>

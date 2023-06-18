@@ -168,6 +168,7 @@
 
             <p class="post-category">{shop.credentials.category}</p>
 
+             
             <h2 class="title">
               <button
                 type="button"

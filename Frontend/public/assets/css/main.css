@@ -2786,3 +2786,29 @@ section {
   margin-right: auto;
   align-items: center;
 }
+
+.normalbutton[type=button] {
+  background: var(--color-primary);
+  border: 0;
+  padding: 14px 45px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+.normalbutton[type=button]:hover {
+  background: rgba(0, 131, 116, 0.8);
+}
+
+.normalbutton[type=submit] {
+  background: var(--color-primary);
+  border: 0;
+  padding: 14px 45px;
+  color: #fff;
+  transition: 0.4s;
+  border-radius: 50px;
+}
+
+.normalbutton[type=submit]:hover {
+  background: rgba(0, 131, 116, 0.8);
+}

@@ -261,6 +261,7 @@
               <span />
               <input
                 type="reset"
+                style="color: red;"
                 class="btn btn-default rounded-pill"
                 value="বাতিল করুন"
               />
